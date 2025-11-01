@@ -331,6 +331,39 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
+    @Description("Update station info with correct values")
+    @Test(dependsOnMethods = "getStationInfoAfterUpdating")
+    public void updateStationWithCorrectValues() {
+        data.setStationLongitude(80.09);
+        data.setStationLatitude(-90.0);
+        data.setStationAltitude(-90.09);
+
+        PostStation<Object> updatedStation = new PostStation<>();
+        updatedStation.setExternalId(data.externalId);
+        updatedStation.setName(data.stationName);
+        updatedStation.setLongitude(data.getStationLongitude());
+        updatedStation.setLatitude(data.getStationLatitude());
+        updatedStation.setAltitude(data.getStationAltitude());
+
+        updateStationById(data.getStationId(), updatedStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetStation.class);
+    }
+
+    @Description("Get station info after updating again")
+    @Test(dependsOnMethods = "updateStationWithCorrectValues")
+    public void getStationInfoAfterUpdatingAgain() {
+        GetStation station = getStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetStation.class);
+
+        validateStationData(station);
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
