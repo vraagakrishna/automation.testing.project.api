@@ -50,4 +50,18 @@ public class WeatherApiRequestBuilder {
                 .extract().response();
     }
 
+    public static Response updateStationById(String stationId, PostStation<Object> station) {
+        return given()
+                .baseUri(WeatherBaseUrl)
+                .basePath("/stations/" + stationId)
+                .contentType("application/json")
+                .queryParam("appid", appId)
+                .body(station)
+                .log().all()
+                .put()
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
 }

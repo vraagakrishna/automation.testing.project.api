@@ -264,6 +264,43 @@ public class WeatherApiTests {
         validateAllStations(response, true);
     }
 
+    @Description("Update station info with invalid external id")
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration")
+    public void updateStationInfoInvalidExternalId() {
+        PostStation<Object> updatedStation = new PostStation<>();
+
+        Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                400001,
+                "Bad external id"
+        );
+    }
+
+    @Description("Update station info with invalid station name")
+    @Test(dependsOnMethods = "updateStationInfoInvalidExternalId")
+    public void updateStationInfoInvalidStationName() {
+        PostStation<Object> updatedStation = new PostStation<>();
+        updatedStation.setExternalId(data.externalId);
+
+        Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                400001,
+                "Bad or zero length station name"
+        );
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
