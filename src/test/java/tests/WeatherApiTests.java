@@ -5,12 +5,14 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import model.Failure;
+import model.GetStationList;
 import model.PostStation;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.StationTestData;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,57 @@ public class WeatherApiTests {
         );
     }
 
+    @Description("Register with invalid altitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 8)
+    public void registerStationWithoutLongitudeLatitudeAltitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+
+        GetStationList station = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_CREATED)
+                .extract().as(GetStationList.class);
+
+        validateDataAfterRegister(postStation, station);
+
+        validateNotNullAndEqualsZero(
+                station.getLatitude(),
+                "Latitude"
+        );
+
+        validateNotNullAndEqualsZero(
+                station.getLongitude(),
+                "Longitude"
+        );
+    }
+
+    @Description("Register station")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 9)
+    public void registerValidStation() {
+        data.setStationLatitude(37.76);
+        data.setStationLongitude(-122.43);
+        data.setStationAltitude(150.0);
+
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(data.externalId);
+        postStation.setName(data.stationName);
+        postStation.setLatitude(data.getStationLatitude());
+        postStation.setLongitude(data.getStationLongitude());
+        postStation.setAltitude(data.getStationAltitude());
+
+        GetStationList station = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_CREATED)
+                .extract().as(GetStationList.class);
+
+        validateDataAfterRegister(postStation, station);
+
+        data.setStationId(station.getId());
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
@@ -256,4 +309,44 @@ public class WeatherApiTests {
         );
     }
 
+    private void validateDataAfterRegister(PostStation<Object> postStation, GetStationList station) {
+        for (Field field : PostStation.class.getDeclaredFields()) {
+            field.setAccessible(true);
+
+            try {
+                Object requestValue = field.get(postStation);
+
+                Field responseField = GetStationList.class.getDeclaredField(field.getName());
+                responseField.setAccessible(true);
+
+                Object responseValue = responseField.get(station);
+
+                if (requestValue != null) {
+                    Assert.assertEquals(
+                            responseValue,
+                            requestValue,
+                            String.format("Field mismatch for '%s'", field.getName())
+                    );
+                }
+            } catch (NoSuchFieldException e) {
+                System.out.println("Response does not contain field: " + field.getName());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void validateNotNullAndEqualsZero(Double value, String valueName) {
+        Assert.assertNotNull(
+                value,
+                valueName + " is incorrect"
+        );
+
+        Assert.assertEquals(
+                value,
+                0.0,
+                valueName + " is incorrect"
+        );
+    }
+    
 }
