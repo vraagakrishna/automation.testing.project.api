@@ -301,6 +301,36 @@ public class WeatherApiTests {
         );
     }
 
+    @Description("Update station info with without longitude latitude and altitude")
+    @Test(dependsOnMethods = "updateStationInfoInvalidStationName")
+    public void updateStationInfoWithoutLongitudeLatitudeAltitude() {
+        PostStation<Object> updatedStation = new PostStation<>();
+        updatedStation.setExternalId(data.externalId);
+        updatedStation.setName(data.stationName);
+
+        GetStation station = updateStationById(data.getStationId(), updatedStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetStation.class);
+
+        data.setStationLatitude(station.getLatitude());
+        data.setStationLongitude(station.getLongitude());
+        data.setStationAltitude(station.getAltitude());
+    }
+
+    @Description("Get station info after updating")
+    @Test(dependsOnMethods = "updateStationInfoWithoutLongitudeLatitudeAltitude")
+    public void getStationInfoAfterUpdating() {
+        GetStation station = getStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetStation.class);
+
+        validateStationData(station);
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
