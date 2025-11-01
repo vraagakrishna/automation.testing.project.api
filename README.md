@@ -61,7 +61,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │           ├── common
 │           │   └── BasePaths.java
 │           ├── model                           # Data models
-│           │   └── TestModel.java
+│           │   └── PostStation.java
 │           ├── requestbuilder                  # API requests
 │           │   └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
@@ -84,17 +84,17 @@ as the first time that testing has been performed against this API.
 
 You have been tasked to test/create the following scenario:
 
-- [ ] Register a weather station
 - [ ] Get the newly registered weather stations info
 - [ ] Update the station's info
 - [ ] Delete this weather station and confirm it has been deleted
+- [x] Register a weather station
 
 ### Objectives
 
 Keep the following objectives in mind when creating your test suite:
 
-- [ ] Create the expected API calls for the scenario above in Postman
-- [ ] Create tests to demonstrate how you would also test negative scenarios and data validation
 - [ ] Show how you can perform chaining of requests (passing data from one response to another request)
 - [ ] Implement assertions for your postman calls (pass/fail criteria)
 - [ ] Perform parameterisation for any dynamic configs or paths
+- [x] Create the expected API calls for the scenario above in ~~Postman~~ RestAssured
+- [x] Create tests to demonstrate how you would also test negative scenarios and data validation

@@ -4,6 +4,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
+import model.Failure;
+import model.PostStation;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static requestbuilder.WeatherApiRequestBuilder.getStations;
+import static requestbuilder.WeatherApiRequestBuilder.registerStation;
 
 @Test
 @Feature("Open WeatherMap")
@@ -31,6 +34,24 @@ public class WeatherApiTests {
                 .extract().response();
 
         validateAllStations(response, false);
+    }
+
+    @Description("Register blank station")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 1)
+    public void registerBlankStation() {
+        PostStation<Object> postStation = new PostStation<>();
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                400001,
+                "Bad external id"
+        );
     }
 
     private void validateAllStations(Response response, boolean shouldExist) {
@@ -85,6 +106,20 @@ public class WeatherApiTests {
                     String.format("Generated external id '%s' does not exist in response", data.externalId)
             );
         }
+    }
+
+    private void validateFailedResponse(Failure failureResponse, int code, String message) {
+        Assert.assertEquals(
+                failureResponse.getCode(),
+                code,
+                "Response code is incorrect"
+        );
+
+        Assert.assertEquals(
+                failureResponse.getMessage(),
+                message,
+                "Response message is incorrect"
+        );
     }
 
 }
