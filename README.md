@@ -96,8 +96,8 @@ You have been tasked to test/create the following scenario:
 
 Keep the following objectives in mind when creating your test suite:
 
-- [ ] Perform parameterisation for any dynamic configs or paths
 - [x] Create the expected API calls for the scenario above in ~~Postman~~ RestAssured
 - [x] Create tests to demonstrate how you would also test negative scenarios and data validation
 - [x] Show how you can perform chaining of requests (passing data from one response to another request)
 - [x] Implement assertions for your postman calls (pass/fail criteria)
+- [x] Perform parameterisation for any dynamic configs or paths
