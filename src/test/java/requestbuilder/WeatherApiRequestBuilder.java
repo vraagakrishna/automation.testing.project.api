@@ -37,4 +37,17 @@ public class WeatherApiRequestBuilder {
                 .extract().response();
     }
 
+    public static Response getStationById(String stationId) {
+        return given()
+                .baseUri(WeatherBaseUrl)
+                .basePath("/stations/" + stationId)
+                .contentType("application/json")
+                .queryParam("appid", appId)
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
 }

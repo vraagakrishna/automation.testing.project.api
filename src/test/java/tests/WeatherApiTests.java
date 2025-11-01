@@ -5,6 +5,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import model.Failure;
+import model.GetStation;
 import model.GetStationList;
 import model.PostStation;
 import org.apache.http.HttpStatus;
@@ -17,8 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static requestbuilder.WeatherApiRequestBuilder.getStations;
-import static requestbuilder.WeatherApiRequestBuilder.registerStation;
+import static requestbuilder.WeatherApiRequestBuilder.*;
 
 @Test
 @Feature("Open WeatherMap")
@@ -228,6 +228,30 @@ public class WeatherApiTests {
         data.setStationId(station.getId());
     }
 
+    @Description("Get station with invalid name")
+    @Test(dependsOnMethods = "registerValidStation", priority = 1)
+    public void getStationInfoByInvalidId() {
+        Failure failureResponse = getStationById(null)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateInvalidStationResponse(failureResponse);
+    }
+
+    @Description("Get station info")
+    @Test(dependsOnMethods = "registerValidStation", priority = 2)
+    public void getStationInfo() {
+        GetStation station = getStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetStation.class);
+
+        validateStationData(station);
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
@@ -348,5 +372,57 @@ public class WeatherApiTests {
                 valueName + " is incorrect"
         );
     }
-    
+
+    private void validateStationData(GetStation station) {
+        Assert.assertEquals(
+                station.getId(),
+                data.getStationId(),
+                "Station id is incorrect"
+        );
+
+        Assert.assertEquals(
+                station.getName(),
+                data.stationName,
+                "Station name is incorrect"
+        );
+
+        Assert.assertEquals(
+                station.getExternalId(),
+                data.externalId,
+                "Station external id is incorrect"
+        );
+
+        Assert.assertEquals(
+                station.getLongitude(),
+                data.getStationLongitude(),
+                "Station longitude is incorrect"
+        );
+
+        Assert.assertEquals(
+                station.getLatitude(),
+                data.getStationLatitude(),
+                "Station latitude is incorrect"
+        );
+
+        Assert.assertEquals(
+                station.getAltitude(),
+                data.getStationAltitude(),
+                "Station altitude is incorrect"
+        );
+    }
+
+    private void validateInvalidStationResponse(Failure failureResponse) {
+        Assert.assertEquals(
+                failureResponse.getCode(),
+                400002,
+                "Response code is incorrect"
+        );
+
+        Assert.assertEquals(
+                failureResponse.getMessage(),
+                "Station id not valid",
+                "Response message is incorrect"
+        );
+    }
+
 }
