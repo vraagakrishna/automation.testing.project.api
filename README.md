@@ -61,10 +61,11 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │           ├── common
 │           │   └── BasePaths.java
 │           ├── model                           # Data models
-│           │   ├── Failure.java
-│           │   ├── GetStation.java
-│           │   ├── GetStationList.java
-│           │   └── PostStation.java
+│           │   └── weatherapi                  # Data models for weather api
+│           │       ├── Failure.java
+│           │       ├── GetStation.java
+│           │       ├── GetStationList.java
+│           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
 │           │   └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes

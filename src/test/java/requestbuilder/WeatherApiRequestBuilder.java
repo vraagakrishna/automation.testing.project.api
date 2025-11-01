@@ -1,7 +1,7 @@
 package requestbuilder;
 
 import io.restassured.response.Response;
-import model.PostStation;
+import model.weatherapi.PostStation;
 
 import static common.BasePaths.WeatherBaseUrl;
 import static io.restassured.RestAssured.given;
