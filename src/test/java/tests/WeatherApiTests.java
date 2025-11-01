@@ -364,6 +364,27 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
+    @Description("Delete station with invalid id")
+    @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
+    public void deleteStationInfoByInvalidId() {
+        Failure failureResponse = deleteStationById(null)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateInvalidStationResponse(failureResponse);
+    }
+
+    @Description("Delete station with valid id")
+    @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
+    public void deleteStationInfoByValidId() {
+        deleteStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");

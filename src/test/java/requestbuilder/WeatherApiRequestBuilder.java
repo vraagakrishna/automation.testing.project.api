@@ -64,4 +64,17 @@ public class WeatherApiRequestBuilder {
                 .extract().response();
     }
 
+    public static Response deleteStationById(String stationId) {
+        return given()
+                .baseUri(WeatherBaseUrl)
+                .basePath("/stations/" + stationId)
+                .contentType("application/json")
+                .queryParam("appid", appId)
+                .log().all()
+                .delete()
+                .then()
+                .log().all()
+                .extract().response();
+    }
+
 }

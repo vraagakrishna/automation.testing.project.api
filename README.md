@@ -87,10 +87,10 @@ as the first time that testing has been performed against this API.
 
 You have been tasked to test/create the following scenario:
 
-- [ ] Delete this weather station and confirm it has been deleted
 - [x] Register a weather station
 - [x] Get the newly registered weather stations info
 - [x] Update the station's info
+- [x] Delete this weather station and confirm it has been deleted
 
 ### Objectives
 
