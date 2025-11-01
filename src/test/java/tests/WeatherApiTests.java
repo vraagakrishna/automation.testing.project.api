@@ -252,6 +252,18 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
+    @Description("Getting all the stations after registration")
+    @Test(dependsOnMethods = "getStationInfo")
+    public void getAllStationsAfterRegistration() {
+        Response response = getStations()
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().response();
+
+        validateAllStations(response, true);
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
