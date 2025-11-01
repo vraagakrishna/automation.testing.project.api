@@ -385,6 +385,50 @@ public class WeatherApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
+    @Description("Getting all the stations after deletion")
+    @Test(dependsOnMethods = "deleteStationInfoByValidId")
+    public void getAllStationsAfterDeletion() {
+        Response response = getStations()
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().response();
+
+        validateAllStations(response, false);
+    }
+
+    @Description("Getting station by station id after deletion")
+    @Test(dependsOnMethods = "deleteStationInfoByValidId", priority = 2)
+    public void getStationByIdAfterDeletion() {
+        Failure failureResponse = getStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                404001,
+                "Station not found"
+        );
+    }
+
+    @Description("Delete station after deletion")
+    @Test(dependsOnMethods = {"getAllStationsAfterDeletion", "getStationByIdAfterDeletion"})
+    public void deleteStationInfoAfterDeletion() {
+        Failure failureResponse = deleteStationById(data.getStationId())
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                404001,
+                "Station not found"
+        );
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
