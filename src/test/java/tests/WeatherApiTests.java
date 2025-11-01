@@ -54,6 +54,127 @@ public class WeatherApiTests {
         );
     }
 
+    @Description("Register invalid external id")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 2)
+    public void registerInvalidExternalIdStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(0);
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "expected=string, got=number"
+        );
+    }
+
+    @Description("Register with no station name")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 3)
+    public void registerNoStationNameStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(
+                failureResponse,
+                400001,
+                "Bad or zero length station name"
+        );
+    }
+
+    @Description("Register with invalid station name")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 4)
+    public void registerInvalidStationNameStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(0);
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "expected=string, got=number"
+        );
+    }
+
+    @Description("Register with invalid latitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 5)
+    public void registerInvalidLatitudeStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName("");
+        postStation.setLatitude("0");
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "expected=float64, got=string"
+        );
+    }
+
+    @Description("Register with invalid longitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 6)
+    public void registerInvalidLongitudeStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName("");
+        postStation.setLongitude("0");
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "expected=float64, got=string"
+        );
+    }
+
+    @Description("Register with invalid altitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 7)
+    public void registerInvalidAltitudeStation() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName("");
+        postStation.setAltitude("0");
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .log().all()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "expected=float64, got=string"
+        );
+    }
+
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
@@ -118,6 +239,19 @@ public class WeatherApiTests {
         Assert.assertEquals(
                 failureResponse.getMessage(),
                 message,
+                "Response message is incorrect"
+        );
+    }
+
+    private void validateFailedResponseUsingContains(Failure failureResponse, int code, String message) {
+        Assert.assertEquals(
+                failureResponse.getCode(),
+                code,
+                "Response code is incorrect"
+        );
+
+        Assert.assertTrue(
+                failureResponse.getMessage().contains(message),
                 "Response message is incorrect"
         );
     }
