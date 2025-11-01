@@ -31,7 +31,7 @@ cd automation.testing.project.api
 2. Run the tests and generate the test report
 
 ```bash
-mvn clean test
+mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 ```
 
 <br/>
@@ -67,7 +67,7 @@ mvn clean test
 │           ├── tests                           # Test classes
 │           │   └── WeatherApiTests.java 
 │           └── utils                           # Helper classes
-│               └── UserTestData.java
+│               └── StationTestData.java
 ├── pom.xml
 ├── README.md
 └── testng.xml
