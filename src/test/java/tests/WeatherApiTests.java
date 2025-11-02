@@ -11,6 +11,7 @@ import model.weatherapi.PostStation;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.RandomNumberGenerator;
 import utils.StationTestData;
 
 import java.lang.reflect.Field;
@@ -26,6 +27,7 @@ import static requestbuilder.WeatherApiRequestBuilder.*;
 public class WeatherApiTests {
 
     StationTestData data = new StationTestData();
+    RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
     @Description("Getting all the stations")
     public void getAllStationsInitially() {
@@ -56,7 +58,7 @@ public class WeatherApiTests {
 
     @Description("Register invalid external id")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 2)
-    public void registerInvalidExternalIdStation() {
+    public void registerStationWithInvalidExternalId() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(0);
 
@@ -74,7 +76,7 @@ public class WeatherApiTests {
 
     @Description("Register with no station name")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 3)
-    public void registerNoStationNameStation() {
+    public void registerStationWithNoStationName() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
 
@@ -92,7 +94,7 @@ public class WeatherApiTests {
 
     @Description("Register with invalid station name")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 4)
-    public void registerInvalidStationNameStation() {
+    public void registerStationWithInvalidStationName() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
         postStation.setName(0);
@@ -111,7 +113,7 @@ public class WeatherApiTests {
 
     @Description("Register with invalid latitude")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 5)
-    public void registerInvalidLatitudeStation() {
+    public void registerStationWithInvalidLatitude() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
         postStation.setName("");
@@ -129,9 +131,49 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid longitude")
+    @Description("Register with small latitude")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 6)
-    public void registerInvalidLongitudeStation() {
+    public void registerStationWithSmallLatitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMin() - 180.0, data.getLatitudeMin() - 0.1));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "latitude"
+        );
+    }
+
+    @Description("Register with large latitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 7)
+    public void registerStationWithLargeLatitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMax() + 0.1, data.getLatitudeMax() + 180.0));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "latitude"
+        );
+    }
+
+    @Description("Register with invalid longitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 8)
+    public void registerStationWithInvalidLongitude() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
         postStation.setName("");
@@ -149,9 +191,49 @@ public class WeatherApiTests {
         );
     }
 
+    @Description("Register with small longitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 9)
+    public void registerStationWithSmallLongitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMin() - 180.0, data.getLongitudeMin() - 0.1));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "longitude"
+        );
+    }
+
+    @Description("Register with large longitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 10)
+    public void registerStationWithLargeLongitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMax() + 0.1, data.getLongitudeMax() + 180.0));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "longitude"
+        );
+    }
+
     @Description("Register with invalid altitude")
-    @Test(dependsOnMethods = "getAllStationsInitially", priority = 7)
-    public void registerInvalidAltitudeStation() {
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 11)
+    public void registerStationWithInvalidAltitude() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
         postStation.setName("");
@@ -169,8 +251,48 @@ public class WeatherApiTests {
         );
     }
 
+    @Description("Register with small altitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 12)
+    public void registerStationWithSmallAltitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMin() - 180.0, data.getAltitudeMin() - 0.1));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "altitude"
+        );
+    }
+
+    @Description("Register with large altitude")
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 13)
+    public void registerStationWithLargeAltitude() {
+        PostStation<Object> postStation = new PostStation<>();
+        postStation.setExternalId(" ");
+        postStation.setName(" ");
+        postStation.setAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMax() + 0.1, data.getAltitudeMax() + 180.0));
+
+        Failure failureResponse = registerStation(postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                400001,
+                "altitude"
+        );
+    }
+
     @Description("Register with invalid altitude")
-    @Test(dependsOnMethods = "getAllStationsInitially", priority = 8)
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 14)
     public void registerStationWithoutLongitudeLatitudeAltitude() {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
@@ -195,11 +317,11 @@ public class WeatherApiTests {
     }
 
     @Description("Register station")
-    @Test(dependsOnMethods = "getAllStationsInitially", priority = 9)
+    @Test(dependsOnMethods = "getAllStationsInitially", priority = 15)
     public void registerValidStation() {
-        data.setStationLatitude(37.76);
-        data.setStationLongitude(-122.43);
-        data.setStationAltitude(150.0);
+        data.setStationLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMin(), data.getLatitudeMax()));
+        data.setStationLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMin(), data.getLongitudeMax()));
+        data.setStationAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMin(), data.getAltitudeMax()));
 
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(data.externalId);
@@ -317,9 +439,9 @@ public class WeatherApiTests {
     @Description("Update station info with correct values")
     @Test(dependsOnMethods = "getStationInfoAfterUpdating")
     public void updateStationWithCorrectValues() {
-        data.setStationLongitude(80.09);
-        data.setStationLatitude(-90.0);
-        data.setStationAltitude(-90.09);
+        data.setStationLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMin(), data.getLatitudeMax()));
+        data.setStationLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMin(), data.getLongitudeMax()));
+        data.setStationAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMin(), data.getAltitudeMax()));
 
         PostStation<Object> updatedStation = new PostStation<>();
         updatedStation.setExternalId(data.externalId);
@@ -483,7 +605,7 @@ public class WeatherApiTests {
         );
 
         Assert.assertTrue(
-                failureResponse.getMessage().contains(message),
+                failureResponse.getMessage().toLowerCase().contains(message.toLowerCase()),
                 "Response message is incorrect"
         );
     }
