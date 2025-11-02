@@ -60,6 +60,8 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │       └── java
 │           ├── common
 │           │   └── BasePaths.java
+│           ├── listeners                       # Listeners
+│           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
 │           │   └── weatherapi                  # Data models for weather api
 │           │       ├── Failure.java
