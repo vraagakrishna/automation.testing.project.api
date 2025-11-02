@@ -29,9 +29,25 @@ public class WeatherApiTests {
     StationTestData data = new StationTestData();
     RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
+    @Description("Getting all the stations without api key")
+    @Test(priority = 1)
+    public void getAllStationsWithoutApiKey() {
+        Failure failureResponse = getStations(false)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                401,
+                "Invalid API key"
+        );
+    }
+
     @Description("Getting all the stations")
+    @Test(priority = 2)
     public void getAllStationsInitially() {
-        Response response = getStations()
+        Response response = getStations(true)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
@@ -39,12 +55,29 @@ public class WeatherApiTests {
         validateAllStations(response, false);
     }
 
+    @Description("Register station without api key")
+    @Test(dependsOnMethods = "getAllStationsInitially")
+    public void registerStationWithoutApiKey() {
+        PostStation<Object> postStation = new PostStation<>();
+
+        Failure failureResponse = registerStation(false, postStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                401,
+                "Invalid API key"
+        );
+    }
+
     @Description("Register blank station")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 1)
     public void registerBlankStation() {
         PostStation<Object> postStation = new PostStation<>();
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -62,7 +95,7 @@ public class WeatherApiTests {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(0);
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -80,7 +113,7 @@ public class WeatherApiTests {
         PostStation<Object> postStation = new PostStation<>();
         postStation.setExternalId(" ");
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -99,7 +132,7 @@ public class WeatherApiTests {
         postStation.setExternalId(" ");
         postStation.setName(0);
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -119,7 +152,7 @@ public class WeatherApiTests {
         postStation.setName("");
         postStation.setLatitude("0");
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -139,7 +172,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMin() - 180.0, data.getLatitudeMin() - 0.1));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -159,7 +192,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setLatitude(randomNumberGenerator.generateRandomNumber(data.getLatitudeMax() + 0.1, data.getLatitudeMax() + 180.0));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -179,7 +212,7 @@ public class WeatherApiTests {
         postStation.setName("");
         postStation.setLongitude("0");
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -199,7 +232,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMin() - 180.0, data.getLongitudeMin() - 0.1));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -219,7 +252,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setLongitude(randomNumberGenerator.generateRandomNumber(data.getLongitudeMax() + 0.1, data.getLongitudeMax() + 180.0));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -239,7 +272,7 @@ public class WeatherApiTests {
         postStation.setName("");
         postStation.setAltitude("0");
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -259,7 +292,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMin() - 180.0, data.getAltitudeMin() - 0.1));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -279,7 +312,7 @@ public class WeatherApiTests {
         postStation.setName(" ");
         postStation.setAltitude(randomNumberGenerator.generateRandomNumber(data.getAltitudeMax() + 0.1, data.getAltitudeMax() + 180.0));
 
-        Failure failureResponse = registerStation(postStation)
+        Failure failureResponse = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -298,7 +331,7 @@ public class WeatherApiTests {
         postStation.setExternalId(" ");
         postStation.setName(" ");
 
-        GetStationList station = registerStation(postStation)
+        GetStationList station = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract().as(GetStationList.class);
@@ -330,7 +363,7 @@ public class WeatherApiTests {
         postStation.setLongitude(data.getStationLongitude());
         postStation.setAltitude(data.getStationAltitude());
 
-        GetStationList station = registerStation(postStation)
+        GetStationList station = registerStation(true, postStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract().as(GetStationList.class);
@@ -340,10 +373,25 @@ public class WeatherApiTests {
         data.setStationId(station.getId());
     }
 
+    @Description("Get station without api key")
+    @Test(dependsOnMethods = "registerValidStation")
+    public void getStationInfoWithoutApiKey() {
+        Failure failureResponse = getStationById(false, null)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                401,
+                "Invalid API key"
+        );
+    }
+
     @Description("Get station with invalid name")
     @Test(dependsOnMethods = "registerValidStation", priority = 1)
     public void getStationInfoByInvalidId() {
-        Failure failureResponse = getStationById(null)
+        Failure failureResponse = getStationById(true, null)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -354,7 +402,7 @@ public class WeatherApiTests {
     @Description("Get station info")
     @Test(dependsOnMethods = "registerValidStation", priority = 2)
     public void getStationInfo() {
-        GetStation station = getStationById(data.getStationId())
+        GetStation station = getStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
@@ -365,7 +413,7 @@ public class WeatherApiTests {
     @Description("Getting all the stations after registration")
     @Test(dependsOnMethods = "getStationInfo")
     public void getAllStationsAfterRegistration() {
-        Response response = getStations()
+        Response response = getStations(true)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
@@ -373,12 +421,29 @@ public class WeatherApiTests {
         validateAllStations(response, true);
     }
 
-    @Description("Update station info with invalid external id")
+    @Description("Update station info without api key")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration")
+    public void updateStationInfoWithoutApiKey() {
+        PostStation<Object> updatedStation = new PostStation<>();
+
+        Failure failureResponse = updateStationById(false, data.getStationId(), updatedStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                401,
+                "Invalid API key"
+        );
+    }
+
+    @Description("Update station info with invalid external id")
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 1)
     public void updateStationInfoInvalidExternalId() {
         PostStation<Object> updatedStation = new PostStation<>();
 
-        Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
+        Failure failureResponse = updateStationById(true, data.getStationId(), updatedStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -391,12 +456,12 @@ public class WeatherApiTests {
     }
 
     @Description("Update station info with invalid station name")
-    @Test(dependsOnMethods = "updateStationInfoInvalidExternalId")
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 2)
     public void updateStationInfoInvalidStationName() {
         PostStation<Object> updatedStation = new PostStation<>();
         updatedStation.setExternalId(data.externalId);
 
-        Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
+        Failure failureResponse = updateStationById(true, data.getStationId(), updatedStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -409,7 +474,7 @@ public class WeatherApiTests {
     }
 
     @Description("Update station info with without longitude latitude and altitude")
-    @Test(dependsOnMethods = "updateStationInfoInvalidStationName")
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 3)
     public void updateStationInfoWithoutLongitudeLatitudeAltitude() {
         data.setStationLatitude(0.0);
         data.setStationLongitude(0.0);
@@ -419,7 +484,7 @@ public class WeatherApiTests {
         updatedStation.setExternalId(data.externalId);
         updatedStation.setName(data.stationName);
 
-        GetStation station = updateStationById(data.getStationId(), updatedStation)
+        GetStation station = updateStationById(true, data.getStationId(), updatedStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
@@ -440,7 +505,7 @@ public class WeatherApiTests {
     @Description("Get station info after updating")
     @Test(dependsOnMethods = "updateStationInfoWithoutLongitudeLatitudeAltitude")
     public void getStationInfoAfterUpdating() {
-        GetStation station = getStationById(data.getStationId())
+        GetStation station = getStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
@@ -462,7 +527,7 @@ public class WeatherApiTests {
         updatedStation.setLatitude(data.getStationLatitude());
         updatedStation.setAltitude(data.getStationAltitude());
 
-        GetStation station = updateStationById(data.getStationId(), updatedStation)
+        GetStation station = updateStationById(true, data.getStationId(), updatedStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
@@ -473,7 +538,7 @@ public class WeatherApiTests {
     @Description("Get station info after updating again")
     @Test(dependsOnMethods = "updateStationWithCorrectValues")
     public void getStationInfoAfterUpdatingAgain() {
-        GetStation station = getStationById(data.getStationId())
+        GetStation station = getStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
@@ -481,10 +546,25 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
+    @Description("Delete station without api key")
+    @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain")
+    public void deleteStationInfoWithoutApiKey() {
+        Failure failureResponse = deleteStationById(false, null)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponseUsingContains(
+                failureResponse,
+                401,
+                "Invalid API key"
+        );
+    }
+
     @Description("Delete station with invalid id")
     @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
     public void deleteStationInfoByInvalidId() {
-        Failure failureResponse = deleteStationById(null)
+        Failure failureResponse = deleteStationById(true, null)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
@@ -495,7 +575,7 @@ public class WeatherApiTests {
     @Description("Delete station with valid id")
     @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
     public void deleteStationInfoByValidId() {
-        deleteStationById(data.getStationId())
+        deleteStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
@@ -503,7 +583,7 @@ public class WeatherApiTests {
     @Description("Getting all the stations after deletion")
     @Test(dependsOnMethods = "deleteStationInfoByValidId")
     public void getAllStationsAfterDeletion() {
-        Response response = getStations()
+        Response response = getStations(true)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
@@ -514,7 +594,7 @@ public class WeatherApiTests {
     @Description("Getting station by station id after deletion")
     @Test(dependsOnMethods = "deleteStationInfoByValidId", priority = 2)
     public void getStationByIdAfterDeletion() {
-        Failure failureResponse = getStationById(data.getStationId())
+        Failure failureResponse = getStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
                 .extract().as(Failure.class);
@@ -529,7 +609,7 @@ public class WeatherApiTests {
     @Description("Delete station after deletion")
     @Test(dependsOnMethods = {"getAllStationsAfterDeletion", "getStationByIdAfterDeletion"})
     public void deleteStationInfoAfterDeletion() {
-        Failure failureResponse = deleteStationById(data.getStationId())
+        Failure failureResponse = deleteStationById(true, data.getStationId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
                 .extract().as(Failure.class);
@@ -541,6 +621,7 @@ public class WeatherApiTests {
         );
     }
 
+    // <editor-fold desc="Private Methods">
     private void validateAllStations(Response response, boolean shouldExist) {
         List<Map<String, Object>> stations = response
                 .jsonPath().getList("");
@@ -713,5 +794,6 @@ public class WeatherApiTests {
                 "Response message is incorrect"
         );
     }
+    // </editor-fold>
 
 }

@@ -1,6 +1,7 @@
 package requestbuilder;
 
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 import model.weatherapi.PostStation;
 
 import static io.restassured.RestAssured.given;
@@ -9,11 +10,15 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
 
     private static final String appId = System.getProperty("WEATHER_API_KEY", System.getenv("WEATHER_API_KEY"));
 
-    public static Response getStations() {
-        return given()
+    public static Response getStations(boolean includeAppId) {
+        RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/stations")
-                .queryParam("appid", appId)
+                .basePath("/stations");
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        return req
                 .log().all()
                 .get()
                 .then()
@@ -21,11 +26,15 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .extract().response();
     }
 
-    public static Response registerStation(PostStation<Object> station) {
-        return given()
+    public static Response registerStation(boolean includeAppId, PostStation<Object> station) {
+        RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/stations")
-                .queryParam("appid", appId)
+                .basePath("/stations");
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        return req
                 .body(station)
                 .log().all()
                 .post()
@@ -34,11 +43,15 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .extract().response();
     }
 
-    public static Response getStationById(String stationId) {
-        return given()
+    public static Response getStationById(boolean includeAppId, String stationId) {
+        RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/stations/" + stationId)
-                .queryParam("appid", appId)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        return req
                 .log().all()
                 .get()
                 .then()
@@ -46,11 +59,15 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .extract().response();
     }
 
-    public static Response updateStationById(String stationId, PostStation<Object> station) {
-        return given()
+    public static Response updateStationById(boolean includeAppId, String stationId, PostStation<Object> station) {
+        RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/stations/" + stationId)
-                .queryParam("appid", appId)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        return req
                 .body(station)
                 .log().all()
                 .put()
@@ -59,11 +76,15 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .extract().response();
     }
 
-    public static Response deleteStationById(String stationId) {
-        return given()
+    public static Response deleteStationById(boolean includeAppId, String stationId) {
+        RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/stations/" + stationId)
-                .queryParam("appid", appId)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        return req
                 .log().all()
                 .delete()
                 .then()

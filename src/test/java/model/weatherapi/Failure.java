@@ -1,10 +1,13 @@
 package model.weatherapi;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+
 public class Failure {
 
     // <editor-fold desc="Class Fields">
     private String message;
 
+    @JsonAlias({"code", "cod"})
     private int code;
     // </editor-fold>
 
