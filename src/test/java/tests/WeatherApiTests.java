@@ -459,8 +459,22 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Update station info with invalid external id")
+    @Description("Update station info with invalid id")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 1)
+    @Severity(SeverityLevel.NORMAL)
+    public void updateStationInfoByInvalidId() {
+        PostStation<Object> updatedStation = new PostStation<>();
+
+        Failure failureResponse = updateStationById(true, null, updatedStation)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateInvalidStationResponse(failureResponse);
+    }
+
+    @Description("Update station info with invalid external id")
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 2)
     @Severity(SeverityLevel.NORMAL)
     public void updateStationInfoInvalidExternalId() {
         PostStation<Object> updatedStation = new PostStation<>();
@@ -478,7 +492,7 @@ public class WeatherApiTests {
     }
 
     @Description("Update station info with invalid station name")
-    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 2)
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 3)
     @Severity(SeverityLevel.NORMAL)
     public void updateStationInfoInvalidStationName() {
         PostStation<Object> updatedStation = new PostStation<>();
@@ -497,7 +511,7 @@ public class WeatherApiTests {
     }
 
     @Description("Update station info with without longitude latitude and altitude")
-    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 3)
+    @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void updateStationInfoWithoutLongitudeLatitudeAltitude() {
         data.setStationLatitude(0.0);
