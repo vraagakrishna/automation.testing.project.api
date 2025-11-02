@@ -328,10 +328,12 @@ public class WeatherApiTests {
         updatedStation.setLatitude(data.getStationLatitude());
         updatedStation.setAltitude(data.getStationAltitude());
 
-        updateStationById(data.getStationId(), updatedStation)
+        GetStation station = updateStationById(data.getStationId(), updatedStation)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
+
+        validateStationData(station);
     }
 
     @Description("Get station info after updating again")
