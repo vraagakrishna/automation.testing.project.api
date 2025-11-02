@@ -411,6 +411,10 @@ public class WeatherApiTests {
     @Description("Update station info with without longitude latitude and altitude")
     @Test(dependsOnMethods = "updateStationInfoInvalidStationName")
     public void updateStationInfoWithoutLongitudeLatitudeAltitude() {
+        data.setStationLatitude(0.0);
+        data.setStationLongitude(0.0);
+        data.setStationAltitude(null);
+
         PostStation<Object> updatedStation = new PostStation<>();
         updatedStation.setExternalId(data.externalId);
         updatedStation.setName(data.stationName);
@@ -420,9 +424,17 @@ public class WeatherApiTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
 
-        data.setStationLatitude(station.getLatitude());
-        data.setStationLongitude(station.getLongitude());
-        data.setStationAltitude(station.getAltitude());
+        validateStationData(station);
+
+        validateNotNullAndEqualsZero(
+                station.getLatitude(),
+                "Latitude"
+        );
+
+        validateNotNullAndEqualsZero(
+                station.getLongitude(),
+                "Longitude"
+        );
     }
 
     @Description("Get station info after updating")
