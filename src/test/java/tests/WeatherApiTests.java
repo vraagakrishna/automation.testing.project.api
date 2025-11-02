@@ -31,7 +31,6 @@ public class WeatherApiTests {
     public void getAllStationsInitially() {
         Response response = getStations()
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
 
@@ -45,7 +44,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -64,7 +62,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -83,7 +80,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -103,7 +99,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -124,7 +119,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -145,7 +139,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -166,7 +159,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -186,7 +178,6 @@ public class WeatherApiTests {
 
         GetStationList station = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract().as(GetStationList.class);
 
@@ -219,7 +210,6 @@ public class WeatherApiTests {
 
         GetStationList station = registerStation(postStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract().as(GetStationList.class);
 
@@ -233,7 +223,6 @@ public class WeatherApiTests {
     public void getStationInfoByInvalidId() {
         Failure failureResponse = getStationById(null)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -245,7 +234,6 @@ public class WeatherApiTests {
     public void getStationInfo() {
         GetStation station = getStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
 
@@ -257,7 +245,6 @@ public class WeatherApiTests {
     public void getAllStationsAfterRegistration() {
         Response response = getStations()
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
 
@@ -271,7 +258,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -290,7 +276,6 @@ public class WeatherApiTests {
 
         Failure failureResponse = updateStationById(data.getStationId(), updatedStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -310,7 +295,6 @@ public class WeatherApiTests {
 
         GetStation station = updateStationById(data.getStationId(), updatedStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
 
@@ -324,7 +308,6 @@ public class WeatherApiTests {
     public void getStationInfoAfterUpdating() {
         GetStation station = getStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
 
@@ -347,7 +330,6 @@ public class WeatherApiTests {
 
         updateStationById(data.getStationId(), updatedStation)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
     }
@@ -357,7 +339,6 @@ public class WeatherApiTests {
     public void getStationInfoAfterUpdatingAgain() {
         GetStation station = getStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetStation.class);
 
@@ -369,7 +350,6 @@ public class WeatherApiTests {
     public void deleteStationInfoByInvalidId() {
         Failure failureResponse = deleteStationById(null)
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
@@ -381,7 +361,6 @@ public class WeatherApiTests {
     public void deleteStationInfoByValidId() {
         deleteStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
@@ -390,7 +369,6 @@ public class WeatherApiTests {
     public void getAllStationsAfterDeletion() {
         Response response = getStations()
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().response();
 
@@ -402,7 +380,6 @@ public class WeatherApiTests {
     public void getStationByIdAfterDeletion() {
         Failure failureResponse = getStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
                 .extract().as(Failure.class);
 
@@ -418,7 +395,6 @@ public class WeatherApiTests {
     public void deleteStationInfoAfterDeletion() {
         Failure failureResponse = deleteStationById(data.getStationId())
                 .then()
-                .log().all()
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND)
                 .extract().as(Failure.class);
 
