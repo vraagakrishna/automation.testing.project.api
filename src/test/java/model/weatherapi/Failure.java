@@ -33,4 +33,5 @@ public class Failure {
         this.code = code;
     }
     // </editor-fold>
+
 }
