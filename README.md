@@ -31,7 +31,7 @@ cd automation.testing.project.api
 2. Run the tests and generate the test report
 
 ```bash
-mvn clean test
+mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 ```
 
 <br/>
@@ -60,14 +60,23 @@ mvn clean test
 │       └── java
 │           ├── common
 │           │   └── BasePaths.java
+│           ├── listeners                       # Listeners
+│           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
-│           │   └── TestModel.java
+│           │   └── weatherapi                  # Data models for weather api
+│           │       ├── Failure.java
+│           │       ├── GetStation.java
+│           │       ├── GetStationList.java
+│           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
+│           │   ├── BaseWeatherApiRequestBuilder.java
 │           │   └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
 │           │   └── WeatherApiTests.java 
 │           └── utils                           # Helper classes
-│               └── UserTestData.java
+│               ├── AllureUtils.java
+│               ├── RandomNumberGenerator.java
+│               └── StationTestData.java
 ├── pom.xml
 ├── README.md
 └── testng.xml
@@ -84,17 +93,17 @@ as the first time that testing has been performed against this API.
 
 You have been tasked to test/create the following scenario:
 
-- [ ] Register a weather station
-- [ ] Get the newly registered weather stations info
-- [ ] Update the station's info
-- [ ] Delete this weather station and confirm it has been deleted
+- [x] Register a weather station
+- [x] Get the newly registered weather stations info
+- [x] Update the station's info
+- [x] Delete this weather station and confirm it has been deleted
 
 ### Objectives
 
 Keep the following objectives in mind when creating your test suite:
 
-- [ ] Create the expected API calls for the scenario above in Postman
-- [ ] Create tests to demonstrate how you would also test negative scenarios and data validation
-- [ ] Show how you can perform chaining of requests (passing data from one response to another request)
-- [ ] Implement assertions for your postman calls (pass/fail criteria)
-- [ ] Perform parameterisation for any dynamic configs or paths
+- [x] Create the expected API calls for the scenario above in ~~Postman~~ RestAssured
+- [x] Create tests to demonstrate how you would also test negative scenarios and data validation
+- [x] Show how you can perform chaining of requests (passing data from one response to another request)
+- [x] Implement assertions for your postman calls (pass/fail criteria)
+- [x] Perform parameterisation for any dynamic configs or paths

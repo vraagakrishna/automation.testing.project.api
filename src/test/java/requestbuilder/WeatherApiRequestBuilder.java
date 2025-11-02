@@ -1,26 +1,128 @@
 package requestbuilder;
 
 import io.restassured.response.Response;
-import model.TestModel;
+import io.restassured.specification.RequestSpecification;
+import model.weatherapi.PostStation;
+import utils.AllureUtils;
 
-import static common.BasePaths.WeatherBaseUrl;
 import static io.restassured.RestAssured.given;
 
-public class WeatherApiRequestBuilder {
+public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
 
-    public static Response testRequest() {
-        TestModel body = new TestModel("a", "b", 2);
+    private static final String appId = System.getProperty("WEATHER_API_KEY", System.getenv("WEATHER_API_KEY"));
 
-        return given()
-                .basePath(WeatherBaseUrl)
-                .basePath("/test")
-                .contentType("application/json")
-                .body(body)
+    public static Response getStations(boolean includeAppId) {
+        AllureUtils.attachUri("GET /stations");
+
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/stations");
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        Response response = req
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response registerStation(boolean includeAppId, PostStation<Object> station) {
+        AllureUtils.attachUri("POST /stations");
+        AllureUtils.attachRequest(station.toString());
+
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/stations");
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        Response response = req
+                .body(station)
                 .log().all()
                 .post()
                 .then()
                 .log().all()
                 .extract().response();
+
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response getStationById(boolean includeAppId, String stationId) {
+        AllureUtils.attachUri("GET /stations/" + (stationId != null ? stationId : ""));
+
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        Response response = req
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response updateStationById(boolean includeAppId, String stationId, PostStation<Object> station) {
+        AllureUtils.attachUri("PUT /stations/" + (stationId != null ? stationId : ""));
+        AllureUtils.attachRequest(station.toString());
+
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        Response response = req
+                .body(station)
+                .log().all()
+                .put()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response deleteStationById(boolean includeAppId, String stationId) {
+        AllureUtils.attachUri("DELETE /stations/" + (stationId != null ? stationId : ""));
+
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/stations/" + stationId);
+
+        if (includeAppId)
+            req.queryParam("appid", appId);
+
+        Response response = req
+                .log().all()
+                .delete()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
     }
 
 }
