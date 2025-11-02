@@ -3,18 +3,16 @@ package requestbuilder;
 import io.restassured.response.Response;
 import model.weatherapi.PostStation;
 
-import static common.BasePaths.WeatherBaseUrl;
 import static io.restassured.RestAssured.given;
 
-public class WeatherApiRequestBuilder {
+public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
 
     private static final String appId = System.getProperty("WEATHER_API_KEY", System.getenv("WEATHER_API_KEY"));
 
     public static Response getStations() {
         return given()
-                .baseUri(WeatherBaseUrl)
+                .spec(baseSpec)
                 .basePath("/stations")
-                .contentType("application/json")
                 .queryParam("appid", appId)
                 .log().all()
                 .get()
@@ -25,9 +23,8 @@ public class WeatherApiRequestBuilder {
 
     public static Response registerStation(PostStation<Object> station) {
         return given()
-                .baseUri(WeatherBaseUrl)
+                .spec(baseSpec)
                 .basePath("/stations")
-                .contentType("application/json")
                 .queryParam("appid", appId)
                 .body(station)
                 .log().all()
@@ -39,9 +36,8 @@ public class WeatherApiRequestBuilder {
 
     public static Response getStationById(String stationId) {
         return given()
-                .baseUri(WeatherBaseUrl)
+                .spec(baseSpec)
                 .basePath("/stations/" + stationId)
-                .contentType("application/json")
                 .queryParam("appid", appId)
                 .log().all()
                 .get()
@@ -52,9 +48,8 @@ public class WeatherApiRequestBuilder {
 
     public static Response updateStationById(String stationId, PostStation<Object> station) {
         return given()
-                .baseUri(WeatherBaseUrl)
+                .spec(baseSpec)
                 .basePath("/stations/" + stationId)
-                .contentType("application/json")
                 .queryParam("appid", appId)
                 .body(station)
                 .log().all()
@@ -66,9 +61,8 @@ public class WeatherApiRequestBuilder {
 
     public static Response deleteStationById(String stationId) {
         return given()
-                .baseUri(WeatherBaseUrl)
+                .spec(baseSpec)
                 .basePath("/stations/" + stationId)
-                .contentType("application/json")
                 .queryParam("appid", appId)
                 .log().all()
                 .delete()
