@@ -2,6 +2,7 @@ package model.weatherapi;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PostStation<T> {
@@ -21,14 +22,6 @@ public class PostStation<T> {
 
     // <editor-fold desc="Ctor">
     public PostStation() {
-    }
-
-    public PostStation(T externalId, T name, T latitude, T longitude, T altitude) {
-        this.externalId = externalId;
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
     }
     // </editor-fold>
 
@@ -71,6 +64,19 @@ public class PostStation<T> {
 
     public void setAltitude(T altitude) {
         this.altitude = altitude;
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Overrides">
+    @Override
+    public String toString() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (Exception e) {
+            return super.toString();
+        }
     }
     // </editor-fold>
 
