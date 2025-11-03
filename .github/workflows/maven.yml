@@ -78,7 +78,7 @@ jobs:
 
       # Save last seen commit
       - name: Commit cache update
-        if: steps.check_changes.outputs.run_tests = 'true'
+        if: steps.check_changes.outputs.run_tests == 'true'
         run: |
           echo "Committing updated cache file..."
           git config user.name "github-actions[bot]"
@@ -89,7 +89,7 @@ jobs:
 
       # Set up JDK
       - name: Set up JDK 17
-        if: steps.check_changes.outputs.run_tests = 'true'
+        if: steps.check_changes.outputs.run_tests == 'true'
         uses: actions/setup-java@v4
         with:
           java-version: '11'
@@ -98,12 +98,12 @@ jobs:
 
       # Run maven tests
       - name: Build with Maven
-        if: steps.check_changes.outputs.run_tests = 'true'
+        if: steps.check_changes.outputs.run_tests == 'true'
         run: mvn clean test -DWEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}
 
       # Upload test report
       - name: Upload Test Evidence
-        if: steps.check_changes.outputs.run_tests = 'true'
+        if: steps.check_changes.outputs.run_tests == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: test-evidence
