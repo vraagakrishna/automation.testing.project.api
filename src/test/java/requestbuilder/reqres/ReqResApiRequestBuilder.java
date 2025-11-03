@@ -23,7 +23,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .queryParam("page", page)
@@ -47,7 +47,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/users");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -69,7 +69,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/users/" + userId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -91,7 +91,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/users/" + userId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -113,7 +113,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/users/" + userId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -135,7 +135,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/users/" + userId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -157,7 +157,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/{resource}/" + resourceId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -179,7 +179,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/{resource}/" + resourceId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -201,7 +201,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/{resource}/" + resourceId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -223,7 +223,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/{resource}/" + resourceId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -246,7 +246,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/login");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .body(body)
@@ -270,7 +270,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/register");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .body(body)
@@ -293,7 +293,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/logout");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -316,7 +316,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/clerk/link-pro");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .body(body)
@@ -339,7 +339,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/clerk/auto-link-pro");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -361,7 +361,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/clerk/subscription-status");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -383,7 +383,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/clerk/payment-status");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -405,7 +405,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/clerk/unlink-pro");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -427,7 +427,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom-endpoints");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -450,7 +450,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom-endpoints");
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .body(endpoint)
@@ -473,7 +473,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom-endpoints/" + endpointId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -496,7 +496,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom-endpoints/" + endpointId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .body(endpoint)
@@ -519,7 +519,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom-endpoints/" + endpointId);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -541,7 +541,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom/" + path);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -563,7 +563,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom/" + path);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -585,7 +585,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom/" + path);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -607,7 +607,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom/" + path);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -629,7 +629,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .basePath("/custom/" + path);
 
         if (includeAppId)
-            req.queryParam(appKey, appId);
+            req.header(appKey, appId);
 
         Response response = req
                 .log().all()
