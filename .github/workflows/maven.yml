@@ -1,0 +1,110 @@
+name: Running API Tests
+
+# grant permissions to write content
+permissions:
+  content: write
+
+on:
+  # run manually or on schedule
+  schedule:
+    - cron: '*/10 * * * *'  # poll every 10 minutes
+
+  workflow_dispatch:  # allow manual runs too
+
+  push:
+    branches: [ "main" ]
+    paths-ignore:
+      - '.github/cache/**'  # prevent self-trigger
+
+  pull_request:
+    branches: [ "main" ]
+
+  repository_dispatch:
+    types: [ run-tests ]
+
+concurrency:
+  group: api-tests-main
+  cancel-in-progress: true
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout current repo
+      - uses: actions/checkout@v4
+
+      # Check if development repo changed since last run
+      - name: Check for new commits in development repo
+        id: check_changes
+        run: |
+          echo "Checking latest commit in dev repo"
+          
+          LATEST_COMMIT=$(curl -s \
+            -H "Authorization: token ${{ secrets.DEV_REPO_TOKEN }}" \
+            https://api.github.com/repos/vraagakrishna/automation.testing.project.development/commits/main | jq -r '.sha')
+          
+          echo "Latest commit SHA: $LATEST_COMMIT"
+          echo "latest_commit=$LATEST_COMMIT" >> $GITHUB_OUTPUT
+          
+          mkdir -p .github/cache
+          CACHE_FILE=".github/cache/latest_dev_repo_commit.txt"
+          
+          if [ -f "$CACHE_FILE" ]; then
+            LAST_COMMIT=$(cat "$CACHE_FILE")
+          else
+            echo "No cache file found. Creating one for the first time."
+            echo "$LATEST_COMMIT" > "$CACHE_FILE"
+            LAST_COMMIT=""
+          fi
+          
+          echo "Last commit seem: $LAST_COMMIT"
+          
+          # Always run tests if this repo changed
+          if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Tests triggered due to current repo changed."
+            echo "run_tests=true" >> $GITHUB_OUTPUT
+          
+          # Otherwise, check dev repo changes
+          elif [ "$LATEST_COMMIT" = "$LAST_COMMIT" ]; then
+            echo "No new commits in dev repo. Skipping tests."
+            echo "run_tests=false" >> $GITHUB_OUTPUT
+          else
+            echo "New commit detected in dev repo!"
+            echo "$LATEST_COMMIT" > "$CACHE_FILE"
+            echo "run_tests=true" >> $GITHUB_OUTPUT
+          fi
+
+      # Save last seen commit
+      - name: Commit cache update
+        if: steps.check_changes.outputs.run_tests = 'true'
+        run: |
+          echo "Committing updated cache file..."
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/cache/latest_dev_repo_commit.txt
+          git diff --cached --quiet && echo "No changes to commit" || git commit -m "Update last seen commit from dev repo"
+          git push || echo "No push permission or nothing to update"
+
+      # Set up JDK
+      - name: Set up JDK 17
+        if: steps.check_changes.outputs.run_tests = 'true'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+
+      # Run maven tests
+      - name: Build with Maven
+        if: steps.check_changes.outputs.run_tests = 'true'
+        run: mvn clean test -DWEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}
+
+      # Upload test report
+      - name: Upload Test Evidence
+        if: steps.check_changes.outputs.run_tests = 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence
+          path: ./Reports/
