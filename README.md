@@ -1,9 +1,11 @@
-# Ndosi Test Automation Project 2: Weather API
+# Ndosi Test Automation Project 2: API Testing
 
 ## Overview
 
-This project automates the API testing for [Open WeatherMap](https://openweathermap.org/stations) using **RestAssured**
-with **Java** and **TestNG**.
+This project automates the API testing using **RestAssured** with **Java** and **TestNG** for:
+
+* [Open WeatherMap](https://openweathermap.org/stations)
+* [ReqRes](https://reqres.in/)
 
 It validates the functionalities of the API.
 
@@ -84,7 +86,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 
 <br/>
 
-## Assessment requirements
+## [Open WeatherMap](https://openweathermap.org/stations)
 
 Perform functional API testing using Postman (or your preferred Custom API tool) against the scenario below. Treat this
 as the first time that testing has been performed against this API.
@@ -107,3 +109,39 @@ Keep the following objectives in mind when creating your test suite:
 - [x] Show how you can perform chaining of requests (passing data from one response to another request)
 - [x] Implement assertions for your postman calls (pass/fail criteria)
 - [x] Perform parameterisation for any dynamic configs or paths
+
+<br/>
+
+## [ReqRes](https://reqres.in/)
+
+ReqRes is a hosted REST-API ready to respond to your AJAX requests. It's perfect for testing and prototyping with real
+API responses without needing to set up your own backend.
+
+The API provides realistic data and follows REST conventions, making it ideal for practicing API testing scenarios.
+
+### Available Endpoints
+
+- [ ] Users: GET, POST, PUT, DELETE operations for user management
+- [ ] Authentication: Login and registration endpoints
+- [ ] Resources: Generic resource CRUD operations
+- [ ] Delayed Responses: Test timeout and loading scenarios
+- [ ] Pagination: Practice handling paginated API responses
+
+### Testing Scenarios to Practice
+
+- [ ] User Management: Create, read, update, and delete users
+- [ ] Authentication Flow: Test login/register with valid and invalid credentials
+- [ ] Data Validation: Test required fields, data types, and formats
+- [ ] Response Validation: Verify status codes, headers, and response structure
+- [ ] CRUD Operations: Full create-read-update-delete workflow testing
+- [ ] Edge Cases: Test with invalid IDs, missing data, and error scenarios
+
+### Key Features for Testing
+
+- [ ] No Setup Required: Ready-to-use API with realistic responses
+- [ ] Realistic Data: User profiles with avatars and personal information
+- [ ] Proper HTTP Status Codes: 200, 201, 204, 400, 404 responses
+- [ ] Delayed Responses: Test timeouts with ?delay=3 parameter
+- [ ] CORS Enabled: Perfect for frontend testing and AJAX requests
+
+<br/>
