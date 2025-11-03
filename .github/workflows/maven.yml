@@ -2,7 +2,7 @@ name: Running API Tests
 
 # grant permissions to write content
 permissions:
-  content: write
+  contents: write
 
 on:
   # run manually or on schedule
