@@ -78,7 +78,10 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │           │       ├── BaseWeatherApiRequestBuilder.java
 │           │       └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
-│           │   └── WeatherApiTests.java 
+│           │   ├── reqres                      # Test classes for reqres
+│           │   │   └── ReqResApiTests.java 
+│           │   └── weatherapi                  # Test classes for weather api
+│           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
 │               ├── RandomNumberGenerator.java

@@ -1,4 +1,4 @@
-package tests;
+package tests.weatherapi;
 
 import io.qameta.allure.*;
 import io.restassured.response.Response;

@@ -6,7 +6,8 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="ApiAutomationTesting">
         <classes>
-            <class name="tests.WeatherApiTests"/>
+            <class name="tests.weatherapi.WeatherApiTests"/>
+            <class name="tests.reqres.ReqResApiTests"/>
         </classes>
     </test>
 </suite>
