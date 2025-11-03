@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static requestbuilder.WeatherApiRequestBuilder.*;
+import static requestbuilder.weatherapi.WeatherApiRequestBuilder.*;
 
 @Test
 @Feature("Open WeatherMap")

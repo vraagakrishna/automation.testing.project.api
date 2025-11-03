@@ -1,14 +1,14 @@
-package requestbuilder;
+package requestbuilder.reqres;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 
-import static common.BasePaths.WeatherBaseUrl;
+import static common.BasePaths.ReqResBaseUrl;
 
-public class BaseWeatherApiRequestBuilder {
+public class BaseReqResApiRequestBuilder {
 
     protected static RequestSpecification baseSpec = new RequestSpecBuilder()
-            .setBaseUri(WeatherBaseUrl)
+            .setBaseUri(ReqResBaseUrl)
             .setContentType("application/json")
             .build();
 

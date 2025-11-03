@@ -71,8 +71,12 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │           │       ├── GetStationList.java
 │           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
-│           │   ├── BaseWeatherApiRequestBuilder.java
-│           │   └── WeatherApiRequestBuilder.java 
+│           │   ├── reqres                      # API requests for reqres
+│           │   │   ├── BaseReqResApiRequestBuilder.java
+│           │   │   └── ReqResApiRequestBuilder.java 
+│           │   └── weatherapi                  # API requests for weather api
+│           │       ├── BaseWeatherApiRequestBuilder.java
+│           │       └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
 │           │   └── WeatherApiTests.java 
 │           └── utils                           # Helper classes

@@ -1,4 +1,4 @@
-package requestbuilder;
+package requestbuilder.weatherapi;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
@@ -11,6 +11,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
 
     private static final String appId = System.getProperty("WEATHER_API_KEY", System.getenv("WEATHER_API_KEY"));
 
+    private static final String appKey = "appid";
+
     public static Response getStations(boolean includeAppId) {
         AllureUtils.attachUri("GET /stations");
 
@@ -19,7 +21,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .basePath("/stations");
 
         if (includeAppId)
-            req.queryParam("appid", appId);
+            req.queryParam(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -42,7 +44,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .basePath("/stations");
 
         if (includeAppId)
-            req.queryParam("appid", appId);
+            req.queryParam(appKey, appId);
 
         Response response = req
                 .body(station)
@@ -65,7 +67,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .basePath("/stations/" + stationId);
 
         if (includeAppId)
-            req.queryParam("appid", appId);
+            req.queryParam(appKey, appId);
 
         Response response = req
                 .log().all()
@@ -88,7 +90,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .basePath("/stations/" + stationId);
 
         if (includeAppId)
-            req.queryParam("appid", appId);
+            req.queryParam(appKey, appId);
 
         Response response = req
                 .body(station)
@@ -111,7 +113,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .basePath("/stations/" + stationId);
 
         if (includeAppId)
-            req.queryParam("appid", appId);
+            req.queryParam(appKey, appId);
 
         Response response = req
                 .log().all()
