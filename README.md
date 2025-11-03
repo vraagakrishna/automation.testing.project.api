@@ -33,7 +33,7 @@ cd automation.testing.project.api
 2. Run the tests and generate the test report
 
 ```bash
-mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
+mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQRES_API_KEY
 ```
 
 <br/>

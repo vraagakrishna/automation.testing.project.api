@@ -96,7 +96,7 @@ jobs:
       # Run maven tests
       - name: Build with Maven
         if: steps.check_changes.outputs.run_tests == 'true'
-        run: mvn clean test -DWEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}
+        run: mvn clean test -DWEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }} -DREQRES_API_KEY=${{ secrets.REQRES_API_KEY }}
 
       # Upload test report
       - name: Upload Test Evidence
