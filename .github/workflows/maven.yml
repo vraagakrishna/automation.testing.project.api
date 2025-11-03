@@ -19,6 +19,13 @@ on:
   pull_request:
     branches: [ "main" ]
 
+  repository_dispatch:
+    types: [ run-tests ]
+
+concurrency:
+  group: api-tests-main
+  cancel-in-progress: true
+
 jobs:
   build:
 
