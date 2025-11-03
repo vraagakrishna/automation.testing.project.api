@@ -2,6 +2,9 @@ package requestbuilder.reqres;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import model.reqres.CustomEndpoint;
+import model.reqres.LoginRegisterUser;
+import model.reqres.ProSubscription;
 import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
@@ -234,7 +237,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response login(boolean includeAppId, Object body) {
+    public static Response login(boolean includeAppId, LoginRegisterUser<Object> body) {
         AllureUtils.attachUri("POST /login");
         AllureUtils.attachRequest(body.toString());
 
@@ -258,7 +261,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response register(boolean includeAppId, Object body) {
+    public static Response register(boolean includeAppId, LoginRegisterUser<Object> body) {
         AllureUtils.attachUri("POST /register");
         AllureUtils.attachRequest(body.toString());
 
@@ -304,7 +307,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response linkClerkWithProSubscription(boolean includeAppId, Object body) {
+    public static Response linkClerkWithProSubscription(boolean includeAppId, ProSubscription<Object> body) {
         AllureUtils.attachUri("POST /clerk/link-pro");
         AllureUtils.attachRequest(body.toString());
 
@@ -438,7 +441,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response createCustomEndpoint(boolean includeAppId, Object endpoint) {
+    public static Response createCustomEndpoint(boolean includeAppId, CustomEndpoint<Object> endpoint) {
         AllureUtils.attachUri("POST /custom-endpoints");
         AllureUtils.attachRequest(endpoint.toString());
 
@@ -484,7 +487,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response putCustomEndpoint(boolean includeAppId, Integer endpointId, Object endpoint) {
+    public static Response putCustomEndpoint(boolean includeAppId, Integer endpointId, CustomEndpoint<Object> endpoint) {
         AllureUtils.attachUri("PUT /custom-endpoints/" + (endpointId != null ? endpointId : ""));
         AllureUtils.attachRequest(endpoint.toString());
 
