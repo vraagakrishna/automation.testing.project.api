@@ -16,9 +16,6 @@ on:
     paths-ignore:
       - '.github/cache/**'  # prevent self-trigger
 
-  pull_request:
-    branches: [ "main" ]
-
   repository_dispatch:
     types: [ run-tests ]
 
