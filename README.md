@@ -67,6 +67,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           ├── model                           # Data models
 │           │   ├── reqres                      # Data models for reqres
 │           │   │   ├── CustomEndpoint.java
+│           │   │   ├── Failure.java
+│           │   │   ├── GetResouce.java
+│           │   │   ├── GetResourceData.java
 │           │   │   ├── LoginRegisterUser.java
 │           │   │   └── ProSubscription.java
 │           │   └── weatherapi                  # Data models for weather api

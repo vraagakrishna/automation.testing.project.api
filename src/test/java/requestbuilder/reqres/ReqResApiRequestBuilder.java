@@ -16,15 +16,16 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
 
     private static final String appKey = "x-api-key";
 
-    public static Response getResources(boolean includeAppId, int page, int perPage) {
+    public static Response getResources(boolean includeAppId, String resourceName, int page, int perPage) {
         RequestSpecification req = given()
                 .spec(baseSpec)
-                .basePath("/");
+                .basePath("/{resource}");
 
         if (includeAppId)
             req.header(appKey, appId);
 
         Response response = req
+                .pathParam("resource", resourceName)
                 .queryParam("page", page)
                 .queryParam("per_page", perPage)
                 .log().all()
