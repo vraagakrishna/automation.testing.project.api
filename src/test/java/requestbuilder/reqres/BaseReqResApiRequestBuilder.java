@@ -9,7 +9,7 @@ public class BaseReqResApiRequestBuilder {
 
     protected static RequestSpecification baseSpec = new RequestSpecBuilder()
             .setBaseUri(ReqResBaseUrl)
-            .setContentType("application/json")
+            .setAccept("application/json")
             .build();
 
 }
