@@ -357,6 +357,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         Response response = req
+                .body("{}")
                 .log().all()
                 .post()
                 .then()

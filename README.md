@@ -70,6 +70,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   ├── Failure.java
 │           │   │   ├── GetResouce.java
 │           │   │   ├── GetResourceData.java
+│           │   │   ├── GetSingleUser.java
+│           │   │   ├── GetUser.java
+│           │   │   ├── GetUserData.java
 │           │   │   ├── LoginRegisterUser.java
 │           │   │   └── ProSubscription.java
 │           │   └── weatherapi                  # Data models for weather api
@@ -92,7 +95,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
 │               ├── RandomNumberGenerator.java
-│               └── StationTestData.java
+│               ├── ReqResTestData.java
+│               ├── StationTestData.java
+│               └── ValidateReqResUtils.java
 ├── pom.xml
 ├── README.md
 └── testng.xml

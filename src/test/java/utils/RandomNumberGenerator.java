@@ -10,4 +10,8 @@ public class RandomNumberGenerator {
         return min + (max - min) * random.nextDouble();
     }
 
+    public int generateRandomNumber(int min, int max) {
+        return min + random.nextInt(max - min + 1);
+    }
+
 }

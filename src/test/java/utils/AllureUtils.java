@@ -20,6 +20,10 @@ public class AllureUtils {
         attachToReport("Response", prettyPrintJson(response));
     }
 
+    public static void attachNote(String note) {
+        Allure.addAttachment("Note", note);
+    }
+
     private static String prettyPrintJson(String json) {
         try {
             Object jsonObj = mapper.readValue(json, Object.class);
