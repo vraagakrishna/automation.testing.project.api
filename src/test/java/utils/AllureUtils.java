@@ -2,6 +2,7 @@ package utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Allure;
+import io.restassured.http.ContentType;
 
 public class AllureUtils {
 
@@ -30,7 +31,7 @@ public class AllureUtils {
     }
 
     private static void attachToReport(String name, String value) {
-        Allure.addAttachment(name, "application/json", value, ".json");
+        Allure.addAttachment(name, ContentType.JSON.toString(), value, ".json");
     }
 
 }
