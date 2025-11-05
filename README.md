@@ -89,7 +89,10 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
 │           │   ├── reqres                      # Test classes for reqres
-│           │   │   └── ReqResApiTests.java 
+│           │   │   ├── AuthTests.java
+│           │   │   ├── ReqResApiTests.java
+│           │   │   ├── ResourceTests.java
+│           │   │   └── UserTests.java 
 │           │   └── weatherapi                  # Test classes for weather api
 │           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
@@ -141,7 +144,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 ### Available Endpoints
 
 - [ ] Users: GET, POST, PUT, DELETE operations for user management
-- [ ] Authentication: Login and registration endpoints
+- [x] Authentication: Login and registration endpoints
 - [ ] Resources: Generic resource CRUD operations
 - [ ] Delayed Responses: Test timeout and loading scenarios
 - [ ] Pagination: Practice handling paginated API responses

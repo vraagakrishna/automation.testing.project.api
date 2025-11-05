@@ -4,10 +4,16 @@
     <listeners>
         <listener class-name="listeners.TestLoggerListener"/>
     </listeners>
-    <test verbose="2" preserve-order="true" name="ApiAutomationTesting">
+    <test name="Weather API Testing">
         <classes>
             <class name="tests.weatherapi.WeatherApiTests"/>
-            <class name="tests.reqres.ReqResApiTests"/>
+        </classes>
+    </test>
+    <test name="ReqRes Testing">
+        <classes>
+            <class name="tests.reqres.ResourceTests"/>
+            <class name="tests.reqres.UserTests"/>
+            <class name="tests.reqres.AuthTests"/>
         </classes>
     </test>
 </suite>
