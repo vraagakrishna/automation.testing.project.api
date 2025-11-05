@@ -16,6 +16,30 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
 
     private static final String appKey = "x-api-key";
 
+    public static Response getResources(boolean includeAppId, String resourceName) {
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/{resource}");
+
+        if (includeAppId)
+            req.header(appKey, appId);
+
+        Response response = req
+                .pathParam("resource", resourceName)
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachUri(
+                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
+        );
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
     public static Response getResources(boolean includeAppId, String resourceName, int page, int perPage) {
         RequestSpecification req = given()
                 .spec(baseSpec)
@@ -65,7 +89,32 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response getUserById(boolean includeAppId, String userId) {
+    public static Response getUsers(boolean includeAppId, int page, int perPage) {
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/users");
+
+        if (includeAppId)
+            req.header(appKey, appId);
+
+        Response response = req
+                .queryParam("page", page)
+                .queryParam("per_page", perPage)
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachUri(
+                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
+        );
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response getUserById(boolean includeAppId, int userId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/users/" + userId);
@@ -88,7 +137,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response putUserById(boolean includeAppId, String userId) {
+    public static Response putUserById(boolean includeAppId, int userId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/users/" + userId);
@@ -111,7 +160,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response patchUserById(boolean includeAppId, String userId) {
+    public static Response patchUserById(boolean includeAppId, int userId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/users/" + userId);
@@ -134,7 +183,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response deleteUserById(boolean includeAppId, String userId) {
+    public static Response deleteUserById(boolean includeAppId, int userId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/users/" + userId);
