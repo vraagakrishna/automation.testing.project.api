@@ -25,6 +25,7 @@ import static requestbuilder.weatherapi.WeatherApiRequestBuilder.*;
 public class WeatherApiTests {
 
     StationTestData data = new StationTestData();
+
     RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
     @Description("Getting all the stations without api key")
