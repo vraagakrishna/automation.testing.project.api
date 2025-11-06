@@ -70,6 +70,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   ├── Failure.java
 │           │   │   ├── GetResouce.java
 │           │   │   ├── GetResourceData.java
+│           │   │   ├── GetSingleResource.java
 │           │   │   ├── GetSingleUser.java
 │           │   │   ├── GetUser.java
 │           │   │   ├── GetUserData.java
@@ -145,7 +146,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 
 - [x] Users: GET, POST, PUT, DELETE operations for user management
 - [x] Authentication: Login and registration endpoints
-- [ ] Resources: Generic resource CRUD operations
+- [x] Resources: Generic resource CRUD operations
 - [ ] Delayed Responses: Test timeout and loading scenarios
 - [x] Pagination: Practice handling paginated API responses
 

@@ -4,6 +4,7 @@ import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.reqres.CustomEndpoint;
+import model.reqres.GetResourceData;
 import model.reqres.LoginRegisterUser;
 import model.reqres.ProSubscription;
 import utils.AllureUtils;
@@ -208,7 +209,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response getResourceById(boolean includeAppId, String resourceId) {
+    public static Response getResourceById(boolean includeAppId, String resourceName, int resourceId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/{resource}/" + resourceId);
@@ -217,6 +218,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         Response response = req
+                .pathParam("resource", resourceName)
                 .log().all()
                 .get()
                 .then()
@@ -231,7 +233,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response putResourceById(boolean includeAppId, String resourceId) {
+    public static Response putResourceById(boolean includeAppId, String resourceName, int resourceId, GetResourceData payload) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/{resource}/" + resourceId);
@@ -240,6 +242,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         Response response = req
+                .pathParam("resource", resourceName)
+                .body(payload)
                 .log().all()
                 .put()
                 .then()
@@ -254,7 +258,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response patchResourceById(boolean includeAppId, String resourceId) {
+    public static Response patchResourceById(boolean includeAppId, String resourceName, int resourceId, GetResourceData payload) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/{resource}/" + resourceId);
@@ -263,6 +267,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         Response response = req
+                .pathParam("resource", resourceName)
+                .body(payload)
                 .log().all()
                 .patch()
                 .then()
@@ -277,7 +283,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         return response;
     }
 
-    public static Response deleteResourceById(boolean includeAppId, String resourceId) {
+    public static Response deleteResourceById(boolean includeAppId, String resourceName, int resourceId) {
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/{resource}/" + resourceId);
@@ -286,6 +292,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         Response response = req
+                .pathParam("resource", resourceName)
                 .log().all()
                 .delete()
                 .then()

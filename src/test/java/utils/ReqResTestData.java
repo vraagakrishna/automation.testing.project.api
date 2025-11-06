@@ -1,6 +1,7 @@
 package utils;
 
 import com.github.javafaker.Faker;
+import model.reqres.GetResourceData;
 import model.reqres.GetUserData;
 
 import java.util.List;
@@ -22,9 +23,13 @@ public class ReqResTestData {
 
     private List<GetUserData> users;
 
+    private List<GetResourceData> resources;
+
     private String token;
 
     private String id;
+
+    private String resourceName;
     // </editor-fold>
 
     // <editor-fold desc="Getters and Setters">
@@ -66,6 +71,22 @@ public class ReqResTestData {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<GetResourceData> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<GetResourceData> resources) {
+        this.resources = resources;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
     }
     // </editor-fold>
 

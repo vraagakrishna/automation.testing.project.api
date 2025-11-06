@@ -114,4 +114,17 @@ public class ValidateReqResUtils {
         Assert.assertEquals(expectedUser.getAvatar(), userData.getAvatar(), "Avatar does not match");
     }
 
+    public static void validateSingleResource(GetResourceData expectedResource, GetSingleResource resourceResponse) {
+        Assert.assertNotNull(resourceResponse, "Resource should not be null");
+
+        // validate data list
+        GetResourceData responseData = resourceResponse.getData();
+
+        Assert.assertEquals(expectedResource.getId(), responseData.getId(), "Id does not match");
+        Assert.assertEquals(expectedResource.getName(), responseData.getName(), "Name does not match");
+        Assert.assertEquals(expectedResource.getYear(), responseData.getYear(), "Year does not match");
+        Assert.assertEquals(expectedResource.getColor(), responseData.getColor(), "Color does not match");
+        Assert.assertEquals(expectedResource.getPantoneValue(), responseData.getPantoneValue(), "Pantone value does not match");
+    }
+
 }
