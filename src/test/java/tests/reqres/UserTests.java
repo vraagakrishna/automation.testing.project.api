@@ -180,4 +180,42 @@ public class UserTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
+    @Description("Delete a user without api key")
+    @Test(dependsOnMethods = "getAllUsers", priority = 10)
+    @Severity(SeverityLevel.CRITICAL)
+    public void deleteUserWithoutApiKey() {
+        List<GetUserData> users = data.getUsers();
+        GetUserData expectedUser = users.get(1);
+        Failure failureResponse = deleteUserById(false, expectedUser.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Missing API key");
+    }
+
+    @Description("Delete a user")
+    @Test(dependsOnMethods = "getAllUsers", priority = 11)
+    @Severity(SeverityLevel.BLOCKER)
+    public void deleteUser() {
+        List<GetUserData> users = data.getUsers();
+        GetUserData expectedUser = users.get(
+                randomNumberGenerator.generateRandomNumber(0, users.size() - 1)
+        );
+        deleteUserById(true, expectedUser.getId())
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
+    }
+
+    @Description("Delete a user by invalid id")
+    @Test(dependsOnMethods = "getAllUsers", priority = 12)
+    @Severity(SeverityLevel.NORMAL)
+    public void deleteUserByInvalidId() {
+        List<GetUserData> users = data.getUsers();
+        int id = randomNumberGenerator.generateRandomNumber(users.size() + 1, users.size() + 20);
+        deleteUserById(true, id)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
+    }
+
 }

@@ -143,7 +143,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 
 ### Available Endpoints
 
-- [ ] Users: GET, POST, PUT, DELETE operations for user management
+- [x] Users: GET, POST, PUT, DELETE operations for user management
 - [x] Authentication: Login and registration endpoints
 - [ ] Resources: Generic resource CRUD operations
 - [ ] Delayed Responses: Test timeout and loading scenarios
@@ -151,12 +151,12 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 
 ### Testing Scenarios to Practice
 
-- [ ] User Management: Create, read, update, and delete users
+- [x] User Management: Create, read, update, and delete users
 - [x] Authentication Flow: Test login/register with valid and invalid credentials
 - [ ] Data Validation: Test required fields, data types, and formats
 - [ ] Response Validation: Verify status codes, headers, and response structure
-- [ ] CRUD Operations: Full create-read-update-delete workflow testing
-- [ ] Edge Cases: Test with invalid IDs, missing data, and error scenarios
+- [x] CRUD Operations: Full create-read-update-delete workflow testing
+- [x] Edge Cases: Test with invalid IDs, missing data, and error scenarios
 
 ### Key Features for Testing
 
