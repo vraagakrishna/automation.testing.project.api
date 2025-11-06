@@ -147,7 +147,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 - [x] Authentication: Login and registration endpoints
 - [ ] Resources: Generic resource CRUD operations
 - [ ] Delayed Responses: Test timeout and loading scenarios
-- [ ] Pagination: Practice handling paginated API responses
+- [x] Pagination: Practice handling paginated API responses
 
 ### Testing Scenarios to Practice
 

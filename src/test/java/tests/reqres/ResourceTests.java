@@ -6,8 +6,13 @@ import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
 import model.reqres.Failure;
 import model.reqres.GetResource;
+import model.reqres.GetResourceData;
 import org.apache.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Collections;
+import java.util.List;
 
 import static requestbuilder.reqres.ReqResApiRequestBuilder.getResources;
 import static utils.ValidateReqResUtils.validateFailedResponse;
@@ -52,6 +57,35 @@ public class ResourceTests extends ReqResApiTests {
                 .extract().as(GetResource.class);
 
         validateResponse(resource, page, perPage);
+    }
+
+    @Description("Get all resources with pagination")
+    @Test(priority = 4)
+    @Severity(SeverityLevel.CRITICAL)
+    public void getAllResourcesWithPagination() {
+        int page = 1;
+        int perPage = randomNumberGenerator.generateRandomNumber(0, 2);
+        GetResource resource1 = getResources(true, "flower", page, perPage)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetResource.class);
+
+        validateResponse(resource1, page, perPage);
+
+        GetResource resource2 = getResources(true, "flower", page + 1, perPage)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(GetResource.class);
+
+        validateResponse(resource2, page + 1, perPage);
+
+        List<GetResourceData> resourceDataList1 = resource1.getData();
+        List<GetResourceData> resourceDataList2 = resource2.getData();
+
+        Assert.assertTrue(
+                Collections.disjoint(resourceDataList1, resourceDataList2),
+                "Pages have overlapping user IDs"
+        );
     }
 
 }
