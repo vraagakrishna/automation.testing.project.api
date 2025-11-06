@@ -152,7 +152,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 ### Testing Scenarios to Practice
 
 - [ ] User Management: Create, read, update, and delete users
-- [ ] Authentication Flow: Test login/register with valid and invalid credentials
+- [x] Authentication Flow: Test login/register with valid and invalid credentials
 - [ ] Data Validation: Test required fields, data types, and formats
 - [ ] Response Validation: Verify status codes, headers, and response structure
 - [ ] CRUD Operations: Full create-read-update-delete workflow testing
