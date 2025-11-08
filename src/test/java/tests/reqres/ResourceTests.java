@@ -4,6 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import model.reqres.Failure;
 import model.reqres.GetResource;
 import model.reqres.GetResourceData;
@@ -15,8 +16,8 @@ import org.testng.annotations.Test;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static requestbuilder.reqres.ReqResApiRequestBuilder.*;
+import static utils.ValidateFormats.isValidIso8601;
 import static utils.ValidateReqResUtils.*;
 
 @Story("Resource Tests")
@@ -171,10 +172,18 @@ public class ResourceTests extends ReqResApiTests {
         GetResourceData expectedResource = resources.get(
                 randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
         );
-        putResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
+
+        Response response = putResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
-                .body(containsString("updatedAt"));
+                .extract().response();
+
+        String updatedAt = response.jsonPath().getString("updatedAt");
+
+        Assert.assertTrue(
+                isValidIso8601(updatedAt),
+                "Invalid ISO 8601 format: " + updatedAt
+        );
     }
 
     @Description("Put a resource by invalid id")
@@ -224,10 +233,18 @@ public class ResourceTests extends ReqResApiTests {
         GetResourceData expectedResource = resources.get(
                 randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
         );
-        patchResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
+
+        Response response = patchResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
-                .body(containsString("updatedAt"));
+                .extract().response();
+
+        String updatedAt = response.jsonPath().getString("updatedAt");
+
+        Assert.assertTrue(
+                isValidIso8601(updatedAt),
+                "Invalid ISO 8601 format: " + updatedAt
+        );
     }
 
     @Description("Patch a resource by invalid id")

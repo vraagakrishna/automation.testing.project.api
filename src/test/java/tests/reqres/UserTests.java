@@ -16,8 +16,8 @@ import utils.AllureUtils;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.containsString;
 import static requestbuilder.reqres.ReqResApiRequestBuilder.*;
+import static utils.ValidateFormats.isValidIso8601;
 import static utils.ValidateReqResUtils.*;
 
 @Story("User Tests")
@@ -154,10 +154,18 @@ public class UserTests extends ReqResApiTests {
         GetUserData expectedUser = users.get(
                 randomNumberGenerator.generateRandomNumber(0, users.size() - 1)
         );
-        putUserById(true, expectedUser.getId())
+
+        Response response = putUserById(true, expectedUser.getId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
-                .body(containsString("updatedAt"));
+                .extract().response();
+
+        String updatedAt = response.jsonPath().getString("updatedAt");
+
+        Assert.assertTrue(
+                isValidIso8601(updatedAt),
+                "Invalid ISO 8601 format: " + updatedAt
+        );
     }
 
     @Description("Put a user by invalid id")
@@ -193,10 +201,18 @@ public class UserTests extends ReqResApiTests {
         GetUserData expectedUser = users.get(
                 randomNumberGenerator.generateRandomNumber(0, users.size() - 1)
         );
-        patchUserById(true, expectedUser.getId())
+
+        Response response = patchUserById(true, expectedUser.getId())
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
-                .body(containsString("updatedAt"));
+                .extract().response();
+
+        String updatedAt = response.jsonPath().getString("updatedAt");
+
+        Assert.assertTrue(
+                isValidIso8601(updatedAt),
+                "Invalid ISO 8601 format: " + updatedAt
+        );
     }
 
     @Description("Patch a user by invalid id")

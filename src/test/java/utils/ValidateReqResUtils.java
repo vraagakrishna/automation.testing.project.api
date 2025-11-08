@@ -5,6 +5,8 @@ import org.testng.Assert;
 
 import java.util.List;
 
+import static utils.ValidateFormats.*;
+
 public class ValidateReqResUtils {
 
     public static void validateResponse(GetResource resource, int page, int perPage) {
@@ -43,11 +45,7 @@ public class ValidateReqResUtils {
         List<GetResourceData> resourceDataList = resource.getData();
 
         for (GetResourceData resourceData : resourceDataList) {
-            Assert.assertNotNull(resourceData.getId(), "Id should not be null");
-            Assert.assertNotNull(resourceData.getName(), "Name should not be null");
-            Assert.assertNotNull(resourceData.getColor(), "Color should not be null");
-            Assert.assertNotNull(resourceData.getYear(), "Year should not be null");
-            Assert.assertNotNull(resourceData.getPantoneValue(), "Pantone value should not be null");
+            validateResourceData(resourceData);
         }
     }
 
@@ -93,11 +91,7 @@ public class ValidateReqResUtils {
         List<GetUserData> userDataList = user.getData();
 
         for (GetUserData userData : userDataList) {
-            Assert.assertNotNull(userData.getId(), "Id should not be null");
-            Assert.assertNotNull(userData.getEmail(), "Email should not be null");
-            Assert.assertNotNull(userData.getFirstName(), "First name should not be null");
-            Assert.assertNotNull(userData.getLastName(), "Last name should not be null");
-            Assert.assertNotNull(userData.getAvatar(), "Avatar value should not be null");
+            validateUserData(userData);
         }
     }
 
@@ -107,11 +101,7 @@ public class ValidateReqResUtils {
         // validate data list
         GetUserData userData = userResponse.getData();
 
-        Assert.assertEquals(expectedUser.getId(), userData.getId(), "Id does not match");
-        Assert.assertEquals(expectedUser.getEmail(), userData.getEmail(), "Email does not match");
-        Assert.assertEquals(expectedUser.getFirstName(), userData.getFirstName(), "First name does not match");
-        Assert.assertEquals(expectedUser.getLastName(), userData.getLastName(), "Last name does not match");
-        Assert.assertEquals(expectedUser.getAvatar(), userData.getAvatar(), "Avatar does not match");
+        validateUserData(userData);
     }
 
     public static void validateSingleResource(GetResourceData expectedResource, GetSingleResource resourceResponse) {
@@ -119,12 +109,41 @@ public class ValidateReqResUtils {
 
         // validate data list
         GetResourceData responseData = resourceResponse.getData();
+        
+        validateResourceData(responseData);
+    }
 
-        Assert.assertEquals(expectedResource.getId(), responseData.getId(), "Id does not match");
-        Assert.assertEquals(expectedResource.getName(), responseData.getName(), "Name does not match");
-        Assert.assertEquals(expectedResource.getYear(), responseData.getYear(), "Year does not match");
-        Assert.assertEquals(expectedResource.getColor(), responseData.getColor(), "Color does not match");
-        Assert.assertEquals(expectedResource.getPantoneValue(), responseData.getPantoneValue(), "Pantone value does not match");
+    private static void validateResourceData(GetResourceData resourceData) {
+        Assert.assertNotNull(resourceData.getId(), "Id should not be null");
+        Assert.assertNotNull(resourceData.getName(), "Name should not be null");
+        Assert.assertNotNull(resourceData.getColor(), "Color should not be null");
+        Assert.assertNotNull(resourceData.getYear(), "Year should not be null");
+        Assert.assertNotNull(resourceData.getPantoneValue(), "Pantone value should not be null");
+
+        // validate formats
+        Assert.assertTrue(
+                isValidHexColor(resourceData.getColor()),
+                "Invalid color: " + resourceData.getColor()
+        );
+    }
+
+    private static void validateUserData(GetUserData userData) {
+        Assert.assertNotNull(userData.getId(), "Id should not be null");
+        Assert.assertNotNull(userData.getEmail(), "Email should not be null");
+        Assert.assertNotNull(userData.getFirstName(), "First name should not be null");
+        Assert.assertNotNull(userData.getLastName(), "Last name should not be null");
+        Assert.assertNotNull(userData.getAvatar(), "Avatar value should not be null");
+
+        // validating format
+        Assert.assertTrue(
+                isValidEmail(userData.getEmail()),
+                "Invalid email format: " + userData.getEmail()
+        );
+
+        Assert.assertTrue(
+                isValidUrl(userData.getAvatar()),
+                "Invalid url: " + userData.getAvatar()
+        );
     }
 
 }

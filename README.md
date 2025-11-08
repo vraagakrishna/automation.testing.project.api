@@ -101,6 +101,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │               ├── RandomNumberGenerator.java
 │               ├── ReqResTestData.java
 │               ├── StationTestData.java
+│               ├── ValidateFormats.java
 │               └── ValidateReqResUtils.java
 ├── pom.xml
 ├── README.md
@@ -154,7 +155,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 
 - [x] User Management: Create, read, update, and delete users
 - [x] Authentication Flow: Test login/register with valid and invalid credentials
-- [ ] Data Validation: Test required fields, data types, and formats
+- [x] Data Validation: Test required fields, data types, and formats
 - [ ] Response Validation: Verify status codes, headers, and response structure
 - [x] CRUD Operations: Full create-read-update-delete workflow testing
 - [x] Edge Cases: Test with invalid IDs, missing data, and error scenarios
