@@ -165,7 +165,7 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 - [ ] No Setup Required: Ready-to-use API with ~~realistic responses~~ (works without api key sometimes; register works
   with hard-coded user only)
 - [x] Realistic Data: User profiles with avatars and personal information
-- [ ] Proper HTTP Status Codes: 200, 201, 204, 400, 404 responses
+- [x] Proper HTTP Status Codes: 200, ~~201~~, 204, 400, 404 responses (no endpoint returned with 201 status code)
 - [x] Delayed Responses: Test timeouts with ?delay=3 parameter
 - [ ] CORS Enabled: Perfect for frontend testing and AJAX requests
 
