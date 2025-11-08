@@ -7,6 +7,7 @@ import model.reqres.CustomEndpoint;
 import model.reqres.GetResourceData;
 import model.reqres.LoginRegisterUser;
 import model.reqres.ProSubscription;
+import org.testng.Assert;
 import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
@@ -38,6 +39,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -64,6 +67,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -82,6 +87,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -99,6 +106,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -125,6 +134,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -147,6 +158,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -171,6 +184,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -243,6 +258,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -293,6 +310,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -342,6 +361,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachRequest(body.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -367,6 +388,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachRequest(body.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -390,6 +413,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -416,6 +441,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachRequest(body.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -438,6 +465,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -462,6 +491,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -484,6 +515,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -508,6 +541,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -530,6 +565,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -556,6 +593,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachRequest(endpoint.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -578,6 +617,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -604,6 +645,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachRequest(endpoint.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -626,6 +669,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -650,6 +695,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -672,6 +719,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -696,6 +745,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -718,6 +769,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
         AllureUtils.attachResponse(response.getBody().asString());
+
+        validateHeaders(response);
 
         return response;
     }
@@ -742,6 +795,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         );
         AllureUtils.attachResponse(response.getBody().asString());
 
+        validateHeaders(response);
+
         return response;
     }
 
@@ -757,6 +812,37 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.queryParam("delay", 10);
 
         return req;
+    }
+
+    private static void validateHeaders(Response response) {
+        Assert.assertTrue(
+                response.headers().hasHeaderWithName("Content-Type"),
+                "Content-Type header is missing"
+        );
+
+        Assert.assertEquals(
+                response.getHeader("Content-Type"),
+                "application/json; charset=utf-8",
+                "Unexpected Content-Type"
+        );
+
+        String poweredBy = response.getHeader("X-Powered-By");
+        if (poweredBy != null) {
+            Assert.assertEquals(
+                    poweredBy,
+                    "ReqRes.in - Deploy backends in 30 seconds",
+                    "Unexpected X-Powered-By header"
+            );
+        }
+
+        String reqResMessage = response.getHeader("X-Reqres-Message");
+        if (reqResMessage != null) {
+            Assert.assertEquals(
+                    reqResMessage,
+                    "This API is powered by ReqRes. Deploy your own backend in 30 seconds!",
+                    "Unexpected X-Reqres-Message"
+            );
+        }
     }
 
 }
