@@ -68,12 +68,25 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
     }
 
     public static Response getUsers(boolean includeAppId) {
-        RequestSpecification req = given()
-                .spec(baseSpec)
-                .basePath("/users");
+        RequestSpecification req = getUsersRequestSpecification(includeAppId, null);
 
-        if (includeAppId)
-            req.header(appKey, appId);
+        Response response = req
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        AllureUtils.attachUri(
+                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
+        );
+        AllureUtils.attachResponse(response.getBody().asString());
+
+        return response;
+    }
+
+    public static Response getUsersWithDelay(int delayInSeconds) {
+        RequestSpecification req = getUsersRequestSpecification(true, delayInSeconds);
 
         Response response = req
                 .log().all()
@@ -730,6 +743,20 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachResponse(response.getBody().asString());
 
         return response;
+    }
+
+    private static RequestSpecification getUsersRequestSpecification(boolean includeAppId, Integer delayInSeconds) {
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/users");
+
+        if (includeAppId)
+            req.header(appKey, appId);
+
+        if (delayInSeconds != null)
+            req.queryParam("delay", 10);
+
+        return req;
     }
 
 }

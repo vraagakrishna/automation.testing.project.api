@@ -24,6 +24,10 @@ public class AllureUtils {
         Allure.addAttachment("Note", note);
     }
 
+    public static void attachResponseTime(String responseTime, String units) {
+        Allure.addAttachment("Response Time", responseTime + " " + units);
+    }
+
     private static String prettyPrintJson(String json) {
         try {
             Object jsonObj = mapper.readValue(json, Object.class);

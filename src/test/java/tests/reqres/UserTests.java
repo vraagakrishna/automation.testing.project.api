@@ -4,12 +4,15 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
 import model.reqres.Failure;
 import model.reqres.GetSingleUser;
 import model.reqres.GetUser;
 import model.reqres.GetUserData;
 import org.apache.http.HttpStatus;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import utils.AllureUtils;
 
 import java.util.List;
 
@@ -45,6 +48,33 @@ public class UserTests extends ReqResApiTests {
 
         // copy the users over to another list
         data.setUsers(user.getData());
+    }
+
+    @Description("Get all users with delay")
+    @Test(priority = 3)
+    @Severity(SeverityLevel.CRITICAL)
+    public void getAllUsersWithDelay() {
+        int delayInSeconds = 10;
+
+        Response response = getUsersWithDelay(delayInSeconds)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().response();
+
+        double responseTimeInSeconds = response.time() / 1000.0;
+        System.out.println("Response Time: " + responseTimeInSeconds + " s");
+        AllureUtils.attachResponseTime(String.valueOf(responseTimeInSeconds), "s");
+
+        int maxTimeDelay = delayInSeconds + 3;
+        Assert.assertTrue(
+                responseTimeInSeconds >= delayInSeconds && responseTimeInSeconds < maxTimeDelay,
+                "Expected response time to be around " + delayInSeconds + " seconds, " +
+                        "but got " + responseTimeInSeconds + " ms"
+        );
+
+        GetUser user = response.as(GetUser.class);
+
+        validateUser(user);
     }
 
     @Description("Get all users with page restriction")
