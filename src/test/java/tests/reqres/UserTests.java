@@ -78,7 +78,7 @@ public class UserTests extends ReqResApiTests {
     }
 
     @Description("Get all users with page restriction")
-    @Test(priority = 3)
+    @Test(priority = 4)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllUsersWithPage() {
         int page = 10;
