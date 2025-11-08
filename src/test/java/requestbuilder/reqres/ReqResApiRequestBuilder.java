@@ -843,6 +843,21 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                     "Unexpected X-Reqres-Message"
             );
         }
+
+        Assert.assertNotNull(
+                response.getHeader("Access-Control-Allow-Headers"),
+                "Access-Control-Allow-Headers is not found"
+        );
+
+        Assert.assertNotNull(
+                response.getHeader("Access-Control-Allow-Methods"),
+                "Access-Control-Allow-Methods is not found"
+        );
+
+        Assert.assertNotNull(
+                response.getHeader("Access-Control-Allow-Origin"),
+                "Access-Control-Allow-Origin is not found"
+        );
     }
 
 }
