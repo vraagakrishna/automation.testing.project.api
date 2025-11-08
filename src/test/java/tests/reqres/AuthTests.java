@@ -61,8 +61,21 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing email or username");
     }
 
-    @Description("Login user without register")
+    @Description("Register user without api key")
     @Test(priority = 4)
+    @Severity(SeverityLevel.CRITICAL)
+    public void registerUserWithoutApiKey() {
+        LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
+        Failure failureResponse = register(false, loginRegisterUser)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Missing API key");
+    }
+
+    @Description("Login user without register")
+    @Test(priority = 5)
     @Severity(SeverityLevel.BLOCKER)
     public void loginUserWithoutRegister() {
         LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
@@ -75,19 +88,6 @@ public class AuthTests extends ReqResApiTests {
                 .extract().as(Failure.class);
 
         validateFailedResponse(failureResponse, "user not found");
-    }
-
-    @Description("Register user without api key")
-    @Test(priority = 5)
-    @Severity(SeverityLevel.CRITICAL)
-    public void registerUserWithoutApiKey() {
-        LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
-        Failure failureResponse = register(false, loginRegisterUser)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
-                .extract().as(Failure.class);
-
-        validateFailedResponse(failureResponse, "Missing API key");
     }
 
     @Description("Register user without email")
