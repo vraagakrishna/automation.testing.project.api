@@ -1,7 +1,9 @@
 package model.reqres;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetResourceData {
 
     // <editor-fold desc="Class Fields">
