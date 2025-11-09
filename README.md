@@ -63,6 +63,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           ├── common
 │           │   └── BasePaths.java
 │           ├── listeners                       # Listeners
+│           │   ├── SuiteRepeaterListener.java
 │           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
 │           │   ├── reqres                      # Data models for reqres

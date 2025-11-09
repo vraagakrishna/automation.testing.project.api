@@ -39,3 +39,4 @@ target/
 # Report
 Reports*/
 allure-results*/
+test-output/*
