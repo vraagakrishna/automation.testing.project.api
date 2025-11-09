@@ -2,6 +2,7 @@ package model.reqres;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class GetResourceData {
@@ -58,6 +59,19 @@ public class GetResourceData {
 
     public void setPantoneValue(String pantoneValue) {
         this.pantoneValue = pantoneValue;
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Overrides">
+    @Override
+    public String toString() {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (Exception e) {
+            return super.toString();
+        }
     }
     // </editor-fold>
 

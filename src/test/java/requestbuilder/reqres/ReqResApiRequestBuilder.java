@@ -284,6 +284,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachUri(
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
+        AllureUtils.attachRequest(payload.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
         return response;
@@ -309,6 +310,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         AllureUtils.attachUri(
                 ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
         );
+        AllureUtils.attachRequest(payload.toString());
         AllureUtils.attachResponse(response.getBody().asString());
 
         validateHeaders(response);
