@@ -79,7 +79,7 @@ public class ResourceTests extends ReqResApiTests {
 
         validateResource(resource1, page, perPage);
 
-        GetResource resource2 = getResources(true, "flower", page + 1, perPage)
+        GetResource resource2 = getResources(true, data.getResourceName(), page + 1, perPage)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetResource.class);

@@ -69,7 +69,7 @@ public class UserTests extends ReqResApiTests {
         Assert.assertTrue(
                 responseTimeInSeconds >= delayInSeconds && responseTimeInSeconds < maxTimeDelay,
                 "Expected response time to be around " + delayInSeconds + " seconds, " +
-                        "but got " + responseTimeInSeconds + " ms"
+                        "but got " + responseTimeInSeconds + " s"
         );
 
         GetUser user = response.as(GetUser.class);
