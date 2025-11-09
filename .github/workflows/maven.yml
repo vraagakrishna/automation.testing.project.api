@@ -20,8 +20,8 @@ on:
     types: [ run-tests ]
 
 concurrency:
-  group: api-tests-main
-  cancel-in-progress: true
+  group: api-tests-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -93,10 +93,32 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      # Restore previous Allure history (if exists)
+      - name: Download previous Allure results
+        if: steps.check_changes.outputs.run_tests == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: previous-results
+        continue-on-error: true
+
+      - name: Merge Allure history
+        run: |
+          mkdir -p allure-results
+          cp -r previous-results/* allure-results/ 2>/dev/null || echo "No previous history found"
+
       # Run maven tests
       - name: Build with Maven
         if: steps.check_changes.outputs.run_tests == 'true'
         run: mvn clean test -DWEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }} -DREQRES_API_KEY=${{ secrets.REQRES_API_KEY }}
+
+      # Upload updated Allure results (for next run)
+      - name: Upload Allure results (for next run)
+        if: steps.check_changes.outputs.run_tests == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
 
       # Upload test report
       - name: Upload Test Evidence
