@@ -20,8 +20,8 @@ on:
     types: [ run-tests ]
 
 concurrency:
-  group: api-tests-main
-  cancel-in-progress: true
+  group: api-tests-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
