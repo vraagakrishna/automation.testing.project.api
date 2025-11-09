@@ -2,11 +2,13 @@ package utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.qameta.allure.Allure;
+import io.restassured.http.ContentType;
 
 public class AllureUtils {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
+    // <editor-fold desc="Public Methods">
     public static void attachUri(String uri) {
         Allure.addAttachment("Uri", uri);
     }
@@ -19,6 +21,16 @@ public class AllureUtils {
         attachToReport("Response", prettyPrintJson(response));
     }
 
+    public static void attachNote(String note) {
+        Allure.addAttachment("Note", note);
+    }
+
+    public static void attachResponseTime(String responseTime, String units) {
+        Allure.addAttachment("Response Time", responseTime + " " + units);
+    }
+    // </editor-fold>
+
+    // <editor-fold desc="Private Methods">
     private static String prettyPrintJson(String json) {
         try {
             Object jsonObj = mapper.readValue(json, Object.class);
@@ -30,7 +42,8 @@ public class AllureUtils {
     }
 
     private static void attachToReport(String name, String value) {
-        Allure.addAttachment(name, "application/json", value, ".json");
+        Allure.addAttachment(name, ContentType.JSON.toString(), value, ".json");
     }
+    // </editor-fold>
 
 }

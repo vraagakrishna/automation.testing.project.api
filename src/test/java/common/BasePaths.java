@@ -4,4 +4,6 @@ public class BasePaths {
 
     public static String WeatherBaseUrl = "http://api.openweathermap.org/data/3.0";
 
+    public static String ReqResBaseUrl = "https://reqres.in/api";
+
 }

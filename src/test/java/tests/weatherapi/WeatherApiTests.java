@@ -1,6 +1,9 @@
-package tests;
+package tests.weatherapi;
 
-import io.qameta.allure.*;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import model.weatherapi.Failure;
 import model.weatherapi.GetStation;
@@ -17,14 +20,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static requestbuilder.WeatherApiRequestBuilder.*;
+import static requestbuilder.weatherapi.WeatherApiRequestBuilder.*;
 
-@Test
-@Feature("Open WeatherMap")
-@Story("Weather Station")
+@Story("Weather Station Tests")
 public class WeatherApiTests {
 
     StationTestData data = new StationTestData();
+
     RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
     @Description("Getting all the stations without api key")

@@ -1,9 +1,11 @@
-# Ndosi Test Automation Project 2: Weather API
+# Ndosi Test Automation Project 2: API Testing
 
 ## Overview
 
-This project automates the API testing for [Open WeatherMap](https://openweathermap.org/stations) using **RestAssured**
-with **Java** and **TestNG**.
+This project automates the API testing using **RestAssured** with **Java** and **TestNG** for:
+
+* [Open WeatherMap](https://openweathermap.org/stations)
+* [ReqRes](https://reqres.in/)
 
 It validates the functionalities of the API.
 
@@ -31,7 +33,7 @@ cd automation.testing.project.api
 2. Run the tests and generate the test report
 
 ```bash
-mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
+mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQRES_API_KEY
 ```
 
 <br/>
@@ -61,22 +63,45 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 │           ├── common
 │           │   └── BasePaths.java
 │           ├── listeners                       # Listeners
+│           │   ├── SuiteRepeaterListener.java
 │           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
+│           │   ├── reqres                      # Data models for reqres
+│           │   │   ├── Failure.java
+│           │   │   ├── GetResouce.java
+│           │   │   ├── GetResourceData.java
+│           │   │   ├── GetSingleResource.java
+│           │   │   ├── GetSingleUser.java
+│           │   │   ├── GetUser.java
+│           │   │   ├── GetUserData.java
+│           │   │   └── LoginRegisterUser.java
 │           │   └── weatherapi                  # Data models for weather api
 │           │       ├── Failure.java
 │           │       ├── GetStation.java
 │           │       ├── GetStationList.java
 │           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
-│           │   ├── BaseWeatherApiRequestBuilder.java
-│           │   └── WeatherApiRequestBuilder.java 
+│           │   ├── reqres                      # API requests for reqres
+│           │   │   ├── BaseReqResApiRequestBuilder.java
+│           │   │   └── ReqResApiRequestBuilder.java 
+│           │   └── weatherapi                  # API requests for weather api
+│           │       ├── BaseWeatherApiRequestBuilder.java
+│           │       └── WeatherApiRequestBuilder.java 
 │           ├── tests                           # Test classes
-│           │   └── WeatherApiTests.java 
+│           │   ├── reqres                      # Test classes for reqres
+│           │   │   ├── AuthTests.java
+│           │   │   ├── ReqResApiTests.java
+│           │   │   ├── ResourceTests.java
+│           │   │   └── UserTests.java 
+│           │   └── weatherapi                  # Test classes for weather api
+│           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
 │               ├── RandomNumberGenerator.java
-│               └── StationTestData.java
+│               ├── ReqResTestData.java
+│               ├── StationTestData.java
+│               ├── ValidateFormats.java
+│               └── ValidateReqResUtils.java
 ├── pom.xml
 ├── README.md
 └── testng.xml
@@ -84,7 +109,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_API_KEY
 
 <br/>
 
-## Assessment requirements
+## [Open WeatherMap](https://openweathermap.org/stations)
 
 Perform functional API testing using Postman (or your preferred Custom API tool) against the scenario below. Treat this
 as the first time that testing has been performed against this API.
@@ -107,3 +132,40 @@ Keep the following objectives in mind when creating your test suite:
 - [x] Show how you can perform chaining of requests (passing data from one response to another request)
 - [x] Implement assertions for your postman calls (pass/fail criteria)
 - [x] Perform parameterisation for any dynamic configs or paths
+
+<br/>
+
+## [ReqRes](https://reqres.in/)
+
+ReqRes is a hosted REST-API ready to respond to your AJAX requests. It's perfect for testing and prototyping with real
+API responses without needing to set up your own backend.
+
+The API provides realistic data and follows REST conventions, making it ideal for practicing API testing scenarios.
+
+### Available Endpoints
+
+- [x] Users: GET, POST, PUT, DELETE operations for user management
+- [x] Authentication: Login and registration endpoints
+- [x] Resources: Generic resource CRUD operations
+- [x] Delayed Responses: Test timeout and loading scenarios
+- [x] Pagination: Practice handling paginated API responses
+
+### Testing Scenarios to Practice
+
+- [x] User Management: Create, read, update, and delete users
+- [x] Authentication Flow: Test login/register with valid and invalid credentials
+- [x] Data Validation: Test required fields, data types, and formats
+- [x] Response Validation: Verify status codes, headers, and response structure
+- [x] CRUD Operations: Full create-read-update-delete workflow testing
+- [x] Edge Cases: Test with invalid IDs, missing data, and error scenarios
+
+### Key Features for Testing
+
+- [ ] No Setup Required: Ready-to-use API with ~~realistic responses~~ (works without api key sometimes; register works
+  with hard-coded user only)
+- [x] Realistic Data: User profiles with avatars and personal information
+- [x] Proper HTTP Status Codes: 200, ~~201~~, 204, 400, 404 responses (no endpoint returned with 201 status code)
+- [x] Delayed Responses: Test timeouts with ?delay=3 parameter
+- [X] CORS (Cross-Origin Resource Sharing) Enabled: Perfect for frontend testing and AJAX requests
+
+<br/>

@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
+    <parameter name="suiteRepeatCount" value="3"/>
+
     <listeners>
         <listener class-name="listeners.TestLoggerListener"/>
+        <listener class-name="listeners.SuiteRepeaterListener"/>
     </listeners>
-    <test verbose="2" preserve-order="true" name="ApiAutomationTesting">
+    <test name="Weather API Testing">
         <classes>
-            <class name="tests.WeatherApiTests"/>
+            <class name="tests.weatherapi.WeatherApiTests"/>
+        </classes>
+    </test>
+    <test name="ReqRes Testing">
+        <classes>
+            <class name="tests.reqres.ResourceTests"/>
+            <class name="tests.reqres.UserTests"/>
+            <class name="tests.reqres.AuthTests"/>
         </classes>
     </test>
 </suite>
