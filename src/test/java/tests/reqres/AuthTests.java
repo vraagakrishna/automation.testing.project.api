@@ -36,21 +36,6 @@ public class AuthTests extends ReqResApiTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutEmail() {
         LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
-        loginRegisterUser.setEmail(data.getEmail());
-
-        Failure failureResponse = login(true, loginRegisterUser)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract().as(Failure.class);
-
-        validateFailedResponse(failureResponse, "Missing password");
-    }
-
-    @Description("Login user without password")
-    @Test(priority = 3)
-    @Severity(SeverityLevel.CRITICAL)
-    public void loginUserWithoutPassword() {
-        LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
         loginRegisterUser.setPassword(data.getPassword());
 
         Failure failureResponse = login(true, loginRegisterUser)
@@ -59,6 +44,21 @@ public class AuthTests extends ReqResApiTests {
                 .extract().as(Failure.class);
 
         validateFailedResponse(failureResponse, "Missing email or username");
+    }
+
+    @Description("Login user without password")
+    @Test(priority = 3)
+    @Severity(SeverityLevel.CRITICAL)
+    public void loginUserWithoutPassword() {
+        LoginRegisterUser<Object> loginRegisterUser = new LoginRegisterUser<>();
+        loginRegisterUser.setEmail(data.getEmail());
+
+        Failure failureResponse = login(true, loginRegisterUser)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Missing password");
     }
 
     @Description("Register user without api key")
