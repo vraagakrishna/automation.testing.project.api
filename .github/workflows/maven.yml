@@ -104,8 +104,13 @@ jobs:
 
       - name: Merge Allure history
         run: |
-          mkdir -p allure-results
-          cp -r previous-results/* allure-results/ 2>/dev/null || echo "No previous history found"
+          if [ -d "previous-results" ]; then
+            mkdir -p allure-results
+            cp -r previous-results/* allure-results/
+            echo "Merged previous Allure results"
+          else
+            echo "No previous results to merge"
+          fi
 
       # Run maven tests
       - name: Build with Maven
