@@ -57,7 +57,7 @@ public class ResourceTests extends ReqResApiTests {
     @Severity(SeverityLevel.BLOCKER)
     public void getAllResourcesWithPage() {
         int page = 10;
-        int perPage = randomNumberGenerator.generateRandomNumber(0, 10);
+        int perPage = randomNumberGenerator.generateRandomNumber(1, 10);
         GetResource resource = getResources(true, data.getResourceName(), page, perPage)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
@@ -71,7 +71,7 @@ public class ResourceTests extends ReqResApiTests {
     @Severity(SeverityLevel.CRITICAL)
     public void getAllResourcesWithPagination() {
         int page = 1;
-        int perPage = randomNumberGenerator.generateRandomNumber(0, 2);
+        int perPage = randomNumberGenerator.generateRandomNumber(1, 2);
         GetResource resource1 = getResources(true, data.getResourceName(), page, perPage)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
@@ -115,7 +115,7 @@ public class ResourceTests extends ReqResApiTests {
     public void getResource() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(
-                randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
+                randomNumberGenerator.generateRandomNumber(1, resources.size() - 1)
         );
         GetSingleResource resourceResponse = getResourceById(true, data.getResourceName(), expectedResource.getId())
                 .then()
@@ -170,7 +170,7 @@ public class ResourceTests extends ReqResApiTests {
     public void putResource() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(
-                randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
+                randomNumberGenerator.generateRandomNumber(1, resources.size() - 1)
         );
 
         Response response = putResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
@@ -231,7 +231,7 @@ public class ResourceTests extends ReqResApiTests {
     public void patchResource() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(
-                randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
+                randomNumberGenerator.generateRandomNumber(1, resources.size() - 1)
         );
 
         Response response = patchResourceById(true, data.getResourceName(), expectedResource.getId(), expectedResource)
@@ -278,7 +278,7 @@ public class ResourceTests extends ReqResApiTests {
     public void deleteResource() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(
-                randomNumberGenerator.generateRandomNumber(0, resources.size() - 1)
+                randomNumberGenerator.generateRandomNumber(1, resources.size() - 1)
         );
         deleteResourceById(true, data.getResourceName(), expectedResource.getId())
                 .then()
