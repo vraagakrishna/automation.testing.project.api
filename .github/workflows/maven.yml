@@ -19,9 +19,12 @@ on:
   repository_dispatch:
     types: [ run-tests ]
 
+# Concurrency logic:
+# - Manual / push → priority group, never cancel
+# - Scheduled → scheduled group, cancel previous scheduled runs
 concurrency:
-  group: api-tests-${{ github.event_name }}-${{ github.ref }}
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'schedule' && 'api-tests-scheduled' || 'api-tests-priority' }}
+  cancel-in-progress: ${{ github.event_name == 'schedule' && true || false }}
 
 jobs:
   build:
@@ -104,8 +107,13 @@ jobs:
 
       - name: Merge Allure history
         run: |
-          mkdir -p allure-results
-          cp -r previous-results/* allure-results/ 2>/dev/null || echo "No previous history found"
+          if [ -d "previous-results" ]; then
+            mkdir -p allure-results
+            cp -r previous-results/* allure-results/
+            echo "Merged previous Allure results"
+          else
+            echo "No previous results to merge"
+          fi
 
       # Run maven tests
       - name: Build with Maven
