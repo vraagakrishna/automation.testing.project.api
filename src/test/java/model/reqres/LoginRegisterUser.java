@@ -7,8 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class LoginRegisterUser<T> {
 
     // <editor-fold desc="Class Fields">
-    private T username;
-
     private T email;
 
     private T password;
@@ -20,14 +18,6 @@ public class LoginRegisterUser<T> {
     // </editor-fold>
 
     // <editor-fold desc="Getters and Setters">
-    public T getUsername() {
-        return username;
-    }
-
-    public void setUsername(T username) {
-        this.username = username;
-    }
-
     public T getEmail() {
         return email;
     }

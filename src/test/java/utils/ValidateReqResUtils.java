@@ -9,7 +9,8 @@ import static utils.ValidateFormats.*;
 
 public class ValidateReqResUtils {
 
-    public static void validateResponse(GetResource resource, int page, int perPage) {
+    // <editor-fold desc="Public Methods">
+    public static void validateResource(GetResource resource, int page, int perPage) {
         Assert.assertNotNull(resource, "Response should not be null");
 
         // validate top-level fields
@@ -32,7 +33,7 @@ public class ValidateReqResUtils {
         }
     }
 
-    public static void validateResponse(GetResource resource) {
+    public static void validateResource(GetResource resource) {
         Assert.assertNotNull(resource, "Response should not be null");
 
         // validate top-level fields
@@ -109,10 +110,12 @@ public class ValidateReqResUtils {
 
         // validate data list
         GetResourceData responseData = resourceResponse.getData();
-        
+
         validateResourceData(responseData);
     }
+    // </editor-fold>
 
+    // <editor-fold desc="Private Methods">
     private static void validateResourceData(GetResourceData resourceData) {
         Assert.assertNotNull(resourceData.getId(), "Id should not be null");
         Assert.assertNotNull(resourceData.getName(), "Name should not be null");
@@ -145,5 +148,7 @@ public class ValidateReqResUtils {
                 "Invalid url: " + userData.getAvatar()
         );
     }
+
+    // </editor-fold>
 
 }

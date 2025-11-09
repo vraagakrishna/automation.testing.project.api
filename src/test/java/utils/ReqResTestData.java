@@ -17,8 +17,6 @@ public class ReqResTestData {
 
     private String password = faker.internet().password(8, 16, true, true, true);
 
-    private String username = firstName.toLowerCase() + "." + lastName.toLowerCase();
-
     private String email = firstName + "." + lastName + "@gmail.com";
 
     private List<GetUserData> users;

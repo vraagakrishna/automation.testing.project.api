@@ -46,7 +46,7 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetResource.class);
 
-        validateResponse(resource);
+        validateResource(resource);
 
         // copy the resources to another list
         data.setResources(resource.getData());
@@ -63,7 +63,7 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetResource.class);
 
-        validateResponse(resource, page, perPage);
+        validateResource(resource, page, perPage);
     }
 
     @Description("Get all resources with pagination")
@@ -77,14 +77,14 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetResource.class);
 
-        validateResponse(resource1, page, perPage);
+        validateResource(resource1, page, perPage);
 
         GetResource resource2 = getResources(true, "flower", page + 1, perPage)
                 .then()
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(GetResource.class);
 
-        validateResponse(resource2, page + 1, perPage);
+        validateResource(resource2, page + 1, perPage);
 
         List<GetResourceData> resourceDataList1 = resource1.getData();
         List<GetResourceData> resourceDataList2 = resource2.getData();

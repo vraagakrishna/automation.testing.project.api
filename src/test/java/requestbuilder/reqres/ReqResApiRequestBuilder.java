@@ -12,10 +12,13 @@ import static io.restassured.RestAssured.given;
 
 public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
 
+    // <editor-fold desc="Class Fields">
     private static final String appId = System.getProperty("REQRES_API_KEY", System.getenv("REQRES_API_KEY"));
 
     private static final String appKey = "x-api-key";
+    // </editor-fold>
 
+    // <editor-fold desc="Public Methods">
     public static Response getResources(boolean includeAppId, String resourceName) {
         RequestSpecification req = given()
                 .spec(baseSpec)
@@ -416,7 +419,9 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
 
         return response;
     }
+    // </editor-fold>
 
+    // <editor-fold desc="Private Methods">
     private static RequestSpecification getUsersRequestSpecification(boolean includeAppId, Integer delayInSeconds) {
         RequestSpecification req = given()
                 .spec(baseSpec)
@@ -476,5 +481,6 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 "Access-Control-Allow-Origin is not found"
         );
     }
+    // </editor-fold>
 
 }
