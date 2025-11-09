@@ -102,7 +102,7 @@ public class ValidateReqResUtils {
         // validate data list
         GetUserData userData = userResponse.getData();
 
-        validateUserData(userData);
+        validateUserData(userData, expectedUser);
     }
 
     public static void validateSingleResource(GetResourceData expectedResource, GetSingleResource resourceResponse) {
@@ -111,7 +111,7 @@ public class ValidateReqResUtils {
         // validate data list
         GetResourceData responseData = resourceResponse.getData();
 
-        validateResourceData(responseData);
+        validateResourceData(responseData, expectedResource);
     }
     // </editor-fold>
 
@@ -128,6 +128,16 @@ public class ValidateReqResUtils {
                 isValidHexColor(resourceData.getColor()),
                 "Invalid color: " + resourceData.getColor()
         );
+    }
+
+    private static void validateResourceData(GetResourceData resourceData, GetResourceData expectedResource) {
+        validateResourceData(resourceData);
+
+        Assert.assertEquals(expectedResource.getId(), resourceData.getId(), "Id does not match");
+        Assert.assertEquals(expectedResource.getName(), resourceData.getName(), "Name does not match");
+        Assert.assertEquals(expectedResource.getColor(), resourceData.getColor(), "Color does not match");
+        Assert.assertEquals(expectedResource.getYear(), resourceData.getYear(), "Year does not match");
+        Assert.assertEquals(expectedResource.getPantoneValue(), resourceData.getPantoneValue(), "Pantone value does not match");
     }
 
     private static void validateUserData(GetUserData userData) {
@@ -149,6 +159,15 @@ public class ValidateReqResUtils {
         );
     }
 
+    private static void validateUserData(GetUserData userData, GetUserData expectedUser) {
+        validateUserData(userData);
+
+        Assert.assertEquals(expectedUser.getId(), userData.getId(), "Id does not match");
+        Assert.assertEquals(expectedUser.getEmail(), userData.getEmail(), "Email does not match");
+        Assert.assertEquals(expectedUser.getFirstName(), userData.getFirstName(), "First name does not match");
+        Assert.assertEquals(expectedUser.getLastName(), userData.getLastName(), "Last name does not match");
+        Assert.assertEquals(expectedUser.getAvatar(), userData.getAvatar(), "Avatar does not match");
+    }
     // </editor-fold>
 
 }
