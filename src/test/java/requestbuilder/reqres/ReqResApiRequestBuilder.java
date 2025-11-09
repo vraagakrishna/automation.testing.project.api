@@ -433,7 +433,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
             req.header(appKey, appId);
 
         if (delayInSeconds != null)
-            req.queryParam("delay", 10);
+            req.queryParam("delay", delayInSeconds);
 
         return req;
     }
