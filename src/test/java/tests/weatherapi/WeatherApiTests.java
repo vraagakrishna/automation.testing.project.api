@@ -45,7 +45,7 @@ public class WeatherApiTests {
     }
 
     @Story("Get All Stations")
-    @Description("Verify that the initial request to retrieve all stations")
+    @Description("Verify that the initial request to retrieve all stations is successful")
     @Test(priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllStationsInitially() {
@@ -157,7 +157,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that invalid latitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 5)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidLatitude() {
@@ -179,7 +179,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too small latitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 6)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallLatitude() {
@@ -201,7 +201,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too large latitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 7)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeLatitude() {
@@ -223,7 +223,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that invalid longitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 8)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidLongitude() {
@@ -245,7 +245,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too small longitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 9)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallLongitude() {
@@ -267,7 +267,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too large longitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 10)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeLongitude() {
@@ -289,7 +289,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that invalid altitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 11)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidAltitude() {
@@ -311,7 +311,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too small altitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 12)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallAltitude() {
@@ -333,7 +333,7 @@ public class WeatherApiTests {
     }
 
     @Story("Register Station")
-    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
+    @Description("Verify that too large altitude values are validated correctly")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 13)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeAltitude() {
