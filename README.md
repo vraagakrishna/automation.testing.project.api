@@ -82,6 +82,8 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       ├── GetStationList.java
 │           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
+│           │   ├── ndosiautomation             # API requests for Ndosi Automation
+│           │   │   └── BaseNdosiAutomationRequestBuilder.java
 │           │   ├── reqres                      # API requests for reqres
 │           │   │   ├── BaseReqResApiRequestBuilder.java
 │           │   │   └── ReqResApiRequestBuilder.java 
