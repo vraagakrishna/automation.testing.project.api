@@ -1,9 +1,6 @@
 package tests.reqres;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import model.reqres.Failure;
 import model.reqres.GetResource;
@@ -20,10 +17,11 @@ import static requestbuilder.reqres.ReqResApiRequestBuilder.*;
 import static utils.ValidateFormats.isValidIso8601;
 import static utils.ValidateReqResUtils.*;
 
-@Story("Resource Tests")
+@Feature("Resource Endpoints")
 public class ResourceTests extends ReqResApiTests {
 
-    @Description("Get all resources without api key")
+    @Story("Get All Resources")
+    @Description("Verify that requesting all resources without an API key returns an authentication error")
     @Test(priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void getAllResourcesWithoutApiKey() {
@@ -37,7 +35,8 @@ public class ResourceTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Get all resources")
+    @Story("Get All Resources")
+    @Description("Verify that the initial request to retrieve all resources is successful")
     @Test(priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllResources() {
@@ -52,7 +51,8 @@ public class ResourceTests extends ReqResApiTests {
         data.setResources(resource.getData());
     }
 
-    @Description("Get all resources with page restriction")
+    @Story("Get All Resources")
+    @Description("Verify that requesting all resources with page numbers is successful")
     @Test(priority = 3)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllResourcesWithPage() {
@@ -66,7 +66,8 @@ public class ResourceTests extends ReqResApiTests {
         validateResource(resource, page, perPage);
     }
 
-    @Description("Get all resources with pagination")
+    @Story("Get All Resources")
+    @Description("Verify that requesting all resources with multiple pages is successful")
     @Test(priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void getAllResourcesWithPagination() {
@@ -95,7 +96,8 @@ public class ResourceTests extends ReqResApiTests {
         );
     }
 
-    @Description("Get a resource without api key")
+    @Story("Get Resource by ID")
+    @Description("Verify that requesting a resource without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllResources", priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void getResourceWithoutApiKey() {
@@ -109,7 +111,8 @@ public class ResourceTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Get a resource")
+    @Story("Get Resource by ID")
+    @Description("Verify that getting resource by valid ID returns correct data and 200 OK")
     @Test(dependsOnMethods = "getAllResources", priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getResource() {
@@ -125,7 +128,8 @@ public class ResourceTests extends ReqResApiTests {
         validateSingleResource(expectedResource, resourceResponse);
     }
 
-    @Description("Get a resource by invalid id")
+    @Story("Get Resource by ID")
+    @Description("Verify that getting resource with an invalid ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllResources", priority = 3)
     @Severity(SeverityLevel.NORMAL)
     public void getResourceByInvalidId() {
@@ -136,7 +140,8 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Put a resource without api key")
+    @Story("Put Resource by ID")
+    @Description("Verify that updating (PUT) a resource without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllResources", priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void putResourceWithoutApiKey() {
@@ -150,7 +155,8 @@ public class ResourceTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Put a resource without payload")
+    @Story("Put Resource by ID")
+    @Description("Verify that updating (PUT) a resource without a payload returns an error")
     @Test(dependsOnMethods = "getAllResources", priority = 5)
     @Severity(SeverityLevel.CRITICAL)
     public void putResourceWithoutPayload() {
@@ -158,13 +164,14 @@ public class ResourceTests extends ReqResApiTests {
         GetResourceData expectedResource = resources.get(1);
         Failure failureResponse = putResourceById(true, data.getResourceName(), expectedResource.getId(), new GetResourceData())
                 .then()
-                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
-        validateFailedResponse(failureResponse, "Missing API key");
+        validateFailedResponse(failureResponse, "Missing data");
     }
 
-    @Description("Put a resource")
+    @Story("Put Resource by ID")
+    @Description("Verify that updating (PUT) a resource with valid data returns 200 OK")
     @Test(dependsOnMethods = "getAllResources", priority = 6)
     @Severity(SeverityLevel.BLOCKER)
     public void putResource() {
@@ -186,7 +193,8 @@ public class ResourceTests extends ReqResApiTests {
         );
     }
 
-    @Description("Put a resource by invalid id")
+    @Story("Put Resource by ID")
+    @Description("Verify that updating (PUT) a non-existent resource ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllResources", priority = 7)
     @Severity(SeverityLevel.NORMAL)
     public void putResourceByInvalidId() {
@@ -197,7 +205,8 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Patch a resource without api key")
+    @Story("Patch Resource by ID")
+    @Description("Verify that updating (PATCH) a resource without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllResources", priority = 8)
     @Severity(SeverityLevel.CRITICAL)
     public void patchResourceWithoutApiKey() {
@@ -211,21 +220,23 @@ public class ResourceTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Patch a resource without payload")
+    @Story("Patch Resource by ID")
+    @Description("Verify that updating (PATCH) a resource without a payload returns an error")
     @Test(dependsOnMethods = "getAllResources", priority = 9)
     @Severity(SeverityLevel.CRITICAL)
     public void patchResourceWithoutPayload() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(1);
-        Failure failureResponse = patchResourceById(false, data.getResourceName(), expectedResource.getId(), new GetResourceData())
+        Failure failureResponse = patchResourceById(true, data.getResourceName(), expectedResource.getId(), new GetResourceData())
                 .then()
-                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
-        validateFailedResponse(failureResponse, "Missing API key");
+        validateFailedResponse(failureResponse, "Missing data");
     }
 
-    @Description("Patch a resource")
+    @Story("Patch Resource by ID")
+    @Description("Verify that updating (PATCH) a resource with valid data returns 200 OK")
     @Test(dependsOnMethods = "getAllResources", priority = 10)
     @Severity(SeverityLevel.BLOCKER)
     public void patchResource() {
@@ -247,7 +258,8 @@ public class ResourceTests extends ReqResApiTests {
         );
     }
 
-    @Description("Patch a resource by invalid id")
+    @Story("Patch Resource by ID")
+    @Description("Verify that updating (PATCH) a non-existent resource ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllResources", priority = 11)
     @Severity(SeverityLevel.NORMAL)
     public void patchResourceByInvalidId() {
@@ -258,7 +270,8 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Delete a resource without api key")
+    @Story("Delete Resource by ID")
+    @Description("Verify that deleting a resource without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllResources", priority = 12)
     @Severity(SeverityLevel.CRITICAL)
     public void deleteResourceWithoutApiKey() {
@@ -272,7 +285,8 @@ public class ResourceTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Delete a resource")
+    @Story("Delete Resource by ID")
+    @Description("Verify that deleting a valid resource succeeds with 204 No Content")
     @Test(dependsOnMethods = "getAllResources", priority = 13)
     @Severity(SeverityLevel.BLOCKER)
     public void deleteResource() {
@@ -285,7 +299,8 @@ public class ResourceTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
-    @Description("Delete a resource by invalid id")
+    @Story("Delete Resource by ID")
+    @Description("Verify that deleting a non-existent resource ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllResources", priority = 14)
     @Severity(SeverityLevel.NORMAL)
     public void deleteResourceByInvalidId() {

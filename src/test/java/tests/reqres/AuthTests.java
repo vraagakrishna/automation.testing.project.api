@@ -1,9 +1,6 @@
 package tests.reqres;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import model.reqres.Failure;
 import model.reqres.LoginRegisterUser;
@@ -15,10 +12,11 @@ import utils.AllureUtils;
 import static requestbuilder.reqres.ReqResApiRequestBuilder.*;
 import static utils.ValidateReqResUtils.validateFailedResponse;
 
-@Story("Auth Tests")
+@Feature("Auth Endpoints")
 public class AuthTests extends ReqResApiTests {
 
-    @Description("Login user without api key")
+    @Story("Login")
+    @Description("Verify that logging in without an API key returns an authentication error")
     @Test(priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutApiKey() {
@@ -31,7 +29,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Login user without email")
+    @Story("Login")
+    @Description("Verify that logging in without an email returns a validation error")
     @Test(priority = 2)
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutEmail() {
@@ -46,7 +45,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing email or username");
     }
 
-    @Description("Login user without password")
+    @Story("Login")
+    @Description("Verify that logging in without a password returns a validation error")
     @Test(priority = 3)
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutPassword() {
@@ -61,7 +61,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing password");
     }
 
-    @Description("Register user without api key")
+    @Story("Register")
+    @Description("Verify that registering without an API key returns an authentication error")
     @Test(priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutApiKey() {
@@ -74,7 +75,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Login user without register")
+    @Story("Login")
+    @Description("Verify that logging in without registration returns an error")
     @Test(priority = 5)
     @Severity(SeverityLevel.BLOCKER)
     public void loginUserWithoutRegister() {
@@ -90,7 +92,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "user not found");
     }
 
-    @Description("Register user without email")
+    @Story("Register")
+    @Description("Verify that registering without an email returns a validation error")
     @Test(priority = 1, dependsOnMethods = "loginUserWithoutRegister")
     @Severity(SeverityLevel.BLOCKER)
     public void registerUserWithoutEmail() {
@@ -105,7 +108,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing email or username");
     }
 
-    @Description("Register user without password")
+    @Story("Register")
+    @Description("Verify that registering without a password returns a validation error")
     @Test(priority = 2, dependsOnMethods = "loginUserWithoutRegister")
     @Severity(SeverityLevel.BLOCKER)
     public void registerUserWithoutPassword() {
@@ -120,7 +124,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing password");
     }
 
-    @Description("Register user with invalid credentials")
+    @Story("Register")
+    @Description("Verify that registering without invalid credentials returns an error")
     @Test(priority = 3, dependsOnMethods = "loginUserWithoutRegister")
     @Severity(SeverityLevel.BLOCKER)
     public void registerUserInvalidCredentials() {
@@ -138,7 +143,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Note: Only defined users succeed registration");
     }
 
-    @Description("Register user with invalid data types")
+    @Story("Register")
+    @Description("Verify that registering with invalid data types returns a validation error")
     @Test(priority = 4, dependsOnMethods = "loginUserWithoutRegister")
     @Severity(SeverityLevel.BLOCKER)
     public void registerUserInvalidDataTypes() {
@@ -154,7 +160,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Note: Only defined users succeed registration");
     }
 
-    @Description("Register user")
+    @Story("Register")
+    @Description("Verify that registering with valid credentials returns a success response")
     @Test(priority = 5, dependsOnMethods = "loginUserWithoutRegister")
     @Severity(SeverityLevel.BLOCKER)
     public void registerUserWithValidCredentials() {
@@ -176,7 +183,8 @@ public class AuthTests extends ReqResApiTests {
         data.setToken(response.jsonPath().getString("token"));
     }
 
-    @Description("Login user after register")
+    @Story("Login")
+    @Description("Verify logging in after registration returns a success response")
     @Test(dependsOnMethods = "registerUserWithValidCredentials")
     @Severity(SeverityLevel.BLOCKER)
     public void loginUserAfterRegister() {
@@ -196,7 +204,8 @@ public class AuthTests extends ReqResApiTests {
         );
     }
 
-    @Description("Logout user without api key")
+    @Story("Logout")
+    @Description("Verify that logging out without an API key returns an authentication error")
     @Test(dependsOnMethods = "loginUserAfterRegister", priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void logoutUserWithoutApiKey() {
@@ -208,7 +217,8 @@ public class AuthTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Logout user")
+    @Story("Logout")
+    @Description("Verify logging out returns a success response")
     @Test(dependsOnMethods = "loginUserAfterRegister", priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void logoutUser() {

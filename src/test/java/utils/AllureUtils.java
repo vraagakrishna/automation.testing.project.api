@@ -28,6 +28,18 @@ public class AllureUtils {
     public static void attachResponseTime(String responseTime, String units) {
         Allure.addAttachment("Response Time", responseTime + " " + units);
     }
+
+    public static void attachStatusCode(String statusCode) {
+        Allure.addAttachment("Status Code", String.valueOf(statusCode));
+    }
+
+    public static void attachRequestHeaders(String requestHeaders) {
+        Allure.addAttachment("Request Headers", requestHeaders);
+    }
+
+    public static void attachResponseHeaders(String responseHeaders) {
+        Allure.addAttachment("Response Headers", responseHeaders);
+    }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
