@@ -164,10 +164,10 @@ public class ResourceTests extends ReqResApiTests {
         GetResourceData expectedResource = resources.get(1);
         Failure failureResponse = putResourceById(true, data.getResourceName(), expectedResource.getId(), new GetResourceData())
                 .then()
-                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
-        validateFailedResponse(failureResponse, "Missing API key");
+        validateFailedResponse(failureResponse, "Missing data");
     }
 
     @Story("Put Resource by ID")
@@ -227,12 +227,12 @@ public class ResourceTests extends ReqResApiTests {
     public void patchResourceWithoutPayload() {
         List<GetResourceData> resources = data.getResources();
         GetResourceData expectedResource = resources.get(1);
-        Failure failureResponse = patchResourceById(false, data.getResourceName(), expectedResource.getId(), new GetResourceData())
+        Failure failureResponse = patchResourceById(true, data.getResourceName(), expectedResource.getId(), new GetResourceData())
                 .then()
-                .assertThat().statusCode(HttpStatus.SC_UNAUTHORIZED)
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
                 .extract().as(Failure.class);
 
-        validateFailedResponse(failureResponse, "Missing API key");
+        validateFailedResponse(failureResponse, "Missing data");
     }
 
     @Story("Patch Resource by ID")
