@@ -1,10 +1,10 @@
 package tests.reqres;
 
-import io.qameta.allure.Feature;
+import io.qameta.allure.Epic;
 import utils.RandomNumberGenerator;
 import utils.ReqResTestData;
 
-@Feature("ReqRes")
+@Epic("ResReq API")
 public class ReqResApiTests {
 
     ReqResTestData data = new ReqResTestData();

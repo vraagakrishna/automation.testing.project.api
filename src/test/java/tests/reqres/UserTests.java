@@ -1,9 +1,6 @@
 package tests.reqres;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import model.reqres.Failure;
 import model.reqres.GetSingleUser;
@@ -20,10 +17,11 @@ import static requestbuilder.reqres.ReqResApiRequestBuilder.*;
 import static utils.ValidateFormats.isValidIso8601;
 import static utils.ValidateReqResUtils.*;
 
-@Story("User Tests")
+@Feature("User Endpoints")
 public class UserTests extends ReqResApiTests {
 
-    @Description("Get all users without api key")
+    @Story("Get All Users")
+    @Description("Verify that requesting all users without an API key returns an authentication error")
     @Test(priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void getAllUsersWithoutApiKey() {
@@ -35,7 +33,8 @@ public class UserTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Get all users")
+    @Story("Get All Users")
+    @Description("Verify that the initial request to retrieve all users is successful")
     @Test(priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllUsers() {
@@ -50,7 +49,8 @@ public class UserTests extends ReqResApiTests {
         data.setUsers(user.getData());
     }
 
-    @Description("Get all users with delay")
+    @Story("Get All Users")
+    @Description("Verify that retrieving all users with a delay is successful")
     @Test(priority = 3)
     @Severity(SeverityLevel.CRITICAL)
     public void getAllUsersWithDelay() {
@@ -77,7 +77,8 @@ public class UserTests extends ReqResApiTests {
         validateUser(user);
     }
 
-    @Description("Get all users with page restriction")
+    @Story("Get All Users")
+    @Description("Verify that requesting all users with page numbers is successful")
     @Test(priority = 4)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllUsersWithPage() {
@@ -91,7 +92,8 @@ public class UserTests extends ReqResApiTests {
         validateUser(user, page, perPage);
     }
 
-    @Description("Get a user without api key")
+    @Story("Get User by ID")
+    @Description("Verify that requesting a user without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllUsers", priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void getUserWithoutApiKey() {
@@ -105,7 +107,8 @@ public class UserTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Get a user")
+    @Story("Get User by ID")
+    @Description("Verify that getting user by valid ID returns correct data and 200 OK")
     @Test(dependsOnMethods = "getAllUsers", priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getUser() {
@@ -121,7 +124,8 @@ public class UserTests extends ReqResApiTests {
         validateSingleUser(expectedUser, userResponse);
     }
 
-    @Description("Get a user by invalid id")
+    @Story("Get User by ID")
+    @Description("Verify that getting user with an invalid ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllUsers", priority = 3)
     @Severity(SeverityLevel.NORMAL)
     public void getUserByInvalidId() {
@@ -132,7 +136,8 @@ public class UserTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Put a user without api key")
+    @Story("Put User by ID")
+    @Description("Verify that updating (PUT) a user without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllUsers", priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void putUserWithoutApiKey() {
@@ -146,7 +151,8 @@ public class UserTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Put a user")
+    @Story("Put User by ID")
+    @Description("Verify that updating (PUT) a user with valid data returns 200 OK")
     @Test(dependsOnMethods = "getAllUsers", priority = 5)
     @Severity(SeverityLevel.BLOCKER)
     public void putUser() {
@@ -168,7 +174,8 @@ public class UserTests extends ReqResApiTests {
         );
     }
 
-    @Description("Put a user by invalid id")
+    @Story("Patch User by ID")
+    @Description("Verify that updating (PUT) a non-existent user ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllUsers", priority = 6)
     @Severity(SeverityLevel.NORMAL)
     public void putUserByInvalidId() {
@@ -179,7 +186,8 @@ public class UserTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Patch a user without api key")
+    @Story("Patch User by ID")
+    @Description("Verify that updating (PATCH) a user without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllUsers", priority = 7)
     @Severity(SeverityLevel.CRITICAL)
     public void patchUserWithoutApiKey() {
@@ -193,7 +201,8 @@ public class UserTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Patch a user")
+    @Story("Patch User by ID")
+    @Description("Verify that updating (PATCH) a user with valid data returns 200 OK")
     @Test(dependsOnMethods = "getAllUsers", priority = 8)
     @Severity(SeverityLevel.BLOCKER)
     public void patchUser() {
@@ -215,7 +224,8 @@ public class UserTests extends ReqResApiTests {
         );
     }
 
-    @Description("Patch a user by invalid id")
+    @Story("Patch User by ID")
+    @Description("Verify that updating (PATCH) a non-existent user ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllUsers", priority = 9)
     @Severity(SeverityLevel.NORMAL)
     public void patchUserByInvalidId() {
@@ -226,7 +236,8 @@ public class UserTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-    @Description("Delete a user without api key")
+    @Story("Delete User by ID")
+    @Description("Verify that deleting a user without an API key returns an authentication error")
     @Test(dependsOnMethods = "getAllUsers", priority = 10)
     @Severity(SeverityLevel.CRITICAL)
     public void deleteUserWithoutApiKey() {
@@ -240,7 +251,8 @@ public class UserTests extends ReqResApiTests {
         validateFailedResponse(failureResponse, "Missing API key");
     }
 
-    @Description("Delete a user")
+    @Story("Delete User by ID")
+    @Description("Verify that deleting a valid user succeeds with 204 No Content")
     @Test(dependsOnMethods = "getAllUsers", priority = 11)
     @Severity(SeverityLevel.BLOCKER)
     public void deleteUser() {
@@ -253,7 +265,8 @@ public class UserTests extends ReqResApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
-    @Description("Delete a user by invalid id")
+    @Story("Delete User by ID")
+    @Description("Verify that deleting a non-existent user ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllUsers", priority = 12)
     @Severity(SeverityLevel.NORMAL)
     public void deleteUserByInvalidId() {
