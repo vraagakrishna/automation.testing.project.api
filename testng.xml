@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <parameter name="suiteRepeatCount" value="3"/>
+    <parameter name="suiteRepeatDelayMs" value="3000"/>
 
     <listeners>
         <listener class-name="listeners.TestLoggerListener"/>

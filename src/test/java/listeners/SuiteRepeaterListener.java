@@ -12,20 +12,31 @@ public class SuiteRepeaterListener implements ISuiteListener {
 
     private int runCount = 1; // default if not set
 
+    private long delay = 0;
+
     @Override
     public void onStart(ISuite suite) {
         // only set runCount if not already in a repeated run
         if (System.getProperty(REPEAT_FLAG) == null) {
             System.out.println("=== Running suite: " + suite.getName() + " | Run #1 ===");
 
-            // get the parameter form testng.xml file
+            // get the parameters form testng.xml file
             String repeatCountParam = suite.getXmlSuite().getParameter("suiteRepeatCount");
+            String delayParam = suite.getXmlSuite().getParameter("suiteRepeatDelayMs");
 
             if (repeatCountParam != null) {
                 try {
                     runCount = Integer.parseInt(repeatCountParam);
                 } catch (NumberFormatException ex) {
                     System.out.println("Invalid suiteRepeatCount parameter: " + repeatCountParam);
+                }
+            }
+
+            if (delayParam != null) {
+                try {
+                    delay = Long.parseLong(delayParam);
+                } catch (NumberFormatException ex) {
+                    System.out.println("Invalid suiteRepeatDelayMs parameter: " + delayParam);
                 }
             }
         }
@@ -44,6 +55,13 @@ public class SuiteRepeaterListener implements ISuiteListener {
 
             // start at 1 because the first run happened already
             for (int i = 2; i <= runCount; i++) {
+                try {
+                    System.out.println("Waiting " + delay / 1000 + "s before re-running suite...");
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
                 System.out.println("=== Re-running suite: " + suite.getName() + " | Run #" + i + " ===");
 
                 TestNG testng = new TestNG();
