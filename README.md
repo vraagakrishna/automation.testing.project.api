@@ -6,6 +6,7 @@ This project automates the API testing using **RestAssured** with **Java** and *
 
 * [Open WeatherMap](https://openweathermap.org/stations)
 * [ReqRes](https://reqres.in/)
+* [Ndosi Automation](https://www.ndosiautomation.co.za/API/swagger-ui.html)
 
 It validates the functionalities of the API.
 
@@ -168,5 +169,30 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 - [x] Proper HTTP Status Codes: 200, ~~201~~, 204, 400, 404 responses (no endpoint returned with 201 status code)
 - [x] Delayed Responses: Test timeouts with ?delay=3 parameter
 - [X] CORS (Cross-Origin Resource Sharing) Enabled: Perfect for frontend testing and AJAX requests
+
+<br/>
+
+## [Ndosi Automation](https://www.ndosiautomation.co.za/API/swagger-ui.html)
+
+The Ndosi Automation API is part of the Ndosi Automation learning platform. Check the API documentation to explore the
+available endpoints and understand what testing scenarios you can practice.
+
+Visit the Swagger documentation below to see the actual API structure and available operations.
+
+## Getting Started
+
+- [ ] Review the API documentation using the link below
+- [ ] Explore the available endpoints and their parameters
+- [ ] Set up your testing environment (Postman, Insomnia, etc.)
+- [ ] Create test cases based on the documented endpoints
+- [ ] Practice different HTTP methods and response validation
+
+## Testing Best Practices
+
+- [ ] Test both successful and error scenarios
+- [ ] Validate response status codes and data formats
+- [ ] Practice request chaining where applicable
+- [ ] Test with different input parameters and edge cases
+- [ ] Document your test cases and expected results
 
 <br/>
