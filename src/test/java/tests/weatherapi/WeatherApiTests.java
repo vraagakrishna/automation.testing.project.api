@@ -1,9 +1,6 @@
 package tests.weatherapi;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import model.weatherapi.Failure;
 import model.weatherapi.GetStation;
@@ -22,14 +19,16 @@ import java.util.Map;
 
 import static requestbuilder.weatherapi.WeatherApiRequestBuilder.*;
 
-@Story("Weather Station Tests")
+@Epic("Weather API")
+@Feature("Stations Endpoints")
 public class WeatherApiTests {
 
     StationTestData data = new StationTestData();
 
     RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
-    @Description("Getting all the stations without api key")
+    @Story("Get All Stations")
+    @Description("Verify that requesting all stations without an API key returns an authentication error")
     @Test(priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void getAllStationsWithoutApiKey() {
@@ -45,7 +44,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Getting all the stations")
+    @Story("Get All Stations")
+    @Description("Verify that the initial request to retrieve all stations")
     @Test(priority = 2)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllStationsInitially() {
@@ -57,7 +57,8 @@ public class WeatherApiTests {
         validateAllStations(response, false);
     }
 
-    @Description("Register station without api key")
+    @Story("Register Station")
+    @Description("Verify that registering a station without an API key returns 401 Unauthorized")
     @Test(dependsOnMethods = "getAllStationsInitially")
     @Severity(SeverityLevel.CRITICAL)
     public void registerStationWithoutApiKey() {
@@ -75,7 +76,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register blank station")
+    @Story("Register Station")
+    @Description("Verify that registering a station with blank input fields returns validation errors")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void registerBlankStation() {
@@ -93,7 +95,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register invalid external id")
+    @Story("Register Station")
+    @Description("Verify that registering a station with an invalid external ID fails validation")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 2)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidExternalId() {
@@ -112,7 +115,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with no station name")
+    @Story("Register Station")
+    @Description("Verify that registering a station with no name returns a bad request")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 3)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithNoStationName() {
@@ -131,7 +135,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid station name")
+    @Story("Register Station")
+    @Description("Verify that registering a station with an invalid name returns an error")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 4)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidStationName() {
@@ -151,7 +156,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid latitude")
+    @Story("Register Station")
+    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 5)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidLatitude() {
@@ -172,7 +178,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with small latitude")
+    @Story("Register Station")
+    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 6)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallLatitude() {
@@ -193,7 +200,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with large latitude")
+    @Story("Register Station")
+    @Description("Verify that latitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 7)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeLatitude() {
@@ -214,7 +222,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid longitude")
+    @Story("Register Station")
+    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 8)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidLongitude() {
@@ -235,7 +244,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with small longitude")
+    @Story("Register Station")
+    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 9)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallLongitude() {
@@ -256,7 +266,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with large longitude")
+    @Story("Register Station")
+    @Description("Verify that longitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 10)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeLongitude() {
@@ -277,7 +288,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid altitude")
+    @Story("Register Station")
+    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 11)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithInvalidAltitude() {
@@ -298,7 +310,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with small altitude")
+    @Story("Register Station")
+    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 12)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithSmallAltitude() {
@@ -319,7 +332,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with large altitude")
+    @Story("Register Station")
+    @Description("Verify that altitude values are validated correctly (too small, too large, or invalid)")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 13)
     @Severity(SeverityLevel.MINOR)
     public void registerStationWithLargeAltitude() {
@@ -340,7 +354,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register with invalid altitude")
+    @Story("Register Station")
+    @Description("Verify that a valid station (without latitude, longitude and altitude) registration succeeds and returns 201 Created")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 14)
     @Severity(SeverityLevel.NORMAL)
     public void registerStationWithoutLongitudeLatitudeAltitude() {
@@ -366,7 +381,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Register station")
+    @Story("Register Station")
+    @Description("Verify that a valid station registration succeeds and returns 201 Created")
     @Test(dependsOnMethods = "getAllStationsInitially", priority = 15)
     @Severity(SeverityLevel.CRITICAL)
     public void registerValidStation() {
@@ -391,7 +407,8 @@ public class WeatherApiTests {
         data.setStationId(station.getId());
     }
 
-    @Description("Get station without api key")
+    @Story("Get Station by ID")
+    @Description("Verify that getting station info without an API key returns 401 Unauthorized")
     @Test(dependsOnMethods = "registerValidStation")
     @Severity(SeverityLevel.CRITICAL)
     public void getStationInfoWithoutApiKey() {
@@ -407,7 +424,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Get station with invalid name")
+    @Story("Get Station by ID")
+    @Description("Verify that getting station info with an invalid ID returns 404 Not Found")
     @Test(dependsOnMethods = "registerValidStation", priority = 1)
     @Severity(SeverityLevel.NORMAL)
     public void getStationInfoByInvalidId() {
@@ -419,7 +437,8 @@ public class WeatherApiTests {
         validateInvalidStationResponse(failureResponse);
     }
 
-    @Description("Get station info")
+    @Story("Get Station by ID")
+    @Description("Verify that getting station info by valid ID returns correct data and 200 OK")
     @Test(dependsOnMethods = "registerValidStation", priority = 2)
     @Severity(SeverityLevel.CRITICAL)
     public void getStationInfo() {
@@ -431,7 +450,8 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
-    @Description("Getting all the stations after registration")
+    @Story("Get All Stations")
+    @Description("Verify that the request to retrieve all stations returns the registered station")
     @Test(dependsOnMethods = "getStationInfo")
     @Severity(SeverityLevel.CRITICAL)
     public void getAllStationsAfterRegistration() {
@@ -443,7 +463,8 @@ public class WeatherApiTests {
         validateAllStations(response, true);
     }
 
-    @Description("Update station info without api key")
+    @Story("Update Station Info")
+    @Description("Verify that updating station info without an API key returns 401 Unauthorized")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration")
     @Severity(SeverityLevel.CRITICAL)
     public void updateStationInfoWithoutApiKey() {
@@ -461,7 +482,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Update station info with invalid id")
+    @Story("Update Station Info")
+    @Description("Verify that updating a non-existent station ID returns 404 Not Found")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 1)
     @Severity(SeverityLevel.NORMAL)
     public void updateStationInfoByInvalidId() {
@@ -475,7 +497,8 @@ public class WeatherApiTests {
         validateInvalidStationResponse(failureResponse);
     }
 
-    @Description("Update station info with invalid external id")
+    @Story("Update Station Info")
+    @Description("Verify that updating station info with invalid external ID returns validation errors")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 2)
     @Severity(SeverityLevel.NORMAL)
     public void updateStationInfoInvalidExternalId() {
@@ -493,7 +516,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Update station info with invalid station name")
+    @Story("Update Station Info")
+    @Description("Verify that updating station info with invalid name returns validation errors")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 3)
     @Severity(SeverityLevel.NORMAL)
     public void updateStationInfoInvalidStationName() {
@@ -512,7 +536,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Update station info with without longitude latitude and altitude")
+    @Story("Update Station Info")
+    @Description("Verify that updating station info (without longitude, latitude, and altitude) returns 200 OK")
     @Test(dependsOnMethods = "getAllStationsAfterRegistration", priority = 4)
     @Severity(SeverityLevel.CRITICAL)
     public void updateStationInfoWithoutLongitudeLatitudeAltitude() {
@@ -542,7 +567,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Get station info after updating")
+    @Story("Get Station by ID")
+    @Description("Verify that station info returns the updated station info")
     @Test(dependsOnMethods = "updateStationInfoWithoutLongitudeLatitudeAltitude")
     @Severity(SeverityLevel.CRITICAL)
     public void getStationInfoAfterUpdating() {
@@ -554,7 +580,8 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
-    @Description("Update station info with correct values")
+    @Story("Update Station Info")
+    @Description("Verify that updating station info with valid data returns 200 OK")
     @Test(dependsOnMethods = "getStationInfoAfterUpdating")
     @Severity(SeverityLevel.CRITICAL)
     public void updateStationWithCorrectValues() {
@@ -577,7 +604,8 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
-    @Description("Get station info after updating again")
+    @Story("Get Station by ID")
+    @Description("Verify that station info returns the updated station info")
     @Test(dependsOnMethods = "updateStationWithCorrectValues")
     @Severity(SeverityLevel.CRITICAL)
     public void getStationInfoAfterUpdatingAgain() {
@@ -589,7 +617,8 @@ public class WeatherApiTests {
         validateStationData(station);
     }
 
-    @Description("Delete station without api key")
+    @Story("Delete Station Info")
+    @Description("Verify that deleting a station without an API key returns 401 Unauthorized")
     @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain")
     @Severity(SeverityLevel.CRITICAL)
     public void deleteStationInfoWithoutApiKey() {
@@ -605,7 +634,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Delete station with invalid id")
+    @Story("Delete Station Info")
+    @Description("Verify that deleting a station by invalid ID returns 404 Not Found")
     @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
     @Severity(SeverityLevel.NORMAL)
     public void deleteStationInfoByInvalidId() {
@@ -617,7 +647,8 @@ public class WeatherApiTests {
         validateInvalidStationResponse(failureResponse);
     }
 
-    @Description("Delete station with valid id")
+    @Story("Delete Station Info")
+    @Description("Verify that deleting a valid station succeeds with 204 No Content")
     @Test(dependsOnMethods = "getStationInfoAfterUpdatingAgain", priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void deleteStationInfoByValidId() {
@@ -626,7 +657,8 @@ public class WeatherApiTests {
                 .assertThat().statusCode(HttpStatus.SC_NO_CONTENT);
     }
 
-    @Description("Getting all the stations after deletion")
+    @Story("Get All Stations")
+    @Description("Verify that the request to retrieve all stations does not return the deleted station")
     @Test(dependsOnMethods = "deleteStationInfoByValidId")
     @Severity(SeverityLevel.CRITICAL)
     public void getAllStationsAfterDeletion() {
@@ -638,7 +670,8 @@ public class WeatherApiTests {
         validateAllStations(response, false);
     }
 
-    @Description("Getting station by station id after deletion")
+    @Story("Get Station by ID")
+    @Description("Verify that getting station info by valid ID after deletion returns 404 Not Found")
     @Test(dependsOnMethods = "deleteStationInfoByValidId", priority = 2)
     @Severity(SeverityLevel.CRITICAL)
     public void getStationByIdAfterDeletion() {
@@ -654,7 +687,8 @@ public class WeatherApiTests {
         );
     }
 
-    @Description("Delete station after deletion")
+    @Story("Delete Station Info")
+    @Description("Verify that trying to delete the same station again returns 404 Not Found")
     @Test(dependsOnMethods = {"getAllStationsAfterDeletion", "getStationByIdAfterDeletion"})
     @Severity(SeverityLevel.CRITICAL)
     public void deleteStationInfoAfterDeletion() {
