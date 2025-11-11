@@ -67,6 +67,15 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   ├── SuiteRepeaterListener.java
 │           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
+│           │   ├── ndosiautomation             # Data models for Ndosi Automation
+│           │   │   ├── Failure.java
+│           │   │   ├── LoginRequest.java
+│           │   │   ├── LoginResponse.java
+│           │   │   ├── LoginResponseData.java
+│           │   │   ├── LoginResponseUserData.java
+│           │   │   ├── RegisterRequest.java
+│           │   │   ├── RegisterResponse.java
+│           │   │   └── RegisterResponseData.java
 │           │   ├── reqres                      # Data models for reqres
 │           │   │   ├── Failure.java
 │           │   │   ├── GetResouce.java
@@ -93,6 +102,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   └── WeatherApiRequestBuilder.java 
 │           │   └── BaseRequestBuilder.java
 │           ├── tests                           # Test classes
+│           │   ├── ndosiautomation             # Test classes for Ndosi Automation
+│           │   │   ├── AuthTests.java
+│           │   │   └── NdosiAutomationTests.java 
 │           │   ├── reqres                      # Test classes for reqres
 │           │   │   ├── AuthTests.java
 │           │   │   ├── ReqResApiTests.java
@@ -102,10 +114,12 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
+│               ├── NdosiAutomationTestData.java
 │               ├── RandomNumberGenerator.java
 │               ├── ReqResTestData.java
 │               ├── StationTestData.java
 │               ├── ValidateFormats.java
+│               ├── ValidateNdosiAutomationUtils.java
 │               └── ValidateReqResUtils.java
 ├── pom.xml
 ├── README.md
@@ -184,18 +198,18 @@ Visit the Swagger documentation below to see the actual API structure and availa
 
 ## Getting Started
 
-- [ ] Review the API documentation using the link below
-- [ ] Explore the available endpoints and their parameters
-- [ ] Set up your testing environment (Postman, Insomnia, etc.)
-- [ ] Create test cases based on the documented endpoints
-- [ ] Practice different HTTP methods and response validation
+- [x] Review the API documentation using the link below
+- [x] Explore the available endpoints and their parameters
+- [x] Set up your testing environment (Postman, Insomnia, etc.)
+- [x] Create test cases based on the documented endpoints
+- [x] Practice different HTTP methods and response validation
 
 ## Testing Best Practices
 
-- [ ] Test both successful and error scenarios
-- [ ] Validate response status codes and data formats
-- [ ] Practice request chaining where applicable
-- [ ] Test with different input parameters and edge cases
-- [ ] Document your test cases and expected results
+- [x] Test both successful and error scenarios
+- [x] Validate response status codes and data formats
+- [x] Practice request chaining where applicable
+- [x] Test with different input parameters and edge cases
+- [x] Document your test cases and expected results
 
 <br/>
