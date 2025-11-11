@@ -1,12 +1,10 @@
 package requestbuilder.reqres;
 
-import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.reqres.GetResourceData;
 import model.reqres.LoginRegisterUser;
 import org.testng.Assert;
-import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
 
@@ -27,6 +25,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .log().all()
@@ -35,10 +35,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -53,6 +50,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .queryParam("page", page)
@@ -63,10 +62,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -76,6 +72,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
     public static Response getUsers(boolean includeAppId) {
         RequestSpecification req = getUsersRequestSpecification(includeAppId, null);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .get()
@@ -83,10 +81,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -96,6 +91,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
     public static Response getUsersWithDelay(int delayInSeconds) {
         RequestSpecification req = getUsersRequestSpecification(true, delayInSeconds);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .get()
@@ -103,10 +100,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -121,6 +115,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .queryParam("page", page)
                 .queryParam("per_page", perPage)
@@ -130,10 +126,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -148,6 +141,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .get()
@@ -155,10 +150,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -173,6 +165,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body("{}")
                 .log().all()
@@ -181,10 +175,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -199,6 +190,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body("{}")
                 .log().all()
@@ -207,10 +200,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
@@ -223,6 +213,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .delete()
@@ -230,10 +222,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
@@ -246,6 +235,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .log().all()
@@ -254,10 +245,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 
@@ -272,6 +260,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .body(payload)
@@ -281,11 +271,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(payload.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, payload, response);
 
         return response;
     }
@@ -298,6 +284,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .body(payload)
@@ -307,11 +295,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(payload.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, payload, response);
 
         validateHeaders(response);
 
@@ -326,6 +310,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .pathParam("resource", resourceName)
                 .log().all()
@@ -334,10 +320,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
@@ -350,6 +333,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body(body)
                 .log().all()
@@ -358,11 +343,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(body.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, body, response);
 
         validateHeaders(response);
 
@@ -377,6 +358,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body(body)
                 .log().all()
@@ -385,11 +368,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(body.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, body, response);
 
         validateHeaders(response);
 
@@ -404,6 +383,8 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
         if (includeAppId)
             req.header(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body("{}")
                 .log().all()
@@ -412,10 +393,7 @@ public class ReqResApiRequestBuilder extends BaseReqResApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         validateHeaders(response);
 

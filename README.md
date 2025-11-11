@@ -84,9 +84,10 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   ├── reqres                      # API requests for reqres
 │           │   │   ├── BaseReqResApiRequestBuilder.java
 │           │   │   └── ReqResApiRequestBuilder.java 
-│           │   └── weatherapi                  # API requests for weather api
-│           │       ├── BaseWeatherApiRequestBuilder.java
-│           │       └── WeatherApiRequestBuilder.java 
+│           │   ├── weatherapi                  # API requests for weather api
+│           │   │   ├── BaseWeatherApiRequestBuilder.java
+│           │   │   └── WeatherApiRequestBuilder.java 
+│           │   └── BaseRequestBuilder.java
 │           ├── tests                           # Test classes
 │           │   ├── reqres                      # Test classes for reqres
 │           │   │   ├── AuthTests.java

@@ -1,10 +1,8 @@
 package requestbuilder.weatherapi;
 
-import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.weatherapi.PostStation;
-import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
 
@@ -22,6 +20,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
         if (includeAppId)
             req.queryParam(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .get()
@@ -29,10 +29,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
@@ -45,6 +42,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
         if (includeAppId)
             req.queryParam(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body(station)
                 .log().all()
@@ -53,11 +52,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(station.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, station, response);
 
         return response;
     }
@@ -70,6 +65,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
         if (includeAppId)
             req.queryParam(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .get()
@@ -77,10 +74,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
@@ -93,6 +87,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
         if (includeAppId)
             req.queryParam(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .body(station)
                 .log().all()
@@ -101,11 +97,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachRequest(station.toString());
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, station, response);
 
         return response;
     }
@@ -118,6 +110,8 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
         if (includeAppId)
             req.queryParam(appKey, appId);
 
+        addDataToAllureReport(req);
+
         Response response = req
                 .log().all()
                 .delete()
@@ -125,10 +119,7 @@ public class WeatherApiRequestBuilder extends BaseWeatherApiRequestBuilder {
                 .log().all()
                 .extract().response();
 
-        AllureUtils.attachUri(
-                ((RequestSpecificationImpl) req).getMethod() + " " + ((RequestSpecificationImpl) req).getURI()
-        );
-        AllureUtils.attachResponse(response.getBody().asString());
+        addDataToAllureReport(req, null, response);
 
         return response;
     }
