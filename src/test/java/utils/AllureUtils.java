@@ -40,6 +40,14 @@ public class AllureUtils {
     public static void attachResponseHeaders(String responseHeaders) {
         Allure.addAttachment("Response Headers", responseHeaders);
     }
+
+    public static void attachJwtToken(String payloadJson) {
+        Allure.addAttachment("Decoded JWT Payload", prettyPrintJson(payloadJson));
+    }
+
+    public static void attachmentTime(String name, String time) {
+        Allure.addAttachment(name, time);
+    }
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">

@@ -3,13 +3,11 @@ package tests.ndosiautomation;
 import io.qameta.allure.*;
 import model.ndosiautomation.*;
 import org.apache.http.HttpStatus;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static requestbuilder.ndosiautomation.NdosiAutomationRequestBuilder.login;
 import static requestbuilder.ndosiautomation.NdosiAutomationRequestBuilder.register;
-import static utils.ValidateFormats.isValidIso8601;
-import static utils.ValidateNdosiAutomationUtils.validateFailedResponse;
+import static utils.ValidateNdosiAutomationUtils.*;
 
 @Feature("User Authentication Endpoints")
 public class AuthTests extends NdosiAutomationTests {
@@ -36,7 +34,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutPassword() {
         LoginRequest<Object> loginRequest = new LoginRequest<>();
-        loginRequest.setEmail(data.email);
+        loginRequest.setEmail(data.getEmail());
 
         Failure failureResponse = login(loginRequest)
                 .then()
@@ -69,7 +67,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithValidDataBeforeRegistration() {
         LoginRequest<Object> loginRequest = new LoginRequest<>();
-        loginRequest.setEmail(data.email);
+        loginRequest.setEmail(data.getEmail());
         loginRequest.setPassword(data.password);
 
         Failure failureResponse = login(loginRequest)
@@ -86,8 +84,8 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutFirstName() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -105,8 +103,8 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutLastName() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -124,8 +122,8 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutEmail() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -143,9 +141,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutPassword() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setConfirmPassword(data.password);
 
         Failure failureResponse = register(registerRequest)
@@ -162,9 +160,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithoutConfirmPassword() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
 
         Failure failureResponse = register(registerRequest)
@@ -181,9 +179,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithInvalidEmail() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.firstName);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getFirstName());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -201,11 +199,11 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithMismatchPassword() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.firstName);
+        registerRequest.setConfirmPassword(data.getFirstName());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -221,9 +219,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithWeakPassword() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.weakPassword);
         registerRequest.setConfirmPassword(data.weakPassword);
 
@@ -241,9 +239,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithValidDetails() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -252,38 +250,9 @@ public class AuthTests extends NdosiAutomationTests {
                 .assertThat().statusCode(HttpStatus.SC_CREATED)
                 .extract().as(RegisterResponse.class);
 
-        RegisterResponseData registerResponseData = registerResponse.getData();
+        validateSuccessRegisterResponse(registerResponse, data, softAssert);
 
-        Assert.assertEquals(
-                registerResponse.getMessage(),
-                "User registered successfully",
-                "Response message is incorrect"
-        );
-
-        data.setRegisterResponseData(registerResponseData);
-
-        Assert.assertEquals(
-                registerResponseData.getFirstName(),
-                data.firstName,
-                "First name is incorrect"
-        );
-
-        Assert.assertEquals(
-                registerResponseData.getLastName(),
-                data.lastName,
-                "Last name is incorrect"
-        );
-
-        Assert.assertEquals(
-                registerResponseData.getEmail(),
-                data.email,
-                "Email is incorrect"
-        );
-
-        Assert.assertTrue(
-                isValidIso8601(registerResponseData.getCreatedAt()),
-                "Invalid ISO 8601 format: " + registerResponseData.getCreatedAt()
-        );
+        checkSoftAssertion();
     }
 
     @Story("Register")
@@ -292,9 +261,9 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserAfterRegistrationDetails() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.firstName);
-        registerRequest.setLastName(data.lastName);
-        registerRequest.setEmail(data.email);
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
         registerRequest.setPassword(data.password);
         registerRequest.setConfirmPassword(data.password);
 
@@ -312,7 +281,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithValidDataAfterRegistration() {
         LoginRequest<Object> loginRequest = new LoginRequest<>();
-        loginRequest.setEmail(data.email);
+        loginRequest.setEmail(data.getEmail());
         loginRequest.setPassword(data.password);
 
         LoginResponse loginResponse = login(loginRequest)
@@ -320,53 +289,9 @@ public class AuthTests extends NdosiAutomationTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(LoginResponse.class);
 
-        Assert.assertEquals(
-                loginResponse.getMessage(),
-                "Login successful",
-                "Response message is incorrect"
-        );
+        validateSuccessLoginResponse(loginResponse, data, softAssert);
 
-        LoginResponseData loginResponseData = loginResponse.getData();
-
-        data.setToken(loginResponseData.getToken());
-
-        LoginResponseUserData loginResponseUserData = loginResponseData.getUser();
-
-        data.setLoginResponseUserData(loginResponseUserData);
-
-        Assert.assertEquals(
-                loginResponseUserData.getFirstName(),
-                data.firstName,
-                "First name is incorrect"
-        );
-
-        Assert.assertEquals(
-                loginResponseUserData.getLastName(),
-                data.lastName,
-                "Last name is incorrect"
-        );
-
-        Assert.assertEquals(
-                loginResponseUserData.getEmail(),
-                data.email,
-                "Email is incorrect"
-        );
-
-        Assert.assertEquals(
-                loginResponseUserData.getCreatedAt(),
-                data.getRegisterResponseData().getCreatedAt(),
-                "Created at is incorrect"
-        );
-
-        Assert.assertTrue(
-                isValidIso8601(loginResponseUserData.getCreatedAt()),
-                "Invalid ISO 8601 format: " + loginResponseUserData.getCreatedAt()
-        );
-
-        Assert.assertTrue(
-                isValidIso8601(loginResponseUserData.getUpdatedAt()),
-                "Invalid ISO 8601 format: " + loginResponseUserData.getUpdatedAt()
-        );
+        checkSoftAssertion();
     }
 
 }

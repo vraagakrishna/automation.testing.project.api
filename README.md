@@ -114,6 +114,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
+│               ├── JwtUtils.java
 │               ├── NdosiAutomationTestData.java
 │               ├── RandomNumberGenerator.java
 │               ├── ReqResTestData.java
