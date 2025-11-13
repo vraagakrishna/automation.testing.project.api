@@ -129,4 +129,69 @@ public class ValidateNdosiAutomationUtils {
         );
     }
 
+    public static void validateSuccessGetProfileResponse(GetProfileResponse getProfileResponse, NdosiAutomationTestData data, SoftAssert softAssert, String expectedMessage) {
+        GetProfileResponseData getProfileResponseData = getProfileResponse.getData();
+
+        softAssert.assertEquals(
+                getProfileResponse.getMessage(),
+                expectedMessage,
+                "Response message is incorrect"
+        );
+
+        data.setGetProfileResponseData(getProfileResponseData);
+
+        if (data.getRegisterResponseData() != null) {
+            softAssert.assertEquals(
+                    getProfileResponseData.getId(),
+                    data.getRegisterResponseData().getId(),
+                    "Id is incorrect"
+            );
+        }
+
+        softAssert.assertEquals(
+                getProfileResponseData.getFirstName(),
+                data.getFirstName(),
+                "First name is incorrect"
+        );
+
+        softAssert.assertEquals(
+                getProfileResponseData.getLastName(),
+                data.getLastName(),
+                "Last name is incorrect"
+        );
+
+        softAssert.assertEquals(
+                getProfileResponseData.getEmail(),
+                data.getEmail(),
+                "Email is incorrect"
+        );
+
+        softAssert.assertEquals(
+                getProfileResponseData.getCreatedAt(),
+                data.getLoginResponseUserData().getCreatedAt(),
+                "Created at is incorrect"
+        );
+
+        softAssert.assertEquals(
+                getProfileResponseData.getUpdatedAt(),
+                data.getLoginResponseUserData().getUpdatedAt(),
+                "Updated at is incorrect"
+        );
+
+        softAssert.assertTrue(
+                getProfileResponseData.isActive(),
+                "Is active is incorrect"
+        );
+
+        softAssert.assertTrue(
+                isValidIso8601(getProfileResponseData.getCreatedAt()),
+                "Invalid ISO 8601 format: " + getProfileResponseData.getCreatedAt()
+        );
+
+        softAssert.assertTrue(
+                isValidIso8601(getProfileResponseData.getUpdatedAt()),
+                "Invalid ISO 8601 format: " + getProfileResponseData.getUpdatedAt()
+        );
+    }
+
 }

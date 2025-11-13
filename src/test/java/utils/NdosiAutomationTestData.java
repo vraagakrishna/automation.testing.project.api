@@ -1,6 +1,7 @@
 package utils;
 
 import com.github.javafaker.Faker;
+import model.ndosiautomation.GetProfileResponseData;
 import model.ndosiautomation.LoginResponseUserData;
 import model.ndosiautomation.RegisterResponseData;
 
@@ -24,6 +25,8 @@ public class NdosiAutomationTestData {
     private LoginResponseUserData loginResponseUserData;
 
     private String token;
+
+    private GetProfileResponseData getProfileResponseData;
     // </editor-fold>
 
     // <editor-fold desc="Getters and Setters">
@@ -73,6 +76,14 @@ public class NdosiAutomationTestData {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public GetProfileResponseData getGetProfileResponseData() {
+        return getProfileResponseData;
+    }
+
+    public void setGetProfileResponseData(GetProfileResponseData getProfileResponseData) {
+        this.getProfileResponseData = getProfileResponseData;
     }
     // </editor-fold>
 

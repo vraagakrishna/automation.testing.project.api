@@ -23,6 +23,7 @@
     <test name="Ndosi Automation Testing">
         <classes>
             <class name="tests.ndosiautomation.AuthTests"/>
+            <class name="tests.ndosiautomation.UserProfileTests"/>
         </classes>
     </test>
 </suite>

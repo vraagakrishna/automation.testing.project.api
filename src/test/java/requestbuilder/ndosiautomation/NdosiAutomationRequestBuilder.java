@@ -49,6 +49,28 @@ public class NdosiAutomationRequestBuilder extends BaseNdosiAutomationRequestBui
 
         return response;
     }
+
+    public static Response getUserProfile(String token) {
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/profile");
+
+        if (token != null)
+            req.header("Authorization", "Bearer " + token);
+
+        addDataToAllureReport(req);
+
+        Response response = req
+                .log().all()
+                .get()
+                .then()
+                .log().all()
+                .extract().response();
+
+        addDataToAllureReport(req, null, response);
+
+        return response;
+    }
     // </editor-fold>
 
 }

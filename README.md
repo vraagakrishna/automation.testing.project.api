@@ -69,6 +69,8 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           ├── model                           # Data models
 │           │   ├── ndosiautomation             # Data models for Ndosi Automation
 │           │   │   ├── Failure.java
+│           │   │   ├── GetProfileResponse.java
+│           │   │   ├── GetProfileResponseData.java
 │           │   │   ├── LoginRequest.java
 │           │   │   ├── LoginResponse.java
 │           │   │   ├── LoginResponseData.java
@@ -104,7 +106,8 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           ├── tests                           # Test classes
 │           │   ├── ndosiautomation             # Test classes for Ndosi Automation
 │           │   │   ├── AuthTests.java
-│           │   │   └── NdosiAutomationTests.java 
+│           │   │   ├── NdosiAutomationTests.java
+│           │   │   └── UserProfileTests.java 
 │           │   ├── reqres                      # Test classes for reqres
 │           │   │   ├── AuthTests.java
 │           │   │   ├── ReqResApiTests.java
