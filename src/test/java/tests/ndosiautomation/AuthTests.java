@@ -1,13 +1,17 @@
 package tests.ndosiautomation;
 
 import io.qameta.allure.*;
-import model.ndosiautomation.*;
+import model.ndosiautomation.Failure;
+import model.ndosiautomation.LoginRequest;
+import model.ndosiautomation.RegisterRequest;
+import model.ndosiautomation.RegisterResponse;
 import org.apache.http.HttpStatus;
 import org.testng.annotations.Test;
 
 import static requestbuilder.ndosiautomation.NdosiAutomationRequestBuilder.login;
 import static requestbuilder.ndosiautomation.NdosiAutomationRequestBuilder.register;
-import static utils.ValidateNdosiAutomationUtils.*;
+import static utils.ValidateNdosiAutomationUtils.validateFailedResponse;
+import static utils.ValidateNdosiAutomationUtils.validateSuccessRegisterResponse;
 
 @Feature("User Authentication Endpoints")
 public class AuthTests extends NdosiAutomationTests {
@@ -18,7 +22,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutEmail() {
         LoginRequest<Object> loginRequest = new LoginRequest<>();
-        loginRequest.setPassword(data.password);
+        loginRequest.setPassword(data.getPassword());
 
         Failure failureResponse = login(loginRequest)
                 .then()
@@ -68,7 +72,7 @@ public class AuthTests extends NdosiAutomationTests {
     public void loginUserWithValidDataBeforeRegistration() {
         LoginRequest<Object> loginRequest = new LoginRequest<>();
         loginRequest.setEmail(data.getEmail());
-        loginRequest.setPassword(data.password);
+        loginRequest.setPassword(data.getPassword());
 
         Failure failureResponse = login(loginRequest)
                 .then()
@@ -86,8 +90,8 @@ public class AuthTests extends NdosiAutomationTests {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -105,8 +109,8 @@ public class AuthTests extends NdosiAutomationTests {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -124,8 +128,8 @@ public class AuthTests extends NdosiAutomationTests {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -144,7 +148,7 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -163,7 +167,7 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -182,8 +186,8 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getFirstName());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -202,7 +206,7 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
         registerRequest.setConfirmPassword(data.getFirstName());
 
         Failure failureResponse = register(registerRequest)
@@ -242,8 +246,8 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         RegisterResponse registerResponse = register(registerRequest)
                 .then()
@@ -264,8 +268,8 @@ public class AuthTests extends NdosiAutomationTests {
         registerRequest.setFirstName(data.getFirstName());
         registerRequest.setLastName(data.getLastName());
         registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.password);
-        registerRequest.setConfirmPassword(data.password);
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
 
         Failure failureResponse = register(registerRequest)
                 .then()
@@ -280,18 +284,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Test(priority = 2, dependsOnMethods = "registerUserWithValidDetails")
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithValidDataAfterRegistration() {
-        LoginRequest<Object> loginRequest = new LoginRequest<>();
-        loginRequest.setEmail(data.getEmail());
-        loginRequest.setPassword(data.password);
-
-        LoginResponse loginResponse = login(loginRequest)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_OK)
-                .extract().as(LoginResponse.class);
-
-        validateSuccessLoginResponse(loginResponse, data, softAssert);
-
-        checkSoftAssertion();
+        this.loginUserWithValidData();
     }
 
 }

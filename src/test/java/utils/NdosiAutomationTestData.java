@@ -10,9 +10,9 @@ public class NdosiAutomationTestData {
     // <editor-fold desc="Class fields">
     private static final Faker faker = new Faker();
 
-    public String password = generateFakePassword();
-
     public String weakPassword = faker.internet().password(1, 5, true, true, true);
+
+    private String password = generateFakePassword();
 
     private String firstName = generateFakeFirstName();
 
@@ -30,6 +30,14 @@ public class NdosiAutomationTestData {
     // </editor-fold>
 
     // <editor-fold desc="Getters and Setters">
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -98,6 +106,10 @@ public class NdosiAutomationTestData {
 
     public void generateNewEmail() {
         email = generateFakeEmail();
+    }
+
+    public void generateNewPassword() {
+        password = generateFakePassword();
     }
     // </editor-fold>
 
