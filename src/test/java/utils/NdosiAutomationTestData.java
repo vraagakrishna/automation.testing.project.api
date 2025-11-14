@@ -114,6 +114,10 @@ public class NdosiAutomationTestData {
     // </editor-fold>
 
     // <editor-fold desc="Private Methods">
+    private String sanitize(String input) {
+        return input.replaceAll("[^A-Za-z0-9]", "");
+    }
+
     private String generateFakeFirstName() {
         return faker.name().firstName();
     }
@@ -123,7 +127,7 @@ public class NdosiAutomationTestData {
     }
 
     private String generateFakeEmail() {
-        return lastName + "." + firstName + "." + faker.number().numberBetween(0, 10000) + "@gmail.com";
+        return sanitize(lastName) + "." + sanitize(firstName) + "." + faker.number().numberBetween(0, 10000) + "@gmail.com";
     }
 
     private String generateFakePassword() {
