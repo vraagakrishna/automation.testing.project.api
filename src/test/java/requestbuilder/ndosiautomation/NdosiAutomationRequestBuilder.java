@@ -3,6 +3,7 @@ package requestbuilder.ndosiautomation;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.ndosiautomation.LoginRequest;
+import model.ndosiautomation.PasswordRequest;
 import model.ndosiautomation.RegisterRequest;
 import model.ndosiautomation.UpdateRequest;
 
@@ -77,6 +78,29 @@ public class NdosiAutomationRequestBuilder extends BaseNdosiAutomationRequestBui
         RequestSpecification req = given()
                 .spec(baseSpec)
                 .basePath("/profile");
+
+        if (token != null)
+            req.header("Authorization", "Bearer " + token);
+
+        addDataToAllureReport(req);
+
+        Response response = req
+                .body(body)
+                .log().all()
+                .put()
+                .then()
+                .log().all()
+                .extract().response();
+
+        addDataToAllureReport(req, body, response);
+
+        return response;
+    }
+
+    public static Response updateUserPassword(String token, PasswordRequest<Object> body) {
+        RequestSpecification req = given()
+                .spec(baseSpec)
+                .basePath("/profile/password");
 
         if (token != null)
             req.header("Authorization", "Bearer " + token);

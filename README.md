@@ -75,6 +75,7 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   ├── LoginResponse.java
 │           │   │   ├── LoginResponseData.java
 │           │   │   ├── LoginResponseUserData.java
+│           │   │   ├── PasswordRequest.java
 │           │   │   ├── RegisterRequest.java
 │           │   │   ├── RegisterResponse.java
 │           │   │   ├── RegisterResponseData.java
