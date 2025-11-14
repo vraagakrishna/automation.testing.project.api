@@ -238,8 +238,48 @@ public class AuthTests extends NdosiAutomationTests {
     }
 
     @Story("Register")
-    @Description("Verify that registering with valid credentials returns 201 Created")
+    @Description("Verify that registering with long first name returns an error")
     @Test(priority = 9, dependsOnMethods = "loginUserWithValidDataBeforeRegistration")
+    @Severity(SeverityLevel.CRITICAL)
+    public void registerUserWithLongFirstName() {
+        RegisterRequest<Object> registerRequest = new RegisterRequest<>();
+        registerRequest.setFirstName("a".repeat(500000));
+        registerRequest.setLastName(data.getLastName());
+        registerRequest.setEmail(data.getEmail());
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
+
+        Failure failureResponse = register(registerRequest)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Registration failed. Please try again.");
+    }
+
+    @Story("Register")
+    @Description("Verify that registering with long last name returns an error")
+    @Test(priority = 10, dependsOnMethods = "loginUserWithValidDataBeforeRegistration")
+    @Severity(SeverityLevel.CRITICAL)
+    public void registerUserWithLongLastName() {
+        RegisterRequest<Object> registerRequest = new RegisterRequest<>();
+        registerRequest.setFirstName(data.getFirstName());
+        registerRequest.setLastName("a".repeat(500000));
+        registerRequest.setEmail(data.getEmail());
+        registerRequest.setPassword(data.getPassword());
+        registerRequest.setConfirmPassword(data.getPassword());
+
+        Failure failureResponse = register(registerRequest)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Registration failed. Please try again.");
+    }
+
+    @Story("Register")
+    @Description("Verify that registering with valid credentials returns 201 Created")
+    @Test(priority = 11, dependsOnMethods = "loginUserWithValidDataBeforeRegistration")
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserWithValidDetails() {
         RegisterRequest<Object> registerRequest = new RegisterRequest<>();
@@ -273,46 +313,6 @@ public class AuthTests extends NdosiAutomationTests {
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithValidDataAfterRegistration() {
         this.loginUserWithValidData();
-    }
-
-    @Story("Register")
-    @Description("Verify that registering with long first name returns an error")
-    @Test(priority = 13)
-    @Severity(SeverityLevel.CRITICAL)
-    public void registerUserWithLongFirstName() {
-        RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName("a".repeat(500000));
-        registerRequest.setLastName(data.getLastName());
-        registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.getPassword());
-        registerRequest.setConfirmPassword(data.getPassword());
-
-        Failure failureResponse = register(registerRequest)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract().as(Failure.class);
-
-        validateFailedResponse(failureResponse, "Registration failed. Please try again.");
-    }
-
-    @Story("Register")
-    @Description("Verify that registering with long last name returns an error")
-    @Test(priority = 14)
-    @Severity(SeverityLevel.CRITICAL)
-    public void registerUserWithLongLastName() {
-        RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.getFirstName());
-        registerRequest.setLastName("a".repeat(500000));
-        registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.getPassword());
-        registerRequest.setConfirmPassword(data.getPassword());
-
-        Failure failureResponse = register(registerRequest)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract().as(Failure.class);
-
-        validateFailedResponse(failureResponse, "Registration failed. Please try again.");
     }
 
 }
