@@ -264,19 +264,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Test(priority = 1, dependsOnMethods = "registerUserWithValidDetails")
     @Severity(SeverityLevel.CRITICAL)
     public void registerUserAfterRegistrationDetails() {
-        RegisterRequest<Object> registerRequest = new RegisterRequest<>();
-        registerRequest.setFirstName(data.getFirstName());
-        registerRequest.setLastName(data.getLastName());
-        registerRequest.setEmail(data.getEmail());
-        registerRequest.setPassword(data.getPassword());
-        registerRequest.setConfirmPassword(data.getPassword());
-
-        Failure failureResponse = register(registerRequest)
-                .then()
-                .assertThat().statusCode(HttpStatus.SC_BAD_REQUEST)
-                .extract().as(Failure.class);
-
-        validateFailedResponse(failureResponse, "User with this email already exists");
+        this.reRegistrationWithValidData();
     }
 
     @Story("Login")

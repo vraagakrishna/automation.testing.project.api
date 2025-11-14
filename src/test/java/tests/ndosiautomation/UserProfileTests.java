@@ -166,7 +166,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Get Profile")
     @Description("Verify that getting profile after updating the name returns the updated user profile")
-    @Test(priority = 11)
+    @Test(dependsOnMethods = "updateProfileWithoutName")
     @Severity(SeverityLevel.CRITICAL)
     public void getProfileAfterUpdatingName() {
         GetProfileResponse getProfileResponse = getUserProfile(data.getToken())
@@ -203,7 +203,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Get Profile")
     @Description("Verify that getting profile after updating the name returns the updated user profile")
-    @Test(priority = 13)
+    @Test(dependsOnMethods = "updateProfileWithName")
     @Severity(SeverityLevel.CRITICAL)
     public void getProfileAfterUpdatingWithName() {
         GetProfileResponse getProfileResponse = getUserProfile(data.getToken())
@@ -238,7 +238,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Get Profile")
     @Description("Verify that getting profile after updating the email returns the updated user profile")
-    @Test(priority = 15)
+    @Test(priority = 1, dependsOnMethods = "updateProfileWithEmail")
     @Severity(SeverityLevel.CRITICAL)
     public void getProfileAfterUpdatingEmail() {
         GetProfileResponse getProfileResponse = getUserProfile(data.getToken())
@@ -249,6 +249,14 @@ public class UserProfileTests extends NdosiAutomationTests {
         validateSuccessGetProfileResponse(getProfileResponse, data, softAssert, "Profile retrieved successfully");
 
         checkSoftAssertion();
+    }
+
+    @Story("Register")
+    @Description("Verify that registering user with updated email address returns an error")
+    @Test(priority = 2, dependsOnMethods = "updateProfileWithEmail")
+    @Severity(SeverityLevel.CRITICAL)
+    public void registerUserWithNewEmailAddress() {
+        this.reRegistrationWithValidData();
     }
 
     @Story("Update Password")
