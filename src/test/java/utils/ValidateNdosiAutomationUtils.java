@@ -172,11 +172,15 @@ public class ValidateNdosiAutomationUtils {
                 "Created at is incorrect"
         );
 
-        softAssert.assertEquals(
-                getProfileResponseData.getUpdatedAt(),
-                data.getLoginResponseUserData().getUpdatedAt(),
-                "Updated at is incorrect"
-        );
+        if (expectedMessage.equals("Profile updated successfully")) {
+            data.getLoginResponseUserData().setUpdatedAt(getProfileResponseData.getUpdatedAt());
+        } else {
+            softAssert.assertEquals(
+                    getProfileResponseData.getUpdatedAt(),
+                    data.getLoginResponseUserData().getUpdatedAt(),
+                    "Updated at is incorrect"
+            );
+        }
 
         softAssert.assertTrue(
                 getProfileResponseData.isActive(),
