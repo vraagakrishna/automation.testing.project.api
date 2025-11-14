@@ -143,8 +143,40 @@ public class UserProfileTests extends NdosiAutomationTests {
     }
 
     @Story("Update Profile")
-    @Description("Verify that updating profile without a name")
+    @Description("Verify that updating with long first name returns an error")
     @Test(priority = 10)
+    @Severity(SeverityLevel.CRITICAL)
+    public void updateProfileWithLongFirstName() {
+        UpdateRequest<Object> updateRequest = new UpdateRequest<>();
+        updateRequest.setFirstName("a".repeat(500000));
+
+        Failure failureResponse = updateUserProfile(data.getToken(), updateRequest)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Failed to update profile");
+    }
+
+    @Story("Update Profile")
+    @Description("Verify that updating with long last name returns an error")
+    @Test(priority = 11)
+    @Severity(SeverityLevel.CRITICAL)
+    public void updateProfileWithLongLastName() {
+        UpdateRequest<Object> updateRequest = new UpdateRequest<>();
+        updateRequest.setLastName("a".repeat(500000));
+
+        Failure failureResponse = updateUserProfile(data.getToken(), updateRequest)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().as(Failure.class);
+
+        validateFailedResponse(failureResponse, "Failed to update profile");
+    }
+
+    @Story("Update Profile")
+    @Description("Verify that updating profile without a name")
+    @Test(priority = 12)
     @Severity(SeverityLevel.CRITICAL)
     public void updateProfileWithoutName() {
         data.setFirstName("");
@@ -181,7 +213,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Profile")
     @Description("Verify that updating profile with name returns an error")
-    @Test(priority = 12)
+    @Test(priority = 14)
     @Severity(SeverityLevel.CRITICAL)
     public void updateProfileWithName() {
         data.generateNewFirstName();
@@ -218,7 +250,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Profile")
     @Description("Verify that updating profile with an email returns an success response")
-    @Test(priority = 14)
+    @Test(priority = 16)
     @Severity(SeverityLevel.CRITICAL)
     public void updateProfileWithEmail() {
         data.generateNewEmail();
@@ -261,7 +293,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password without a token returns an authentication error")
-    @Test(priority = 16)
+    @Test(priority = 19)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutToken() {
         Failure failureResponse = updateUserPassword(null, new PasswordRequest<>())
@@ -274,7 +306,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with an invalid token returns an authentication error")
-    @Test(priority = 17)
+    @Test(priority = 20)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithInvalidToken() {
         Failure failureResponse = updateUserPassword(data.getFirstName(), new PasswordRequest<>())
@@ -287,7 +319,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with an expired token returns an authentication error")
-    @Test(priority = 18)
+    @Test(priority = 21)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithExpiredToken() {
         String expiredToken = expireJwtToken(data.getToken());
@@ -302,7 +334,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with an invalid payload returns an error")
-    @Test(priority = 19)
+    @Test(priority = 22)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutPayload() {
         Failure failureResponse = updateUserPassword(data.getToken(), new PasswordRequest<>())
@@ -315,7 +347,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password without current password returns an error")
-    @Test(priority = 20)
+    @Test(priority = 23)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutCurrentPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -332,7 +364,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password without new password returns an error")
-    @Test(priority = 21)
+    @Test(priority = 24)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutNewPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -349,7 +381,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password without confirm password returns an error")
-    @Test(priority = 22)
+    @Test(priority = 25)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutConfirmPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -366,7 +398,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with same password returns a validation error")
-    @Test(priority = 23)
+    @Test(priority = 26)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithIncorrectCurrentPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -386,7 +418,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with same password returns a validation error")
-    @Test(priority = 24)
+    @Test(priority = 27)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithoutChangingPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -406,7 +438,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with weak password returns a validation error")
-    @Test(priority = 25)
+    @Test(priority = 28)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithWeakPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -424,7 +456,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with mismatch password returns a validation error")
-    @Test(priority = 26)
+    @Test(priority = 29)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithMismatchPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
@@ -442,7 +474,7 @@ public class UserProfileTests extends NdosiAutomationTests {
 
     @Story("Update Password")
     @Description("Verify that updating password with new password returns a success error")
-    @Test(priority = 27)
+    @Test(priority = 30)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithNewPassword() {
         PasswordRequest<Object> passwordRequest = new PasswordRequest<>();
