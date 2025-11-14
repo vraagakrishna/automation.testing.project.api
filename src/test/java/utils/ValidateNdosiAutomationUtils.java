@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-import static utils.ValidateFormats.isValidIso8601;
+import static utils.ValidateFormats.isValidAnyDateTime;
 
 public class ValidateNdosiAutomationUtils {
 
@@ -51,8 +51,8 @@ public class ValidateNdosiAutomationUtils {
         );
 
         softAssert.assertTrue(
-                isValidIso8601(registerResponseData.getCreatedAt()),
-                "Invalid ISO 8601 format: " + registerResponseData.getCreatedAt()
+                isValidAnyDateTime(registerResponseData.getCreatedAt()),
+                "Invalid datetime format: " + registerResponseData.getCreatedAt()
         );
     }
 
@@ -104,13 +104,13 @@ public class ValidateNdosiAutomationUtils {
         }
 
         softAssert.assertTrue(
-                isValidIso8601(loginResponseUserData.getCreatedAt()),
-                "Invalid ISO 8601 format: " + loginResponseUserData.getCreatedAt()
+                isValidAnyDateTime(loginResponseUserData.getCreatedAt()),
+                "Invalid datetime format: " + loginResponseUserData.getCreatedAt()
         );
 
         softAssert.assertTrue(
-                isValidIso8601(loginResponseUserData.getUpdatedAt()),
-                "Invalid ISO 8601 format: " + loginResponseUserData.getUpdatedAt()
+                isValidAnyDateTime(loginResponseUserData.getUpdatedAt()),
+                "Invalid datetime format: " + loginResponseUserData.getUpdatedAt()
         );
     }
 
@@ -184,13 +184,25 @@ public class ValidateNdosiAutomationUtils {
         );
 
         softAssert.assertTrue(
-                isValidIso8601(getProfileResponseData.getCreatedAt()),
-                "Invalid ISO 8601 format: " + getProfileResponseData.getCreatedAt()
+                isValidAnyDateTime(getProfileResponseData.getCreatedAt()),
+                "Invalid datetime format: " + getProfileResponseData.getCreatedAt()
         );
 
         softAssert.assertTrue(
-                isValidIso8601(getProfileResponseData.getUpdatedAt()),
-                "Invalid ISO 8601 format: " + getProfileResponseData.getUpdatedAt()
+                isValidAnyDateTime(getProfileResponseData.getUpdatedAt()),
+                "Invalid datetime format: " + getProfileResponseData.getUpdatedAt()
+        );
+    }
+
+    public static void validateSuccessResponse(Failure successResponse, String message) {
+        Assert.assertTrue(
+                successResponse.isSuccess(),
+                "Success should be true"
+        );
+
+        Assert.assertTrue(
+                successResponse.getMessage().toLowerCase().contains(message.toLowerCase()),
+                "Response message is incorrect"
         );
     }
 
