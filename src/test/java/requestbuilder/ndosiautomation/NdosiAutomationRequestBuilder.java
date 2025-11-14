@@ -6,6 +6,7 @@ import model.ndosiautomation.LoginRequest;
 import model.ndosiautomation.PasswordRequest;
 import model.ndosiautomation.RegisterRequest;
 import model.ndosiautomation.UpdateRequest;
+import org.apache.http.HttpHeaders;
 
 import static io.restassured.RestAssured.given;
 
@@ -58,7 +59,7 @@ public class NdosiAutomationRequestBuilder extends BaseNdosiAutomationRequestBui
                 .basePath("/profile");
 
         if (token != null)
-            req.header("Authorization", "Bearer " + token);
+            req.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
         addDataToAllureReport(req);
 
@@ -80,7 +81,7 @@ public class NdosiAutomationRequestBuilder extends BaseNdosiAutomationRequestBui
                 .basePath("/profile");
 
         if (token != null)
-            req.header("Authorization", "Bearer " + token);
+            req.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
         addDataToAllureReport(req);
 
@@ -103,7 +104,7 @@ public class NdosiAutomationRequestBuilder extends BaseNdosiAutomationRequestBui
                 .basePath("/profile/password");
 
         if (token != null)
-            req.header("Authorization", "Bearer " + token);
+            req.header(HttpHeaders.AUTHORIZATION, "Bearer " + token);
 
         addDataToAllureReport(req);
 

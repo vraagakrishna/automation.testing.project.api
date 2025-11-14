@@ -1,17 +1,14 @@
 package model.ndosiautomation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateRequest<T> {
 
     // <editor-fold desc="Class Fields">
-    @JsonProperty("firstName")
     private T firstName;
 
-    @JsonProperty("lastName")
     private T lastName;
 
     private T email;

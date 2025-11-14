@@ -127,7 +127,6 @@ public class NdosiAutomationTestData {
     }
 
     private String generateFakePassword() {
-        //return "12345678";
         return faker.internet().password(8, 16, true, true, true);
     }
     // </editor-fold>

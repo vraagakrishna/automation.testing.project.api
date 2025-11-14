@@ -212,7 +212,7 @@ public class UserProfileTests extends NdosiAutomationTests {
     }
 
     @Story("Update Profile")
-    @Description("Verify that updating profile with name returns an error")
+    @Description("Verify that updating profile with different names returns a success response")
     @Test(priority = 14)
     @Severity(SeverityLevel.CRITICAL)
     public void updateProfileWithName() {
@@ -249,7 +249,7 @@ public class UserProfileTests extends NdosiAutomationTests {
     }
 
     @Story("Update Profile")
-    @Description("Verify that updating profile with an email returns an success response")
+    @Description("Verify that updating profile with a different email returns an success response")
     @Test(priority = 16)
     @Severity(SeverityLevel.CRITICAL)
     public void updateProfileWithEmail() {
@@ -473,7 +473,7 @@ public class UserProfileTests extends NdosiAutomationTests {
     }
 
     @Story("Update Password")
-    @Description("Verify that updating password with new password returns a success error")
+    @Description("Verify that updating password with new password returns a success response")
     @Test(priority = 30)
     @Severity(SeverityLevel.CRITICAL)
     public void updatePasswordWithNewPassword() {

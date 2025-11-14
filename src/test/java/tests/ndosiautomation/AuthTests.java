@@ -17,7 +17,7 @@ import static utils.ValidateNdosiAutomationUtils.validateSuccessRegisterResponse
 public class AuthTests extends NdosiAutomationTests {
 
     @Story("Login")
-    @Description("Verify that logging in without a username returns a validation error")
+    @Description("Verify that logging in without an email returns a validation error")
     @Test(priority = 1)
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithoutEmail() {
@@ -49,7 +49,7 @@ public class AuthTests extends NdosiAutomationTests {
     }
 
     @Story("Login")
-    @Description("Verify that logging in invalid data formats returns a validation error")
+    @Description("Verify that logging in with invalid data formats returns a validation error")
     @Test(priority = 3)
     @Severity(SeverityLevel.CRITICAL)
     public void loginUserWithInvalidDataFormats() {
