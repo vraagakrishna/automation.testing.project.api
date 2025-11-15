@@ -50,10 +50,10 @@ public class UserTests extends ReqResApiTests {
     }
 
     @Story("Get All Users")
-    @Description("Verify that retrieving all users with a delay is successful")
+    @Description("Verify that retrieving all users with a timeout delay times out")
     @Test(priority = 3)
     @Severity(SeverityLevel.CRITICAL)
-    public void getAllUsersWithDelay() {
+    public void getAllUsersWithTimeoutDelay() {
         int delayInSeconds = 10;
 
         Response response = getUsersWithDelay(delayInSeconds)
@@ -78,8 +78,36 @@ public class UserTests extends ReqResApiTests {
     }
 
     @Story("Get All Users")
-    @Description("Verify that requesting all users with page numbers is successful")
+    @Description("Verify that retrieving all users with a delay is successful")
     @Test(priority = 4)
+    @Severity(SeverityLevel.CRITICAL)
+    public void getAllUsersWithDelay() {
+        int delayInSeconds = 2;
+
+        Response response = getUsersWithDelay(delayInSeconds)
+                .then()
+                .assertThat().statusCode(HttpStatus.SC_OK)
+                .extract().response();
+
+        double responseTimeInSeconds = response.time() / 1000.0;
+        System.out.println("Response Time: " + responseTimeInSeconds + " s");
+        AllureUtils.attachResponseTime(String.valueOf(responseTimeInSeconds), "s");
+
+        int maxTimeDelay = delayInSeconds + 3;
+        Assert.assertTrue(
+                responseTimeInSeconds >= delayInSeconds && responseTimeInSeconds < maxTimeDelay,
+                "Expected response time to be around " + delayInSeconds + " seconds, " +
+                        "but got " + responseTimeInSeconds + " s"
+        );
+
+        GetUser user = response.as(GetUser.class);
+
+        validateUser(user);
+    }
+
+    @Story("Get All Users")
+    @Description("Verify that requesting all users with page numbers is successful")
+    @Test(priority = 5)
     @Severity(SeverityLevel.BLOCKER)
     public void getAllUsersWithPage() {
         int page = 10;

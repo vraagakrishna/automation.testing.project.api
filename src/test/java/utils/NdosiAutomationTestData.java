@@ -131,15 +131,15 @@ public class NdosiAutomationTestData {
     }
 
     private String generateFakeFirstName() {
-        return faker.name().firstName();
+        return sanitize(faker.name().firstName());
     }
 
     private String generateFakeLastName() {
-        return faker.name().lastName();
+        return sanitize(faker.name().lastName());
     }
 
     private String generateFakeEmail() {
-        return sanitize(lastName) + "." + sanitize(firstName) + "." + faker.number().numberBetween(0, 10000) + "@" + randomDomain();
+        return lastName + "." + firstName + "." + faker.number().numberBetween(0, 10000) + "@" + randomDomain();
     }
 
     private String generateFakePassword() {
