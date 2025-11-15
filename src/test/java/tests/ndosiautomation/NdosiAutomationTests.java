@@ -31,13 +31,13 @@ public class NdosiAutomationTests extends BaseTests {
     @BeforeSuite
     public void beforeSuite() {
         data = new NdosiAutomationTestData();
-        System.out.println("Suite started — TestData initialized");
+        System.out.println("Suite started - TestData initialized");
     }
 
     @AfterSuite
     public void afterSuite() {
         data = null;  // or new TestData();
-        System.out.println("Suite finished — TestData cleared");
+        System.out.println("Suite finished - TestData cleared");
     }
 
     protected void checkSoftAssertion() {
