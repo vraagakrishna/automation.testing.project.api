@@ -52,6 +52,18 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 
 3. **Right-click** -> **Run 'testng.xml'**
 
+
+4. Click **Edit Configurations...** for 'testng.xml'
+
+
+5. Add environment variables:
+
+```bash
+WEATHER_API_KEY=YOUR_WEATHER_API_KEY
+REQRES_API_KEY=YOUR_REQRES_API_KEY
+ENABLE_LOGS=ENABLE_LOGS_OR_NOT
+```
+
 <br/>
 
 ## Project Structure
