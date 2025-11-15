@@ -9,6 +9,7 @@ import model.weatherapi.PostStation;
 import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import tests.BaseTests;
 import utils.RandomNumberGenerator;
 import utils.StationTestData;
 
@@ -21,7 +22,7 @@ import static requestbuilder.weatherapi.WeatherApiRequestBuilder.*;
 
 @Epic("Weather API")
 @Feature("Stations Endpoints")
-public class WeatherApiTests {
+public class WeatherApiTests extends BaseTests {
 
     StationTestData data = new StationTestData();
 
