@@ -5,10 +5,17 @@ import model.ndosiautomation.GetProfileResponseData;
 import model.ndosiautomation.LoginResponseUserData;
 import model.ndosiautomation.RegisterResponseData;
 
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
 public class NdosiAutomationTestData {
 
     // <editor-fold desc="Class fields">
     private static final Faker faker = new Faker();
+
+    private static final List<String> DOMAINS = List.of(
+            "gmail.com", "yahoo.com", "outlook.com", "hotmail.com", "icloud.com"
+    );
 
     public String weakPassword = faker.internet().password(1, 5, true, true, true);
 
@@ -118,6 +125,11 @@ public class NdosiAutomationTestData {
         return input.replaceAll("[^A-Za-z0-9]", "");
     }
 
+    private String randomDomain() {
+        int idx = ThreadLocalRandom.current().nextInt(DOMAINS.size());
+        return DOMAINS.get(idx);
+    }
+
     private String generateFakeFirstName() {
         return faker.name().firstName();
     }
@@ -127,7 +139,7 @@ public class NdosiAutomationTestData {
     }
 
     private String generateFakeEmail() {
-        return sanitize(lastName) + "." + sanitize(firstName) + "." + faker.number().numberBetween(0, 10000) + "@gmail.com";
+        return sanitize(lastName) + "." + sanitize(firstName) + "." + faker.number().numberBetween(0, 10000) + "@" + randomDomain();
     }
 
     private String generateFakePassword() {
