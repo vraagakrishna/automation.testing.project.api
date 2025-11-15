@@ -9,6 +9,7 @@ import org.apache.http.HttpStatus;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
+import tests.BaseTests;
 import utils.NdosiAutomationTestData;
 
 import static requestbuilder.ndosiautomation.NdosiAutomationRequestBuilder.login;
@@ -17,7 +18,7 @@ import static utils.ValidateNdosiAutomationUtils.validateFailedResponse;
 import static utils.ValidateNdosiAutomationUtils.validateSuccessLoginResponse;
 
 @Epic("Ndosi Automation API")
-public class NdosiAutomationTests {
+public class NdosiAutomationTests extends BaseTests {
 
     protected static NdosiAutomationTestData data;
 

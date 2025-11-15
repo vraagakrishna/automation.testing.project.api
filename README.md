@@ -115,8 +115,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   ├── ReqResApiTests.java
 │           │   │   ├── ResourceTests.java
 │           │   │   └── UserTests.java 
-│           │   └── weatherapi                  # Test classes for weather api
-│           │       └── WeatherApiTests.java  
+│           │   ├── weatherapi                  # Test classes for weather api
+│           │   │   └── WeatherApiTests.java  
+│           │   └── BaseTests.java
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
 │               ├── JwtUtils.java
