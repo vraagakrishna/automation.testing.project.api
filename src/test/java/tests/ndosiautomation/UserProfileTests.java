@@ -411,9 +411,7 @@ public class UserProfileTests extends NdosiAutomationTests {
                 .assertThat().statusCode(HttpStatus.SC_OK)
                 .extract().as(Failure.class);
 
-        validateSuccessResponse(failureResponse, "Current password is incorrect");
-
-        AllureUtils.attachNote("Current password is not being validated!");
+        validateFailedResponse(failureResponse, "Current password is incorrect");
     }
 
     @Story("Update Password")
