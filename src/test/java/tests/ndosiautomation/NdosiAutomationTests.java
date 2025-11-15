@@ -6,6 +6,8 @@ import model.ndosiautomation.LoginRequest;
 import model.ndosiautomation.LoginResponse;
 import model.ndosiautomation.RegisterRequest;
 import org.apache.http.HttpStatus;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.asserts.SoftAssert;
 import utils.NdosiAutomationTestData;
 
@@ -17,12 +19,24 @@ import static utils.ValidateNdosiAutomationUtils.validateSuccessLoginResponse;
 @Epic("Ndosi Automation API")
 public class NdosiAutomationTests {
 
-    protected static final NdosiAutomationTestData data = new NdosiAutomationTestData();
+    protected static NdosiAutomationTestData data;
 
     SoftAssert softAssert;
 
     public NdosiAutomationTests() {
         this.softAssert = new SoftAssert();
+    }
+
+    @BeforeSuite
+    public void beforeSuite() {
+        data = new NdosiAutomationTestData();
+        System.out.println("Suite started — TestData initialized");
+    }
+
+    @AfterSuite
+    public void afterSuite() {
+        data = null;  // or new TestData();
+        System.out.println("Suite finished — TestData cleared");
     }
 
     protected void checkSoftAssertion() {
