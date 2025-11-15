@@ -6,6 +6,7 @@ This project automates the API testing using **RestAssured** with **Java** and *
 
 * [Open WeatherMap](https://openweathermap.org/stations)
 * [ReqRes](https://reqres.in/)
+* [Ndosi Automation](https://www.ndosiautomation.co.za/API/swagger-ui.html)
 
 It validates the functionalities of the API.
 
@@ -66,6 +67,19 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   ├── SuiteRepeaterListener.java
 │           │   └── TestLoggerListener.java
 │           ├── model                           # Data models
+│           │   ├── ndosiautomation             # Data models for Ndosi Automation
+│           │   │   ├── Failure.java
+│           │   │   ├── GetProfileResponse.java
+│           │   │   ├── GetProfileResponseData.java
+│           │   │   ├── LoginRequest.java
+│           │   │   ├── LoginResponse.java
+│           │   │   ├── LoginResponseData.java
+│           │   │   ├── LoginResponseUserData.java
+│           │   │   ├── PasswordRequest.java
+│           │   │   ├── RegisterRequest.java
+│           │   │   ├── RegisterResponse.java
+│           │   │   ├── RegisterResponseData.java
+│           │   │   └── UpdateRequest.java
 │           │   ├── reqres                      # Data models for reqres
 │           │   │   ├── Failure.java
 │           │   │   ├── GetResouce.java
@@ -81,6 +95,9 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       ├── GetStationList.java
 │           │       └── PostStation.java
 │           ├── requestbuilder                  # API requests
+│           │   ├── ndosiautomation             # API requests for Ndosi Automation
+│           │   │   ├── BaseNdosiAutomationRequestBuilder.java
+│           │   │   └── NdosiAutomationRequestBuilder.java
 │           │   ├── reqres                      # API requests for reqres
 │           │   │   ├── BaseReqResApiRequestBuilder.java
 │           │   │   └── ReqResApiRequestBuilder.java 
@@ -89,6 +106,10 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │   │   └── WeatherApiRequestBuilder.java 
 │           │   └── BaseRequestBuilder.java
 │           ├── tests                           # Test classes
+│           │   ├── ndosiautomation             # Test classes for Ndosi Automation
+│           │   │   ├── AuthTests.java
+│           │   │   ├── NdosiAutomationTests.java
+│           │   │   └── UserProfileTests.java 
 │           │   ├── reqres                      # Test classes for reqres
 │           │   │   ├── AuthTests.java
 │           │   │   ├── ReqResApiTests.java
@@ -98,10 +119,13 @@ mvn clean test -DWEATHER_API_KEY=YOUR_WEATHER_API_KEY -DREQRES_API_KEY=YOUR_REQR
 │           │       └── WeatherApiTests.java  
 │           └── utils                           # Helper classes
 │               ├── AllureUtils.java
+│               ├── JwtUtils.java
+│               ├── NdosiAutomationTestData.java
 │               ├── RandomNumberGenerator.java
 │               ├── ReqResTestData.java
 │               ├── StationTestData.java
 │               ├── ValidateFormats.java
+│               ├── ValidateNdosiAutomationUtils.java
 │               └── ValidateReqResUtils.java
 ├── pom.xml
 ├── README.md
@@ -168,5 +192,30 @@ The API provides realistic data and follows REST conventions, making it ideal fo
 - [x] Proper HTTP Status Codes: 200, ~~201~~, 204, 400, 404 responses (no endpoint returned with 201 status code)
 - [x] Delayed Responses: Test timeouts with ?delay=3 parameter
 - [X] CORS (Cross-Origin Resource Sharing) Enabled: Perfect for frontend testing and AJAX requests
+
+<br/>
+
+## [Ndosi Automation](https://www.ndosiautomation.co.za/API/swagger-ui.html)
+
+The Ndosi Automation API is part of the Ndosi Automation learning platform. Check the API documentation to explore the
+available endpoints and understand what testing scenarios you can practice.
+
+Visit the Swagger documentation below to see the actual API structure and available operations.
+
+## Getting Started
+
+- [x] Review the API documentation using the link below
+- [x] Explore the available endpoints and their parameters
+- [x] Set up your testing environment (Postman, Insomnia, etc.)
+- [x] Create test cases based on the documented endpoints
+- [x] Practice different HTTP methods and response validation
+
+## Testing Best Practices
+
+- [x] Test both successful and error scenarios
+- [x] Validate response status codes and data formats
+- [x] Practice request chaining where applicable
+- [x] Test with different input parameters and edge cases
+- [x] Document your test cases and expected results
 
 <br/>
