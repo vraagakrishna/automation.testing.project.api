@@ -85,8 +85,8 @@ public class JwtUtils {
         System.out.println(name + " UTC Time:: " + readableUtcDate);
         System.out.println(name + " Local Time:: " + readableLocalDate);
 
-        AllureUtils.attachmentTime(name + " UTC Time: ", readableUtcDate);
-        AllureUtils.attachmentTime(name + " Local Time: ", readableLocalDate);
+        AllureUtils.attachmentTime(name + " UTC Time", readableUtcDate);
+        AllureUtils.attachmentTime(name + " Local Time", readableLocalDate);
     }
 
 }
