@@ -19,12 +19,11 @@ on:
   repository_dispatch:
     types: [ run-tests ]
 
-# Concurrency logic:
-# - Manual / push → priority group, never cancel
-# - Scheduled → scheduled group, cancel previous scheduled runs
+# Scheduled runs = low priority (cancel previous schedule runs only)
+# Manual + push + repo_dispatch = high priority (NEVER cancelled)
 concurrency:
-  group: ${{ github.event_name == 'schedule' && 'api-tests-scheduled' || 'api-tests-priority' }}
-  cancel-in-progress: ${{ github.event_name == 'schedule' && true || false }}
+  group: ${{ startsWith(github.event_name, 'schedule') && 'api-tests-scheduled' || 'api-tests-priority' }}
+  cancel-in-progress: ${{ github.event_name == 'schedule' }}
 
 jobs:
   build:
@@ -35,10 +34,20 @@ jobs:
       # Checkout current repo
       - uses: actions/checkout@v4
 
-      # Check if development repo changed since last run
-      - name: Check for new commits in development repo
+      # Check if tests must run
+      - name: Check if tests must run
         id: check_changes
         run: |
+          echo "Event name: ${{ github.event_name }}"
+
+          # If push or manual run → ALWAYS run tests
+          if [ "${{ github.event_name }}" = "push" ] || \
+             [ "${{ github.event_name }}" = "workflow_dispatch" ] || \
+             [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            echo "run_tests=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
           echo "Checking latest commit in dev repo"
           
           LATEST_COMMIT=$(curl -s \
@@ -61,13 +70,8 @@ jobs:
           
           echo "Last commit seem: $LAST_COMMIT"
           
-          # Always run tests if this repo changed
-          if [ "${{ github.event_name }}" = "push" ] || [ "${{ github.event_name }}" = "pull_request" ]; then
-            echo "Tests triggered due to current repo changed."
-            echo "run_tests=true" >> $GITHUB_OUTPUT
-          
-          # Otherwise, check dev repo changes
-          elif [ "$LATEST_COMMIT" = "$LAST_COMMIT" ]; then
+          # Check dev repo changes
+          if [ "$LATEST_COMMIT" = "$LAST_COMMIT" ]; then
             echo "No new commits in dev repo. Skipping tests."
             echo "run_tests=false" >> $GITHUB_OUTPUT
           else
