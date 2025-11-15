@@ -303,7 +303,7 @@ public class AuthTests extends NdosiAutomationTests {
     @Description("Verify that registering after registration returns an error")
     @Test(priority = 1, dependsOnMethods = "registerUserWithValidDetails")
     @Severity(SeverityLevel.CRITICAL)
-    public void registerUserAfterRegistrationDetails() {
+    public void registerUserAfterRegistration() {
         this.reRegistrationWithValidData();
     }
 
